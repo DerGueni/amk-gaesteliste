@@ -639,8 +639,17 @@ function loadDemoData(){
   }
   if(!Array.isArray(state.tokens))state.tokens=[];
   const cand=created.filter(g=>g.status==='genehmigt'||g.status==='final');
-  [{modus:'kontingent',max:1},{modus:'kauf',max:2},{modus:'kontingent',max:1}].forEach((tp,ix)=>{
-    const g=cand[ix*3];if(!g)return;
+  // Bewusst gemischt: einmal Show mit Sitzplan (Kauf), einmal Stehplatz-Show, dazu ein
+  // weiterer Gast — sonst zeigt die Vorführung zufällig nur eine der beiden Varianten.
+  const genommen=new Set();
+  const istSitz=s=>{const m=tkMap(s);return !!m&&m.typ==='seated';};
+  const waehle=pred=>cand.find(g=>{const s=showById(g.showId);return s&&!genommen.has(g.id)&&pred(s);});
+  const plan=[];
+  const gSitz=waehle(istSitz);            if(gSitz){genommen.add(gSitz.id);plan.push({g:gSitz,modus:'kauf',max:2});}
+  const gSteh=waehle(s=>!istSitz(s));     if(gSteh){genommen.add(gSteh.id);plan.push({g:gSteh,modus:'kontingent',max:1});}
+  const gRest=cand.find(g=>!genommen.has(g.id)); if(gRest){genommen.add(gRest.id);plan.push({g:gRest,modus:'kontingent',max:1});}
+  plan.forEach((tp,ix)=>{
+    const g=tp.g;
     state.tokens.push({
       id:'tk'+now+ix+Math.floor(Math.random()*1e5),
       gastRef:g.id,email:slug(g.vorname)+'.'+slug(g.nachname)+'@example.com',
