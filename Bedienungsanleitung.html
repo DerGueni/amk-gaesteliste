@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMK Gästeliste PRO – Bedienungsanleitung</title>
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{
+  --case:#17181C; --panel:#1F2126; --panel2:#26282E; --line:#33363E;
+  --ink:#E9EAEE; --dim:#9BA0AB; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
+  --disp:'Archivo Black',sans-serif;
+  --body:'Barlow Semi Condensed',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-bottom:40px}
+
+header{background:var(--panel);border-bottom:3px solid var(--tape);padding:20px 24px 16px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape);text-transform:uppercase}
+h1{font-family:var(--disp);font-size:clamp(22px,4.5vw,34px);letter-spacing:.01em;margin:4px 0 4px;text-transform:uppercase}
+.sub{font-size:14px;color:var(--dim)}
+
+main{max-width:900px;margin:0 auto;padding:0 24px}
+
+.intro{
+  background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--tape);
+  border-radius:6px;padding:16px 18px;margin:24px 0;
+}
+.intro h2{font-family:var(--disp);font-size:16px;text-transform:uppercase;margin-bottom:8px;color:var(--tape)}
+.intro p{margin:6px 0}
+
+.demo-hinweis{
+  background:#2b2410;border:1px solid var(--tape);border-radius:6px;
+  padding:14px 18px;margin:18px 0;font-size:14px;
+}
+.demo-hinweis strong{color:var(--tape)}
+
+section{margin:36px 0}
+section h2{
+  font-family:var(--disp);font-size:clamp(18px,3vw,24px);text-transform:uppercase;
+  letter-spacing:.01em;border-bottom:2px solid var(--line);padding-bottom:8px;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+section h2 .nr{
+  background:var(--tape);color:#161616;font-family:var(--mono);font-weight:700;
+  border-radius:4px;padding:2px 9px;font-size:15px;
+}
+section h3{font-family:var(--body);font-weight:700;font-size:17px;margin:20px 0 8px;color:var(--ink)}
+
+p{margin:10px 0}
+ul,ol{margin:10px 0 10px 22px}
+li{margin:4px 0}
+strong{color:#fff}
+code{
+  font-family:var(--mono);background:var(--panel2);border:1px solid var(--line);
+  border-radius:3px;padding:1px 5px;font-size:.92em;
+}
+a{color:var(--tape)}
+
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  padding:14px 18px;margin:12px 0;
+}
+.hint{
+  background:var(--panel2);border-left:3px solid var(--tape);border-radius:4px;
+  padding:10px 14px;margin:12px 0;font-size:14px;color:var(--dim);
+}
+.warn{
+  background:#2b1414;border-left:3px solid var(--now);border-radius:4px;
+  padding:10px 14px;margin:12px 0;font-size:14px;
+}
+.warn strong{color:var(--now)}
+.ok-box{
+  background:#14241a;border-left:3px solid var(--ok);border-radius:4px;
+  padding:10px 14px;margin:12px 0;font-size:14px;
+}
+
+figure{margin:16px 0}
+figure img{
+  max-width:100%;display:block;border:1px solid var(--line);border-radius:6px;
+}
+figcaption{font-size:12px;color:var(--dim);margin-top:6px;font-family:var(--mono)}
+.shots-row{display:flex;gap:14px;flex-wrap:wrap}
+.shots-row figure{flex:1 1 260px;margin:16px 0}
+.shots-row.mobile figure{flex:0 0 220px}
+.shots-row.mobile img{width:220px}
+
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+th{background:var(--panel2);font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+
+.toc{
+  background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  padding:16px 20px;margin:24px 0;
+}
+.toc h2{font-family:var(--disp);font-size:14px;text-transform:uppercase;color:var(--tape);margin-bottom:8px;border:none;padding:0}
+.toc ol{margin:0 0 0 20px;columns:2;column-gap:24px}
+.toc a{text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--tape)}
+
+footer{
+  max-width:900px;margin:40px auto 0;padding:16px 24px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--dim)
+}
+
+@media print{
+  body{background:#fff;color:#000;padding-bottom:0}
+  header{background:#fff;border-bottom:3px solid #000}
+  .kicker{color:#000}
+  .sub{color:#333}
+  .intro,.card,.toc{background:#f4f4f4;border-color:#999}
+  .intro h2{color:#7a5f00}
+  .hint{background:#eee;border-left-color:#999;color:#333}
+  .warn{background:#fee;border-left-color:#900}
+  .warn strong{color:#900}
+  .ok-box{background:#efe;border-left-color:#090}
+  .demo-hinweis{background:#fff8de;border-color:#7a5f00}
+  .demo-hinweis strong{color:#7a5f00}
+  section h2{border-bottom-color:#000}
+  section h2 .nr{background:#000;color:#fff}
+  section h3{color:#000}
+  strong{color:#000}
+  code{background:#eee;color:#000;border-color:#999}
+  a{color:#000;text-decoration:underline}
+  figure img{border-color:#999}
+  th{background:#eee}
+  .toc{display:none}
+  section{break-inside:avoid-page}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">Tourmanagement · Gästeliste</div>
+  <h1>AMK Gästeliste PRO — Bedienungsanleitung</h1>
+  <div class="sub">AnnenMayKantereit · Live 2026 · Für Tourmanagement, Einladende und Einlass-Personal · Zum Ausdrucken geeignet</div>
+</header>
+
+<main>
+
+<div class="intro">
+  <h2>Was ist das?</h2>
+  <p><strong>AMK Gästeliste PRO</strong> ist das Gästelisten-System für die Tour „AnnenMayKantereit · Live 2026". Es läuft komplett offline im Browser, ganz ohne eigenen Server oder Internetverbindung — das Herzstück ist die Datei <code>gaesteliste.html</code> mit den drei Bereichen <strong>Verwaltung</strong>, <strong>Einladen</strong> und <strong>Einlass</strong>, ergänzt um einen Bereich <strong>Ticket-Zugang (Demo)</strong>, der zeigt, wie ein Gast künftig selbst seinen Zugang samt Sitz-/Platzwahl bedienen könnte.</p>
+  <p>Diese Anleitung führt Schritt für Schritt durch alle Bereiche und zeigt echte Bildschirmfotos aus dem Tool.</p>
+</div>
+
+<div class="demo-hinweis">
+  <strong>Wichtig — was ist DEMO?</strong> Der gesamte Bereich „Ticket-Zugang" inklusive Saalplänen, Platzwahl und „Kauf"-Ablauf (Kapitel 4) ist eine <strong>Simulation zu Vorführzwecken</strong>. Es werden keine echten Tickets ausgestellt, keine echten Zahlungen verarbeitet und keine echten Saalpläne verwendet. Echte Tickets für AnnenMayKantereit · Live 2026 gibt es ausschließlich über den offiziellen Ticketing-Partner <strong>krasserstoff</strong>. Eine tatsächliche technische Anbindung existiert in diesem Paket <strong>nicht</strong> — welche Fragen dafür vorab zu klären sind, steht im separaten <em>Fragenkatalog_Landstreicher_krasserstoff.html</em> (siehe Kapitel 8). Alle anderen Kapitel (Verwaltung, Einladen, Einlass, Exporte) sind die echte, produktive Funktion des Tools.
+</div>
+
+<div class="toc">
+  <h2>Inhalt</h2>
+  <ol>
+    <li><a href="#k1">Schnellstart Windows &amp; Mac</a></li>
+    <li><a href="#k2">Handy/Tablet im WLAN (iPhone, iPad, Android)</a></li>
+    <li><a href="#k3">Die drei Modi + Ticket-Tab</a></li>
+    <li><a href="#k4">Ticket-Zugang (Demo)</a></li>
+    <li><a href="#k5">Exporte</a></li>
+    <li><a href="#k6">Optionen</a></li>
+    <li><a href="#k7">Datensicherung</a></li>
+    <li><a href="#k8">krasserstoff heute &amp; morgen</a></li>
+    <li><a href="#k9">Datenschutz</a></li>
+    <li><a href="#k10">Künstler/Band wählen &amp; Shows anlegen</a></li>
+  </ol>
+</div>
+
+<section id="k1">
+  <h2><span class="nr">1</span> Schnellstart Windows &amp; Mac</h2>
+  <p>Das Tool ist eine gewöhnliche HTML-Datei und läuft unter Windows wie unter macOS im Browser — ohne Installation. Für beide Systeme liegen fertige Starter bei:</p>
+
+  <h3>Weg A — Doppelklick auf gaesteliste.html</h3>
+  <p>Der einfachste Weg für den täglichen Einsatz. Einfach im Ordner auf <code>gaesteliste.html</code> doppelklicken — das Tool öffnet sich im Standard-Browser (<code>file://…</code>) und funktioniert vollständig offline, auch ganz ohne Internetverbindung. Alle Eingaben werden lokal im Browser gespeichert (siehe Kapitel 7 „Datensicherung").</p>
+
+  <h3>Weg B — Start_Windows.bat</h3>
+  <p>Startet einen kleinen lokalen Server auf diesem PC und öffnet das Tool im Browser unter <code>http://localhost</code>. Vorteil: Die vollen PWA-Funktionen (als App installieren, Offline-Cache) funktionieren technisch nur über <code>http://localhost</code> oder <code>https</code> — nicht bei einfachem Doppelklick. Ist auf dem PC kein Python installiert, öffnet das Skript stattdessen automatisch die Datei direkt wie bei Weg A.</p>
+
+  <h3>Weg C — Mac (Start_Mac.command)</h3>
+  <p>Am Mac genügt ebenfalls der Doppelklick auf <code>gaesteliste.html</code>; das Tool öffnet sich in Safari oder Chrome, alle Funktionen inklusive Speichern stehen zur Verfügung. Wer zusätzlich die Original-Schriften und die PWA-Funktionen möchte, startet <code>Start_Mac.command</code> — das Skript sucht sich einen freien Port, startet den kleinen Server und öffnet den Browser von selbst. Ist auf dem Mac kein Python vorhanden, öffnet es einfach die Datei direkt.</p>
+  <div class="hint">Rein kosmetisch: Beim Doppelklick lädt Safari die Schriftarten nicht aus dem Netz nach und verwendet die Systemschrift. Inhalt, Bedienung und gespeicherte Daten sind identisch — mit der Safari-Engine geprüft.</div>
+  <div class="warn"><strong>Beim ersten Start am Mac:</strong> macOS lässt heruntergeladene <code>.command</code>-Dateien nicht sofort per Doppelklick zu („nicht überprüft"). Einmalig genügt: Rechtsklick bzw. <code>Ctrl</code> + Klick auf die Datei → <strong>Öffnen</strong> → im Hinweisfenster nochmals <strong>Öffnen</strong>. Danach klappt der normale Doppelklick. Startet die Datei gar nicht, hilft einmalig im Terminal: <code>chmod +x "/Pfad/zum/Ordner/Start_Mac.command"</code>. Wer sich das sparen will, nimmt Weg A — der funktioniert immer und ohne Rückfrage.</div>
+  <div class="hint">Für die reine Tagesarbeit reicht Weg A auf beiden Systemen völlig aus. Die Server-Starter lohnen sich, wenn das Tool als eigene App-Kachel installiert werden soll oder mehrere Geräte im selben WLAN zugreifen sollen (siehe Kapitel 2).</div>
+</section>
+
+<section id="k2">
+  <h2><span class="nr">2</span> Handy/Tablet im WLAN (iPhone, iPad, Android)</h2>
+  <p>Auf iPhone, iPad oder Android lässt sich das Paket <strong>nicht</strong> direkt aus der Dateien-App heraus starten — das ist eine Beschränkung der Geräte, kein Fehler des Tools. Der Weg dorthin führt über den Server-Starter auf einem PC oder Mac im selben WLAN:</p>
+  <ul>
+    <li><strong>Windows:</strong> <code>Start_Server_Handy.bat</code></li>
+    <li><strong>Mac:</strong> <code>Start_Server_Handy_Mac.command</code> (beim ersten Start Rechtsklick → „Öffnen", siehe Kapitel 1)</li>
+  </ul>
+  <p>Beide zeigen eine Adresse wie <code>http://192.168.x.x:8765</code> an — diese Adresse am Handy oder Tablet im Browser eingeben.</p>
+  <div class="warn"><strong>Voraussetzung:</strong> Der PC bzw. Mac mit dem Server muss dabei eingeschaltet bleiben und im gleichen WLAN sein wie das Handy/Tablet. Beim ersten Start ggf. die Firewall-Abfrage bestätigen (Windows-Firewall bzw. macOS-Rückfrage „eingehende Verbindungen erlauben").</div>
+
+  <h3>Auf dem Home-Bildschirm installieren</h3>
+  <ul>
+    <li><strong>iOS (iPhone/iPad):</strong> Seite im Safari-Browser öffnen → Teilen-Symbol → „Zum Home-Bildschirm".</li>
+    <li><strong>Android/Edge:</strong> Seite öffnen → Menü (⋮) → „App installieren" bzw. „Zum Startbildschirm hinzufügen".</li>
+  </ul>
+
+  <h3>Ehrliche PWA-Grenze</h3>
+  <p>Voll-Offline-Betrieb (Installation als App mit eigenem Icon und Offline-Cache) funktioniert technisch nur über <code>https</code> oder <code>localhost</code>. Der WLAN-Zugriff per <code>http://192.168.x.x:8765</code> ist kein <code>localhost</code> und kein <code>https</code> — deshalb greifen dort die vollen PWA-Funktionen (Installierbarkeit, Offline-Cache) nur eingeschränkt oder gar nicht. Die Seite selbst funktioniert trotzdem ganz normal im Browser, solange der Server auf PC oder Mac läuft.</p>
+  <div class="ok-box">Kurz gesagt: Am Handy im WLAN braucht es immer den laufenden Server auf PC oder Mac im Hintergrund — es ist kein eigenständiger Offline-Modus wie direkt am Rechner.</div>
+</section>
+
+<section id="k3">
+  <h2><span class="nr">3</span> Die drei Modi + Ticket-Tab</h2>
+  <p>Oben im Tool wechseln vier Tabs zwischen den Bereichen: <strong>Verwaltung</strong>, <strong>Einladen</strong>, <strong>Einlass</strong> und <strong>Ticket</strong>.</p>
+
+  <h3>Verwaltung</h3>
+  <p>Der Hauptarbeitsbereich für das Tourmanagement: aktive Show wählen, Gesamtdeckel/Vertragskontingent/Redaktionsschluss pflegen, Anträge freigeben oder ablehnen, die komplette Gästeliste mit Suche und Filtern durchsehen, Liste finalisieren und Exporte anstoßen.</p>
+  <div class="hint">Ganz oben steht die Auswahl <strong>„Künstler / Band"</strong> mit allen von Landstreicher Booking vertretenen Acts. Jeder Künstler hat einen eigenen Arbeitsbereich mit eigenen Shows und Gästen — Einzelheiten in <a href="#k10">Kapitel 10</a>.</div>
+  <figure>
+    <img src="screenshots/01_verwaltung.png" alt="Verwaltungs-Tab mit Gästeliste, Suche und Filtern">
+    <figcaption>screenshots/01_verwaltung.png — Gästeliste mit Suche, Status- und Kategorie-Filtern</figcaption>
+  </figure>
+
+  <p>Weiter unten im Verwaltungs-Tab liefert das <strong>Statistik-Dashboard</strong> auf einen Blick die Kategorien-Verteilung, die Gruppen-Auslastung gegen das jeweilige Kontingent sowie Einlass-Quote und Aftershow-Anteil der aktiven Show. Direkt darunter zeigt die <strong>Kontingent-Matrix</strong> alle Gruppen gegen alle Shows der Tour — ein Klick auf eine Zeile klappt die zugehörigen Einladenden auf, eine Zelle zeigt Ausnahmen vom Standard-Kontingent.</p>
+  <figure>
+    <img src="screenshots/02_statistik.png" alt="Statistik-Dashboard und Kontingent-Matrix">
+    <figcaption>screenshots/02_statistik.png — Statistik-Dashboard und Kontingent-Matrix</figcaption>
+  </figure>
+
+  <h3>Einladen</h3>
+  <p>Der reduzierte Bereich für Einladende: nach Auswahl der eigenen Person (tour-internes Vertrauensmodell, keine Login-Pflicht) sieht man nur das eigene Kontingent und die eigenen Gäste — bewusst auf ein 15-Sekunden-Ziel getrimmt: Person wählen, „+ Gast", fertig.</p>
+  <figure>
+    <img src="screenshots/03_einladen.png" alt="Einladen-Tab">
+    <figcaption>screenshots/03_einladen.png — Einladen-Tab, Auswahl der eigenen Person</figcaption>
+  </figure>
+
+  <h3>Einlass</h3>
+  <p>Für das Einlass-Personal am Abend: große, gut antippbare Zeilen je Gast, Suche und Kategorie-Filter, Anzeige „X von Y da" bei Gästen mit Begleitung. Der Einlass-Tab zeigt <strong>nur finalisierte</strong> Shows — eine Liste muss also vorher in der Verwaltung finalisiert werden (siehe Kapitel 5), sonst bleibt die Auswahl leer.</p>
+  <figure>
+    <img src="screenshots/04_einlass.png" alt="Einlass-Tab mit großen antippbaren Zeilen">
+    <figcaption>screenshots/04_einlass.png — Einlass-Tab, Check-in-Stand einer finalisierten Show</figcaption>
+  </figure>
+
+  <h3>Ticket-Tab</h3>
+  <p>Zeigt und verwaltet die Ticket-Zugänge (Demo) der gewählten Show: neuen Zugang erstellen, bestehende Zugänge per Link/Mail/QR-Code weitergeben, Details ansehen oder widerrufen. Näheres dazu in Kapitel 4.</p>
+  <figure>
+    <img src="screenshots/05_ticket_tab.png" alt="Ticket-Tab mit Token-Liste und QR-Button">
+    <figcaption>screenshots/05_ticket_tab.png — Ticket-Tab, ausgegebene Ticket-Zugänge</figcaption>
+  </figure>
+</section>
+
+<section id="k4">
+  <h2><span class="nr">4</span> Ticket-Zugang (Demo)</h2>
+  <div class="demo-hinweis"><strong>Zur Erinnerung:</strong> Dieser gesamte Bereich ist eine Simulation. Kein echtes Ticketing, keine echte Zahlung, keine echten Saalpläne — Zweck ist es, dem Tourmanagement und Landstreicher Booking zu zeigen, wie ein künftiger Gast-Zugang aussehen könnte.</div>
+
+  <p>Im Ticket-Tab (Verwaltung-Seite) lässt sich pro Show für einen Gast ein Ticket-Zugang erstellen: E-Mail eintragen, Modus wählen (Kontingent = 0 €, oder Kauf-Demo), maximale Plätze festlegen. Der erzeugte Zugang erscheint in der Tabelle mit den Aktionen <strong>Link</strong> (Adresse kopieren), <strong>Mail</strong> (mailto-Versand ans E-Mail-Programm), <strong>QR</strong> (QR-Code zum Scannen), <strong>Details</strong> und <strong>Widerrufen</strong>.</p>
+
+  <h3>Gast-Sicht — Kontingent/GA (Stehplatz-Bereiche)</h3>
+  <p>Öffnet der Gast seinen Link (<code>gast.html?token=…</code>), sieht er je nach Venue entweder reine Kategorie-Bereiche mit Stepper (bei Stehplatz-Venues wie Festival-Parks) …</p>
+  <figure>
+    <img src="screenshots/06_gast_ga.png" alt="Gast-Ansicht GA mit Kategorie-Stepper">
+    <figcaption>screenshots/06_gast_ga.png — Gast-Sicht, Stehplatz-Venue mit Mengen-Stepper je Kategorie</figcaption>
+  </figure>
+
+  <h3>Gast-Sicht — Sitzplan (Hallen/Stadien)</h3>
+  <p>… oder bei Hallen/Stadien mit fester Bestuhlung einen Demo-Saalplan mit Legende (frei/belegt/gewählt), Block-Auswahl, Warenkorb-Zeile und dem Button „Beste freie Plätze wählen".</p>
+  <figure>
+    <img src="screenshots/07_gast_sitzplan.png" alt="Gast-Ansicht Saalplan mit Legende und Warenkorb">
+    <figcaption>screenshots/07_gast_sitzplan.png — Gast-Sicht, Demo-Saalplan mit Legende und Warenkorb</figcaption>
+  </figure>
+
+  <h3>Am Handy</h3>
+  <p>Die Gast-Seite ist für schmale Bildschirme optimiert — genauso, wie ein Gast sie am eigenen Smartphone öffnen würde.</p>
+  <figure style="max-width:260px">
+    <img src="screenshots/09_gast_handy.png" alt="Gast-Ansicht auf dem Handy">
+    <figcaption>screenshots/09_gast_handy.png — Gast-Sicht mobil (390×844)</figcaption>
+  </figure>
+
+  <div class="hint">Der Hinweis „Demo" oben rechts auf der Gast-Seite bleibt in dieser Simulation immer sichtbar. QR-Codes und Links funktionieren nur auf demselben Gerät bzw. im selben lokalen Netzwerk, solange der Server läuft (siehe Kapitel 2) — es gibt keinen echten Server-Versand.</div>
+</section>
+
+<section id="k5">
+  <h2><span class="nr">5</span> Exporte</h2>
+  <div class="warn"><strong>Finalisierungs-Pflicht:</strong> Alle Exporte sind erst möglich, nachdem die Gästeliste einer Show über den Button „Liste finalisieren" eingefroren wurde. Vorher zeigt die Verwaltung „Nicht final — Exporte gesperrt". Nach der Finalisierung zählen weitere Änderungen als <em>Nachtrag</em> und müssen erneut exportiert werden.</div>
+
+  <p>Über den Toolbar-Button <strong>Exporte</strong> öffnet sich der Export-Dialog mit vier Exportarten:</p>
+  <figure>
+    <img src="screenshots/08_export_dialog.png" alt="Export-Dialog einer finalisierten Show">
+    <figcaption>screenshots/08_export_dialog.png — Export-Dialog, Show finalisiert (FINAL v1)</figcaption>
+  </figure>
+
+  <table>
+    <tr><th>Export</th><th>Inhalt</th></tr>
+    <tr><td><strong>(a) Druckliste</strong></td><td>Alphabetisch nach Nachname; Farbbalken je Kategorie, Nachname, Vorname, +N Begleitungen, Kategorie, Einladender sowie eine leere Abhak-/Unterschriften-Spalte. Direkt druckbar.</td></tr>
+    <tr><td><strong>(b) CSV Abendkasse</strong></td><td>Eine Zeile je Gast (Nachname; Vorname; Begleitungen; Kategorie; Einladender), UTF-8 mit BOM für saubere Umlaute in Excel.</td></tr>
+    <tr><td><strong>(c) CSV krasserstoff-Personalisierung</strong></td><td>Eine Zeile pro Person (Hauptgast + jede benannte Begleitung einzeln). Unbenannte Begleitungen erscheinen mit einer Warnung vorab, da bei harter Personalisierung jeder Name auf ein eigenes Ticket muss.</td></tr>
+    <tr><td><strong>(d) Aftershow-Liste</strong></td><td>Als Druckansicht und als CSV — alle Gäste mit Aftershow-Kennzeichen plus Kategorie „Aftershow-only".</td></tr>
+  </table>
+
+  <p>Alle Dateien werden mit Show, Version und Zeitstempel benannt, z. B. <code>gaesteliste_koeln_2026-07-11_v2_20260710-1745_krasserstoff.csv</code> — so ist jederzeit nachvollziehbar, welcher Stand exportiert wurde.</p>
+</section>
+
+<section id="k6">
+  <h2><span class="nr">6</span> Optionen</h2>
+  <p>Über das Zahnrad-Symbol „Einstellungen" oben links öffnet sich der Optionen-Dialog:</p>
+  <ul>
+    <li><strong>Theme Hell/Dunkel</strong> — das Tool startet standardmäßig im dunklen Roadcase-Design, kann aber jederzeit auf ein helles Theme umgeschaltet werden (z. B. für draußen bei hellem Tageslicht).</li>
+    <li><strong>Schriftgröße S/M/L</strong> — für unterschiedliche Bildschirme und Lesegewohnheiten am Einlass.</li>
+    <li><strong>Einfach/Profi</strong> — der Einfach-Modus blendet Detailfunktionen rein visuell aus und reduziert die Oberfläche auf das Nötigste; der Profi-Modus zeigt alle Funktionen.</li>
+  </ul>
+  <figure>
+    <img src="screenshots/10_theme_hell.png" alt="Verwaltung im Hell-Theme">
+    <figcaption>screenshots/10_theme_hell.png — Verwaltung im Hell-Theme</figcaption>
+  </figure>
+
+  <h3>Suche, Filter und Mehrfachauswahl</h3>
+  <p>In der Gästeliste (Verwaltung) durchsucht das Suchfeld Name, Begleitung, Einladender und Notiz gleichzeitig. Darunter lassen sich Status (angefragt/genehmigt/abgelehnt/final) und Kategorien als Filter-Chips kombinieren. Über Kontrollkästchen können mehrere Gäste gleichzeitig ausgewählt und per Mehrfach-Aktion genehmigt, abgelehnt, umkategorisiert oder gelöscht werden (nur solange die Liste nicht finalisiert ist).</p>
+
+  <h3>Undo</h3>
+  <p>Nach Aktionen wie Genehmigen, Ablehnen, Löschen oder Check-in erscheint kurz eine Rückgängig-Möglichkeit — ein Sicherheitsnetz gegen Fehlklicks im hektischen Tour-Alltag.</p>
+</section>
+
+<section id="k7">
+  <h2><span class="nr">7</span> Datensicherung</h2>
+  <p>Alle Daten werden automatisch im Browser gespeichert (localStorage) — der Zeitpunkt des letzten Speicherns steht dezent im Kopfbereich („Gespeichert HH:MM"). Diese automatische Speicherung ist bequem, aber <strong>nicht unzerstörbar</strong>: Eine Browser-Bereinigung, ein Cache-Reset oder ein Gerätewechsel kann den Stand löschen.</p>
+  <div class="warn"><strong>Deshalb wichtig:</strong> Regelmäßig über den Toolbar-Button <strong>JSON-Export</strong> eine Sicherungsdatei erzeugen und in den Ordner <code>_daten\</code> ablegen. Das Tool zeigt dazu einmal pro Sitzung einen dezenten Erinnerungshinweis.</div>
+  <p>Ein JSON-Export enthält den kompletten Stand über alle Shows. Über <strong>JSON-Import</strong> lässt sich eine solche Datei wieder einspielen — vor dem Überschreiben fragt das Tool immer mit der genauen Anzahl an Gästen und Shows zur Bestätigung nach, um Datenverlust durch Versehen zu vermeiden.</p>
+</section>
+
+<section id="k8">
+  <h2><span class="nr">8</span> krasserstoff heute &amp; morgen</h2>
+  <p>Heute ist krasserstoff als offizieller Ticketing-Partner für AnnenMayKantereit · Live 2026 zuständig für echte Tickets, echte Zahlungen und echte Saalpläne. Dieses Paket bildet lediglich eine mögliche künftige Gast-Erfahrung <strong>nach</strong> — es besteht aktuell <strong>keine</strong> technische Anbindung an krasserstoff.</p>
+  <p>Für eine echte Anbindung (z. B. automatischer Ticketversand, echte Sitzplandaten, Zahlungsabwicklung) müssen vorab technische und organisatorische Fragen mit Landstreicher Booking und krasserstoff geklärt werden. Diese Fragen sind vollständig gesammelt in der separaten, eigenständig druck- und speicherbaren Datei:</p>
+  <p><a href="Fragenkatalog_Landstreicher_krasserstoff.html">Fragenkatalog_Landstreicher_krasserstoff.html</a></p>
+</section>
+
+<section id="k9">
+  <h2><span class="nr">9</span> Datenschutz</h2>
+  <p>E-Mail-Adressen von Gästen sind personenbezogene Daten und werden im Tool nur für Ticket-Zugänge erfasst (Kapitel 4) — nur mit Einwilligung der betroffenen Person eintragen. Die E-Mail-Adressen erscheinen sowohl in der Ticket-Zugangstabelle als auch im JSON-Gesamtexport.</p>
+  <p>Über die Funktion <strong>„Show-Daten löschen"</strong> in der Verwaltung lassen sich alle Gäste, Ticket-Zugänge und E-Mail-Adressen einer Show vollständig entfernen. Statistik-Zahlen bleiben dabei anonym erhalten — es werden nur Namen und personenbezogene Kontaktdaten gelöscht, nicht die aggregierten Kennzahlen.</p>
+  <div class="hint">Nach Abschluss einer Show empfiehlt es sich, die Show-Daten zeitnah zu löschen, sobald sie nicht mehr für Nachfragen benötigt werden.</div>
+</section>
+
+<section id="k10">
+  <h2><span class="nr">10</span> Künstler/Band wählen &amp; Shows anlegen</h2>
+  <p>Das Tool ist nicht auf eine einzige Band festgelegt. Ganz oben im Tab <strong>Verwaltung</strong> steht das Auswahlfeld <strong>„Künstler / Band · Landstreicher Booking"</strong>. Ein Klick darauf klappt die Liste <strong>aller von Landstreicher Booking vertretenen Künstler und Bands</strong> auf — alphabetisch sortiert, 15 Einträge auf einen Blick, der Rest per Scrollen erreichbar. Wer schneller ist: einfach die ersten Buchstaben ins Suchfeld tippen, die Liste filtert sofort mit. Bedienbar auch komplett per Tastatur (Pfeiltasten, Pos1/Ende, Enter zum Übernehmen, Esc zum Schließen).</p>
+
+  <h3>Was beim Wechsel passiert</h3>
+  <p>Jeder Künstler hat einen <strong>eigenen, vollständig getrennten Arbeitsbereich</strong>: eigene Shows, Gäste, Kontingente, Ticket-Zugänge und Exporte. Beim Wechsel wird der aktuelle Stand automatisch gespeichert — es geht nichts verloren, und Daten verschiedener Künstler können sich nicht vermischen. Der Name im Kopf der Seite, die Dateinamen der Exporte, die Druckliste und der Text der Ticket-Mail übernehmen den gewählten Künstler automatisch.</p>
+  <div class="hint">Im Feld <strong>„Tour / Anlass"</strong> direkt darunter lässt sich die Tour eintragen (z. B. „Arena 2027"). Sie erscheint dann im Seitenkopf und in der Fußzeile der Drucklisten.</div>
+
+  <h3>Shows anlegen</h3>
+  <p>Ein frisch gewählter Künstler startet mit leerem Tourplan. Über <strong>„+ Erste Show anlegen"</strong> (bzw. später über <em>Stammdaten &amp; Einstellungen → „Shows verwalten"</em>) werden Datum, Stadt und Spielstätte eingetragen. Ab der ersten Show stehen Gästeliste, Freigabe, Finalisierung, Einlass und alle Exporte genauso zur Verfügung wie bei AnnenMayKantereit. Shows lassen sich dort auch nachträglich ändern oder löschen — löschen ist nur möglich, solange keine Gäste oder Ticket-Zugänge daran hängen (sonst zuerst Kapitel 9 „Datenschutz").</p>
+  <div class="demo-hinweis"><strong>Demo-Grenze:</strong> Die vereinfachten Saalpläne des Ticket-Bereichs existieren nur für die zwölf hinterlegten AnnenMayKantereit-Spielstätten. Bei neu angelegten Shows anderer Künstler funktionieren Gästeliste, Einlass und alle Exporte vollständig — die Sitzplatzauswahl der Gast-Ansicht meldet dort sauber, dass für diese Show kein Saalplan hinterlegt ist.</div>
+</section>
+
+<footer>
+  AMK Gästeliste PRO — Bedienungsanleitung · Alle Screenshots aus dem laufenden Tool, Demo-Daten. Bei Fragen zum Paket an das Tourmanagement wenden.
+</footer>
+
+</main>
+</body>
+</html>

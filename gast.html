@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17181C">
+<title>AMK Live 2026 · Ticket-Zugang (Demo)</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --case:#17181C; --panel:#1F2126; --panel2:#26282E; --line:#33363E;
+  --ink:#E9EAEE; --dim:#9BA0AB; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
+  --disp:'Archivo Black',sans-serif;
+  --body:'Barlow Semi Condensed',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.4;padding-bottom:132px}
+
+header{background:var(--panel);border-bottom:3px solid var(--tape);padding:12px 16px 10px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape);text-transform:uppercase}
+h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:.01em;margin:2px 0 2px;text-transform:uppercase}
+.sub{font-size:13px;color:var(--dim)}
+
+/* DEMO-Badge fix oben rechts (auf JEDER Ansicht) */
+.demobadge{position:fixed;top:8px;right:8px;z-index:100;background:var(--tape);color:#161616;font-family:var(--disp);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.5)}
+
+.sec{margin:14px 16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 13px;margin-bottom:8px}
+.card.hl{border-color:var(--tape);box-shadow:0 0 0 1px var(--tape)}
+.small{font-size:12px}.muted{color:var(--dim)}.mono{font-family:var(--mono)}
+.hint{margin:10px 16px;font-size:12px;color:var(--dim);border-left:3px solid var(--line);padding-left:8px}
+.hint.tape{border-left-color:var(--tape);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--tape);border-radius:5px;padding:10px 12px}
+.demosub{font-family:var(--mono);font-size:11px;color:var(--dim);margin:2px 16px 8px}
+
+/* GA-Kategorie-Karten + Stepper */
+.katcard{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--dim);border-radius:6px;padding:12px 13px;margin-bottom:8px}
+.katcard .nm{flex:1;min-width:0}.katcard .nm b{font-size:17px}
+.katcard .pr{font-family:var(--mono);font-size:14px;color:var(--tape);white-space:nowrap}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper button{width:40px;height:40px;border-radius:6px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);font-family:var(--mono);font-weight:700;font-size:20px;cursor:pointer}
+.stepper .qty{font-family:var(--mono);font-size:18px;min-width:24px;text-align:center}
+
+/* Blockwahl */
+.blockcard{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 13px;margin-bottom:8px;cursor:pointer}
+.blockcard b{font-size:16px}.blockcard.on{border-color:var(--tape);box-shadow:0 0 0 1px var(--tape)}
+.blockcard .meta{font-family:var(--mono);font-size:12px;color:var(--dim)}
+
+/* Sitzraster */
+.seatwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0}
+.seatgrid{display:inline-grid;gap:5px}
+.seatrow{display:contents}
+.rowlab{font-family:var(--mono);font-size:11px;color:var(--dim);align-self:center;padding-right:6px;white-space:nowrap}
+.seat{width:40px;height:40px;border-radius:4px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);font-family:var(--mono);font-size:12px;cursor:pointer;padding:0}
+.seat.sel{background:var(--tape);color:#161616;border-color:var(--tape)}
+.seat.occ{background:#3a3c42;color:#6a6d75;cursor:not-allowed;border-color:#3a3c42}
+.counter{font-family:var(--mono);font-size:14px;color:var(--tape);margin:8px 0}
+
+/* Legende (F6.1) */
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin:2px 0 10px;font-size:12px}
+.legend .li{display:flex;align-items:center;gap:5px;color:var(--dim)}
+.legend .sw{width:14px;height:14px;border-radius:3px;flex:none;border:1px solid var(--line)}
+.legend .sw.frei{background:var(--panel2)}
+.legend .sw.occ{background:#3a3c42;border-color:#3a3c42}
+.legend .sw.sel{background:var(--tape);border-color:var(--tape)}
+.legend .sw.kat{border-width:2px}
+
+/* Mini-Venue-Layout (F6.2) */
+.venuemap{margin:4px 0 12px}
+.stagebar{background:var(--panel2);border:1px solid var(--line);border-radius:4px;text-align:center;padding:7px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.blockgrid{display:grid;gap:6px;grid-template-columns:repeat(3,1fr)}
+.blockgrid .blk{border:2px solid var(--line);border-radius:5px;padding:8px 4px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--dim);cursor:pointer;background:var(--panel)}
+.blockgrid .blk b{display:block;font-family:var(--body);font-size:13px;color:var(--ink);font-weight:700}
+.blockgrid .blk.on{box-shadow:0 0 0 1px var(--tape)}
+
+/* Kategorie-Filter-Chips (F6.4) */
+.chiprow{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
+.chip{font-family:var(--mono);font-size:12px;padding:7px 12px;border-radius:20px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);cursor:pointer}
+.chip.on{background:var(--tape);color:#161616;border-color:var(--tape)}
+
+/* Best-Platz-Vorschlag (F6.5) */
+.bestbtn{display:block;width:100%;margin:6px 0 10px;padding:11px;border-radius:6px;border:1px dashed var(--tape);background:var(--panel2);color:var(--tape);font-family:var(--body);font-weight:700;font-size:14px;cursor:pointer}
+
+/* Sticky Warenkorb-Leiste (F6.6) */
+.toolbar{flex-direction:column;gap:0}
+.cartrow{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;padding-bottom:8px;margin-bottom:8px;border-bottom:1px solid var(--line);color:var(--ink)}
+.cartrow .sum{color:var(--tape);font-weight:700}
+.btnrow{display:flex;gap:8px}
+
+/* Sprachumschalter (F7.1) */
+.langsw{position:fixed;top:8px;right:68px;z-index:100;background:var(--panel2);color:var(--ink);border:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:5px 9px;border-radius:3px;cursor:pointer}
+
+/* QR-Ticketcode (F6.7) */
+.qrwrap{display:flex;justify-content:center;margin:10px 0}
+.qrwrap svg{width:160px;height:160px;background:#fff;border-radius:6px;padding:8px}
+
+/* Zusammenfassung + Erfolg */
+.sumrow{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:14px;padding:5px 0;border-bottom:1px solid var(--line)}
+.sumtotal{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:18px;font-weight:700;color:var(--tape);padding-top:8px}
+.tcode{font-family:var(--mono);font-size:15px;color:var(--tape);word-break:break-all;background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:10px}
+.okmark{font-family:var(--disp);font-size:20px;color:var(--ok);text-transform:uppercase}
+
+/* Bottom-Toolbar */
+.toolbar{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));z-index:20}
+.toolbar button{flex:1;border-radius:5px;font-family:var(--body);font-weight:700;font-size:15px;padding:13px 4px;cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink)}
+.toolbar .primary{background:var(--tape);color:#161616;border-color:var(--tape)}
+.toolbar button:disabled{opacity:.4;cursor:not-allowed}
+input[type=file]{color:var(--dim);font-size:13px}
+button:focus-visible,input:focus{outline:2px solid var(--tape);outline-offset:1px}
+footer{margin:20px 16px;font-size:12px;color:var(--dim);border-top:1px solid var(--line);padding-top:10px}
+</style>
+</head>
+<body>
+
+<div class="demobadge" id="demoBadge">Demo</div>
+<button type="button" class="langsw" id="langSw" aria-label="Sprache wechseln / Switch language">DE</button>
+
+<header>
+  <div class="kicker" id="hKicker">AnnenMayKantereit · Live 2026</div>
+  <h1 id="hTitle">Ticket-Zugang</h1>
+  <div class="sub" id="hSub">Demo-Prototyp · krasserstoff-Ticketing</div>
+</header>
+
+<main id="view"></main>
+<footer id="footerTxt">Demo-Prototyp — echte Tickets ausschließlich über krasserstoff / annenmaykantereit-shop.com.</footer>
+<div class="toolbar" id="tools"></div>
+<input type="file" id="fileIn" accept=".json" style="display:none">
+
+<script src="seatmaps.js"></script>
+<script src="qr.js"></script>
+<script>
+'use strict';
+/* ============ Helfer ============ */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s);
+function ael(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+const eur=n=>(Number(n)||0).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const fmtDate=d=>{if(!d)return '';const p=String(d).split('-');return p.length===3?p[2]+'.'+p[1]+'.'+p[0]:d;};
+/* Arbeitsbereich je Künstler: ?ws=<kuerzel> aus dem Ticket-Link, ohne ws = AnnenMayKantereit */
+const LS_BASE='amk-gl-2026';
+const LS_KEY=(function(){
+  const m=/[?&]ws=([^&]+)/.exec(location.search||'');
+  let v='';try{v=m?decodeURIComponent(m[1]):'';}catch(e){v='';}
+  v=String(v).replace(/[^a-z0-9-]/gi,'').toLowerCase();
+  return v?LS_BASE+'::'+v:LS_BASE;
+})();
+const LS_LANG='amk-gl-gastlang';
+
+/* ============ i18n (F7.1) ============ */
+const I18N={
+  de:{
+    demo:'Demo',footerTxt:'Demo-Prototyp — echte Tickets ausschließlich über krasserstoff / annenmaykantereit-shop.com.',
+    headerSub:'Demo-Prototyp · krasserstoff-Ticketing',
+    noTicketTitle:'Kein Ticket',noTicketText:'Dieser Link enthält keinen gültigen Ticket-Zugang. Bitte den vollständigen Link aus der E-Mail öffnen.',
+    accessInvalidTitle:'Zugang ungültig oder nicht gefunden',accessInvalidText:'Dieser Ticket-Zugang ist ungültig oder wurde nicht gefunden. Bitte den vollständigen Link aus der E-Mail öffnen.',
+    revokedTitle:'Zugang widerrufen',revokedText:'Dieser Ticket-Zugang wurde vom Tourmanagement widerrufen. Bitte wende dich an deinen Ansprechpartner.',
+    showUnavailTitle:'Show nicht verfügbar',showUnavailText:'Zu diesem Zugang sind keine Saalplan-Daten verfügbar. Bitte die aktuelle Token-Datei laden oder den Link auf dem Tourmanagement-Gerät öffnen.',
+    importTitle:'Ticket-Zugang laden',importText:'Auf diesem Gerät liegen noch keine Ticket-Daten. Bitte die vom Tourmanagement erhaltene Datei „ticketzugang_*.json" laden.',importBtn:'Token-Datei laden',
+    fileReadError:'Datei konnte nicht gelesen werden.',noTicketData:'Keine Ticket-Daten in der Datei.',tokenNotInFile:'Dieser Ticket-Zugang ist nicht in der Datei enthalten.',
+    demoSaalplan:'Demo-Saalplan — nicht der echte Bestuhlungsplan.',
+    legendFrei:'frei',legendOcc:'belegt',legendSel:'gewählt',
+    freieWahl:'Freie Platzwahl im Innenraum — kein Sitzplan.',
+    chipAll:'Alle',
+    bestBtn:'Beste freie Plätze wählen',bestNone:'Keine passende zusammenhängende Platzgruppe gefunden.',
+    maxAlert:'Maximal %n Plätze.',
+    selectedOf:'%s von %n gewählt',guestlist0:'Gästeliste 0 €',
+    confirmKaufTitle:'Kaufen (Demo)',confirmDemoTitle:'Bestätigen (Demo)',
+    weiterKauf:'Weiter zum Kauf (Demo)',weiterDemo:'Weiter (Demo)',
+    zurueck:'Zurück',kaufBestaetigen:'Kauf bestätigen (Demo)',zusagen:'Zusagen (Demo)',
+    summe:'Summe',guestlistParen:'0 € (Gästeliste)',
+    confirmKaufDlg:'Kauf jetzt verbindlich abschließen? (Demo — kein echtes Ticket)',confirmZusageDlg:'Plätze jetzt verbindlich zusagen? (Demo)',
+    alreadyRedeemed:'Bereits eingelöst',doneTitle:'Geschafft!',
+    alreadyText:'Dieser Ticket-Zugang wurde bereits eingelöst. Deine Auswahl:',doneText:'Deine Auswahl wurde als Demo gespeichert:',
+    ticketCodeLabel:'Demo-„Ticketcode" (kein gültiges Ticket):',
+    needFileHint:'Dieses Gerät konnte die Zusage nicht direkt speichern. Bitte die Antwort-Datei speichern und dem Tourmanagement zum Re-Import geben.',
+    downloadAnswerBtn:'Antwort-Datei speichern',
+    seatLabel:'Reihe %r Sitz %s',seatOcc:' belegt',
+    langSwLabel:'Sprache wechseln',stuecke:'×',keineAuswahl:'—'
+  },
+  en:{
+    demo:'Demo',footerTxt:'Demo prototype — real tickets exclusively via krasserstoff / annenmaykantereit-shop.com.',
+    headerSub:'Demo prototype · krasserstoff ticketing',
+    noTicketTitle:'No ticket',noTicketText:'This link does not contain a valid ticket access. Please open the full link from the e-mail.',
+    accessInvalidTitle:'Access invalid or not found',accessInvalidText:'This ticket access is invalid or could not be found. Please open the full link from the e-mail.',
+    revokedTitle:'Access revoked',revokedText:'This ticket access was revoked by tour management. Please contact your tour contact.',
+    showUnavailTitle:'Show not available',showUnavailText:'No seating-plan data is available for this access. Please load the current token file or open the link on the tour-management device.',
+    importTitle:'Load ticket access',importText:'No ticket data is stored on this device yet. Please load the file „ticketzugang_*.json" received from tour management.',importBtn:'Load token file',
+    fileReadError:'The file could not be read.',noTicketData:'No ticket data found in the file.',tokenNotInFile:'This ticket access is not contained in the file.',
+    demoSaalplan:'Demo seating plan — not the real seating chart.',
+    legendFrei:'free',legendOcc:'taken',legendSel:'selected',
+    freieWahl:'Free floor placement — no seating chart.',
+    chipAll:'All',
+    bestBtn:'Choose best available seats',bestNone:'No matching adjacent seat group found.',
+    maxAlert:'Maximum %n seats.',
+    selectedOf:'%s of %n selected',guestlist0:'Guest list €0',
+    confirmKaufTitle:'Purchase (demo)',confirmDemoTitle:'Confirm (demo)',
+    weiterKauf:'Continue to purchase (demo)',weiterDemo:'Continue (demo)',
+    zurueck:'Back',kaufBestaetigen:'Confirm purchase (demo)',zusagen:'Confirm (demo)',
+    summe:'Total',guestlistParen:'€0 (guest list)',
+    confirmKaufDlg:'Complete the purchase now, bindingly? (demo — not a real ticket)',confirmZusageDlg:'Confirm these seats now, bindingly? (demo)',
+    alreadyRedeemed:'Already redeemed',doneTitle:'All set!',
+    alreadyText:'This ticket access has already been redeemed. Your selection:',doneText:'Your selection was saved as a demo:',
+    ticketCodeLabel:'Demo „ticket code" (not a valid ticket):',
+    needFileHint:'This device could not save the confirmation directly. Please save the answer file and hand it to tour management for re-import.',
+    downloadAnswerBtn:'Save answer file',
+    seatLabel:'Row %r Seat %s',seatOcc:' taken',
+    langSwLabel:'Switch language',stuecke:'×',keineAuswahl:'—'
+  }
+};
+let LANG='de';
+function loadLang(){try{const v=localStorage.getItem(LS_LANG);if(v==='en'||v==='de')LANG=v;}catch(e){}}
+function T(key){const s=(I18N[LANG]&&I18N[LANG][key]!=null)?I18N[LANG][key]:(I18N.de[key]||key);return s;}
+function Tf(key,repl){let s=T(key);if(repl)Object.keys(repl).forEach(k=>{s=s.split('%'+k).join(String(repl[k]));});return s;}
+/* Künstler/Band des Arbeitsbereichs — steht im Kopf, im Seitentitel und in der Fußzeile */
+let ARTIST='AnnenMayKantereit',ARTTOUR='Live 2026';
+const ARTIST_AMK='AnnenMayKantereit';
+function artistFooter(){
+  const s=T('footerTxt');
+  // Der AMK-Shop gilt nur für AMK — bei anderen Künstlern raus
+  return (ARTIST===ARTIST_AMK)?s:s.replace(/\s*\/\s*annenmaykantereit-shop\.com/i,'');
+}
+function applyArtistHeader(){
+  const lab=ARTIST?(ARTIST+(ARTTOUR?' · '+ARTTOUR:'')):T('headerSub');
+  const k=$('hKicker');if(k)k.textContent=lab;
+  document.title=(ARTIST?lab:'Gästeliste')+' · Ticket-Zugang (Demo)';
+  const f=$('footerTxt');if(f)f.textContent=artistFooter();
+}
+function setArtist(name,tour){
+  if(!name)return;
+  ARTIST=String(name);ARTTOUR=String(tour||'');
+  applyArtistHeader();
+}
+function applyStaticLang(){
+  document.documentElement.lang=LANG;
+  $('demoBadge').textContent=T('demo');
+  $('hSub').textContent=T('headerSub');
+  $('footerTxt').textContent=artistFooter();
+  $('langSw').textContent=LANG.toUpperCase()==='DE'?'EN':'DE';
+  $('langSw').setAttribute('aria-label',T('langSwLabel'));
+}
+function toggleLang(){
+  LANG=(LANG==='de'?'en':'de');
+  try{localStorage.setItem(LS_LANG,LANG);}catch(e){}
+  applyStaticLang();
+  setHeader();
+  if(TOKEN)routeToken();else gtResolve();
+}
+
+let REDEEM_NEEDFILE=false; // true, wenn Rückschreiben nicht möglich war → Download-Button dauerhaft
+let TOKEN=null;     // aufgelöstes Token
+let SHOW=null;      // {stadt,venue,datum}
+let SM=null;        // Seatmap
+let SEL=[];         // gewählte Plätze (Arbeitskopie)
+let FROM_LS=false;  // true = Token stammt aus localStorage (Rückschreiben möglich)
+
+function readLS(){try{const j=localStorage.getItem(LS_KEY);return j?JSON.parse(j):null;}catch(e){return null;}}
+function showFromState(st,showId){if(!st||!Array.isArray(st.shows))return null;return st.shows.find(s=>s.id===showId)||null;}
+
+function setHeader(){
+  if(SHOW){$('hTitle').textContent=(SHOW.stadt||T('noTicketTitle'));
+    $('hSub').textContent=(SM?SM.venue:(SHOW.venue||''))+(SHOW.datum?' · '+fmtDate(SHOW.datum):'')+' · '+T('demo');
+  }else{$('hSub').textContent=T('headerSub');}
+}
+function setTools(btns,cartText){
+  const tb=$('tools');tb.innerHTML='';
+  if(!btns||!btns.length){tb.style.display='none';return;}
+  tb.style.display='flex';
+  if(cartText){
+    const cr=ael('div','cartrow');
+    cr.appendChild(ael('span',null,cartText));
+    cr.setAttribute('aria-live','polite');
+    tb.appendChild(cr);
+  }
+  const row=ael('div','btnrow');
+  btns.forEach(b=>{const el=ael('button',b.cls||null,b.label);el.type='button';if(b.disabled)el.disabled=true;el.onclick=b.on;row.appendChild(el);});
+  tb.appendChild(row);
+}
+function msgView(title,text){
+  const v=$('view');v.innerHTML='';setTools([]);
+  const s=ael('div','sec');const c=ael('div','card');
+  c.appendChild(ael('div','kicker',title));
+  c.appendChild(ael('div','small muted',text));
+  s.appendChild(c);v.appendChild(s);
+}
+
+/* ============ Auflösung ============ */
+function getTokenId(){const m=/[?&]token=([^&]+)/.exec(location.search||'');return m?decodeURIComponent(m[1]):null;}
+
+function resolveWith(token,show,fromLs){
+  TOKEN=token;FROM_LS=!!fromLs;
+  SM=show?(window.seatmapForShow(show.stadt,show.venue)):null;
+  SHOW=show||null;
+  SEL=Array.isArray(TOKEN.ausgewaehltePlaetze)?JSON.parse(JSON.stringify(TOKEN.ausgewaehltePlaetze)):[];
+  setHeader();
+  routeToken();
+}
+
+function gtResolve(){
+  const tid=getTokenId();
+  if(!tid){msgView(T('noTicketTitle'),T('noTicketText'));return;}
+  const st=readLS();
+  // Kopfzeile auf den Künstler des Arbeitsbereichs setzen (sonst neutral statt falscher Name)
+  if(st&&st.kuenstler)setArtist(st.kuenstler,st.tour);
+  else if(LS_KEY!==LS_BASE){ARTIST='';ARTTOUR='';applyArtistHeader();}
+  const hasData=!!(st&&Array.isArray(st.tokens)&&st.tokens.length);
+  if(hasData){
+    const t=st.tokens.find(x=>x.id===tid);
+    if(t){resolveWith(t,showFromState(st,t.showId),true);return;}
+    // Gerät hat Daten, aber dieses Token nicht → klarer Fehler statt Import-Ansicht
+    msgView(T('accessInvalidTitle'),T('accessInvalidText'));return;
+  }
+  // Gerät ohne Daten → Datei-Import-Ansicht (Zweitgerät)
+  gtImportView(tid);
+}
+
+function gtImportView(tid){
+  const v=$('view');v.innerHTML='';setTools([]);
+  const s=ael('div','sec');const c=ael('div','card hl');
+  c.appendChild(ael('div','kicker',T('importTitle')));
+  c.appendChild(ael('div','small muted',T('importText')));
+  const wrap=ael('div');wrap.style.marginTop='10px';
+  const fbtn=ael('button','primary',T('importBtn'));
+  fbtn.style.cssText='padding:12px;border-radius:6px;border:1px solid var(--tape);background:var(--tape);color:#161616;font-weight:700;cursor:pointer';
+  fbtn.onclick=()=>$('fileIn').click();
+  wrap.appendChild(fbtn);c.appendChild(wrap);
+  s.appendChild(c);v.appendChild(s);
+  $('fileIn').onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=()=>{
+      let p;try{p=JSON.parse(r.result);}catch(err){alert(T('fileReadError'));return;}
+      const toks=p&&Array.isArray(p.tokens)?p.tokens:(Array.isArray(p)?p:null);
+      if(!toks){alert(T('noTicketData'));return;}
+      const t=toks.find(x=>x.id===tid);
+      if(!t){alert(T('tokenNotInFile'));return;}
+      let show=null;
+      if(p&&p.kuenstler)setArtist(p.kuenstler,'');
+      if(p&&Array.isArray(p.shows))show=p.shows.find(s=>s.id===t.showId)||null;
+      resolveWith(t,show,false);
+      $('fileIn').value='';
+    };
+    r.readAsText(f);
+  };
+}
+
+/* ============ Auswahl-Helfer ============ */
+function katById(id){return SM&&SM.kategorien?SM.kategorien.find(k=>k.id===id):null;}
+function katInScope(id){return !TOKEN.kategorieRahmen||!TOKEN.kategorieRahmen.length||TOKEN.kategorieRahmen.indexOf(id)>=0;}
+function selCount(){return SEL.reduce((n,p)=>n+(p.menge!=null?p.menge:1),0);}
+function stehEntry(id){return SEL.find(p=>p.menge!=null&&p.kategorieId===id);}
+function seatSelected(block,r,s){return SEL.some(p=>p.menge==null&&p.block===block&&p.reihe===r&&p.sitz===s);}
+function selSumme(){
+  if(TOKEN.modus!=='kauf')return 0;
+  return SEL.reduce((sum,p)=>{const k=katById(p.kategorieId);const pr=k?(k.preis||0):0;return sum+pr*(p.menge!=null?p.menge:1);},0);
+}
+
+/* ============ Routing ============ */
+function routeToken(){
+  if(TOKEN.status==='widerrufen'){msgView(T('revokedTitle'),T('revokedText'));return;}
+  if(TOKEN.status==='eingeloest'){gtSuccess(true,REDEEM_NEEDFILE);return;}
+  if(!SM){msgView(T('showUnavailTitle'),T('showUnavailText'));return;}
+  if(SM.typ==='ga')gtGA();else gtSeated();
+}
+
+/* ============ Picker (GA + seated gemeinsam) ============ */
+let expandedBlock=null;
+let katFilter=null;
+function gtGA(){katFilter=null;buildPicker();}
+function gtSeated(){katFilter=null;buildPicker();}
+
+function scopedKategorien(){
+  const ids=new Set();
+  (SM.kategorien||[]).filter(k=>katInScope(k.id)).forEach(k=>ids.add(k.id));
+  return (SM.kategorien||[]).filter(k=>ids.has(k.id));
+}
+function buildLegend(s){
+  const wrap=ael('div','legend');
+  scopedKategorien().forEach(k=>{
+    const li=ael('div','li');
+    const sw=ael('span','sw kat');sw.style.background=k.farbe;sw.style.borderColor=k.farbe;
+    li.appendChild(sw);li.appendChild(ael('span',null,k.name+' · '+(TOKEN.modus==='kauf'?eur(k.preis):T('guestlist0'))));
+    wrap.appendChild(li);
+  });
+  if((SM.bloecke||[]).some(bl=>katInScope(bl.kategorieId))){
+    [['frei',T('legendFrei')],['occ',T('legendOcc')],['sel',T('legendSel')]].forEach(pair=>{
+      const li=ael('div','li');const sw=ael('span','sw '+pair[0]);li.appendChild(sw);li.appendChild(ael('span',null,pair[1]));wrap.appendChild(li);
+    });
+  }
+  s.appendChild(wrap);
+}
+function buildChips(s){
+  const kats=scopedKategorien();
+  if(kats.length<2)return;
+  const row=ael('div','chiprow');
+  const all=ael('button','chip'+(katFilter===null?' on':''),T('chipAll'));
+  all.type='button';all.onclick=()=>{katFilter=null;buildPicker();};
+  row.appendChild(all);
+  kats.forEach(k=>{
+    const c=ael('button','chip'+(katFilter===k.id?' on':''),k.name);
+    c.type='button';c.onclick=()=>{katFilter=(katFilter===k.id?null:k.id);buildPicker();};
+    row.appendChild(c);
+  });
+  s.appendChild(row);
+}
+function visibleBloecke(){
+  return (SM.bloecke||[]).filter(bl=>katInScope(bl.kategorieId)&&(katFilter===null||bl.kategorieId===katFilter));
+}
+function bestFreeSeats(){
+  const remaining=TOKEN.maxPlaetze-selCount();
+  if(remaining<1){alert(Tf('maxAlert',{n:TOKEN.maxPlaetze}));return;}
+  let best=null;
+  visibleBloecke().forEach(bl=>{
+    const kk=katById(bl.kategorieId);const blPrice=kk?(kk.preis||0):0;
+    for(let r=1;r<=bl.reihen;r++){
+      let runStart=null;
+      for(let sN=1;sN<=bl.plaetzeProReihe+1;sN++){
+        const free=sN<=bl.plaetzeProReihe&&!window.seatOccupied(SM.key,bl.name,r,sN)&&!seatSelected(bl.name,r,sN);
+        if(free){if(runStart===null)runStart=sN;}
+        else{
+          if(runStart!==null){
+            const runLen=sN-runStart;
+            const usable=Math.min(runLen,remaining);
+            const rowCenter=(bl.plaetzeProReihe+1)/2;
+            const runCenter=runStart+(runLen-1)/2;
+            const bestOffset=Math.max(0,Math.round((runCenter-rowCenter)+(runLen-usable)/2));
+            const winStart=Math.min(runStart+Math.max(0,runLen-usable),runStart+bestOffset);
+            const dist=Math.abs((winStart+(usable-1)/2)-rowCenter);
+            if(usable>=1&&(!best
+               ||usable>best.usable
+               ||(usable===best.usable&&blPrice>best.price)
+               ||(usable===best.usable&&blPrice===best.price&&dist<best.dist))){
+              best={block:bl,reihe:r,start:winStart,usable,dist,price:blPrice};
+            }
+          }
+          runStart=null;
+        }
+      }
+    }
+  });
+  if(!best){alert(T('bestNone'));return;}
+  for(let i=0;i<best.usable;i++){
+    SEL.push({kategorieId:best.block.kategorieId,block:best.block.name,reihe:best.reihe,sitz:best.start+i});
+  }
+  expandedBlock=best.block.name;
+  buildPicker();
+}
+function buildVenueMap(s){
+  const blocks=visibleBloecke();
+  if(!blocks.length)return;
+  const wrap=ael('div','venuemap');
+  wrap.appendChild(ael('div','stagebar','◤ '+ (LANG==='en'?'STAGE':'BÜHNE') +' ◥'));
+  const grid=ael('div','blockgrid');
+  blocks.forEach(bl=>{
+    const k=katById(bl.kategorieId);
+    const cell=ael('div','blk'+(expandedBlock===bl.name?' on':''));
+    cell.style.borderColor=k?k.farbe:'var(--line)';
+    const b=ael('b',null,bl.name);cell.appendChild(b);
+    const seatsHere=SEL.filter(p=>p.menge==null&&p.block===bl.name).length;
+    cell.appendChild(ael('div',null,(k?k.name:'')+(seatsHere?' · '+seatsHere:'')));
+    cell.onclick=()=>{expandedBlock=(expandedBlock===bl.name?null:bl.name);buildPicker();};
+    grid.appendChild(cell);
+  });
+  wrap.appendChild(grid);
+  s.appendChild(wrap);
+  const active=blocks.find(bl=>bl.name===expandedBlock);
+  if(active)s.appendChild(buildSeatGrid(active));
+}
+
+function buildPicker(){
+  const v=$('view');v.innerHTML='';
+  const sub=ael('div','demosub',T('demoSaalplan'));
+  v.appendChild(sub);
+  const s=ael('div','sec');
+  // Zähler (aria-live, F8.2)
+  const cnt=ael('div','counter',Tf('selectedOf',{s:selCount(),n:TOKEN.maxPlaetze})+(TOKEN.modus==='kauf'?' · '+eur(selSumme()):' · '+T('guestlist0')));
+  cnt.setAttribute('aria-live','polite');
+  s.appendChild(cnt);
+  buildLegend(s);
+  buildChips(s);
+  if(SM.typ==='seated'&&visibleBloecke().length){
+    const bb=ael('button','bestbtn',T('bestBtn'));bb.type='button';bb.onclick=bestFreeSeats;
+    s.appendChild(bb);
+  }
+  // Stehplatz-/GA-Kategorien mit Stepper
+  (SM.kategorien||[]).filter(k=>k.stehplatz&&katInScope(k.id)&&(katFilter===null||k.id===katFilter)).forEach(k=>{
+    const c=ael('div','katcard');c.style.borderLeftColor=k.farbe;
+    const nm=ael('div','nm');const b=ael('b',null,k.name);nm.appendChild(b);
+    const pr=ael('div','pr',TOKEN.modus==='kauf'?eur(k.preis):T('guestlist0'));
+    const st=ael('div','stepper');
+    const minus=ael('button',null,'−');const qty=ael('span','qty',String(stehEntry(k.id)?stehEntry(k.id).menge:0));const plus=ael('button',null,'+');
+    minus.type='button';plus.type='button';
+    minus.setAttribute('aria-label','− '+k.name);plus.setAttribute('aria-label','+ '+k.name);
+    minus.onclick=()=>{const e=stehEntry(k.id);if(!e)return;e.menge--;if(e.menge<=0)SEL=SEL.filter(p=>p!==e);buildPicker();};
+    plus.onclick=()=>{if(selCount()>=TOKEN.maxPlaetze){alert(Tf('maxAlert',{n:TOKEN.maxPlaetze}));return;}
+      let e=stehEntry(k.id);if(!e){e={kategorieId:k.id,menge:0};SEL.push(e);}e.menge++;buildPicker();};
+    st.appendChild(minus);st.appendChild(qty);st.appendChild(plus);
+    c.appendChild(nm);c.appendChild(pr);c.appendChild(st);s.appendChild(c);
+    s.appendChild(ael('div','hint',T('freieWahl')));
+  });
+  // Sitzblöcke: räumliches Mini-Venue-Layout (F6.2) statt Karten-Liste
+  buildVenueMap(s);
+  v.appendChild(s);
+  const cartText=Tf('selectedOf',{s:selCount(),n:TOKEN.maxPlaetze})+' · '+(TOKEN.modus==='kauf'?eur(selSumme()):T('guestlist0'));
+  setTools([{label:TOKEN.modus==='kauf'?T('weiterKauf'):T('weiterDemo'),cls:'primary',disabled:selCount()<1,on:gtConfirm}],cartText);
+}
+
+function buildSeatGrid(bl){
+  const wrap=ael('div','seatwrap');
+  const grid=ael('div','seatgrid');
+  grid.style.gridTemplateColumns='auto repeat('+bl.plaetzeProReihe+',40px)';
+  for(let r=1;r<=bl.reihen;r++){
+    grid.appendChild(ael('div','rowlab','R'+r));
+    for(let sN=1;sN<=bl.plaetzeProReihe;sN++){
+      const occ=window.seatOccupied(SM.key,bl.name,r,sN);
+      const sel=seatSelected(bl.name,r,sN);
+      const btn=ael('button','seat'+(occ?' occ':'')+(sel?' sel':''),String(sN));
+      btn.type='button';
+      btn.setAttribute('aria-label',Tf('seatLabel',{r:r,s:sN})+(occ?T('seatOcc'):''));
+      if(occ){btn.disabled=true;}
+      else btn.onclick=()=>{
+        if(seatSelected(bl.name,r,sN)){SEL=SEL.filter(p=>!(p.menge==null&&p.block===bl.name&&p.reihe===r&&p.sitz===sN));buildPicker();return;}
+        if(selCount()>=TOKEN.maxPlaetze){alert(Tf('maxAlert',{n:TOKEN.maxPlaetze}));return;}
+        SEL.push({kategorieId:bl.kategorieId,block:bl.name,reihe:r,sitz:sN});buildPicker();
+      };
+      grid.appendChild(btn);
+    }
+  }
+  wrap.appendChild(grid);return wrap;
+}
+
+/* ============ Bestätigung ============ */
+function platzLabel(p){
+  const k=katById(p.kategorieId);const kn=k?k.name:p.kategorieId;
+  if(p.menge!=null)return kn+' '+T('stuecke')+p.menge;
+  return p.block+' · '+Tf('seatLabel',{r:p.reihe,s:p.sitz});
+}
+function gtConfirm(){
+  const v=$('view');v.innerHTML='';
+  const s=ael('div','sec');const c=ael('div','card');
+  c.appendChild(ael('div','kicker',TOKEN.modus==='kauf'?T('confirmKaufTitle'):T('confirmDemoTitle')));
+  SEL.forEach(p=>{const row=ael('div','sumrow');row.appendChild(ael('span',null,platzLabel(p)));
+    const k=katById(p.kategorieId);const line=TOKEN.modus==='kauf'?eur((k?k.preis:0)*(p.menge!=null?p.menge:1)):'0 €';
+    row.appendChild(ael('span',null,line));c.appendChild(row);});
+  const tot=ael('div','sumtotal');tot.appendChild(ael('span',null,T('summe')));tot.appendChild(ael('span',null,TOKEN.modus==='kauf'?eur(selSumme()):T('guestlistParen')));
+  c.appendChild(tot);
+  s.appendChild(c);v.appendChild(s);
+  setTools([
+    {label:T('zurueck'),on:buildPicker},
+    {label:TOKEN.modus==='kauf'?T('kaufBestaetigen'):T('zusagen'),cls:'primary',on:doRedeem}
+  ]);
+}
+
+function doRedeem(){
+  if(!confirm(TOKEN.modus==='kauf'?T('confirmKaufDlg'):T('confirmZusageDlg')))return;
+  const now=Date.now();
+  TOKEN.status='eingeloest';
+  TOKEN.ausgewaehltePlaetze=JSON.parse(JSON.stringify(SEL));
+  TOKEN.redeemedAt=now;TOKEN.updatedAt=now;
+  const written=writeBack();
+  REDEEM_NEEDFILE=!written;
+  gtSuccess(false,REDEEM_NEEDFILE);
+}
+
+/* Rückschreiben in localStorage (wenn erreichbar) */
+function writeBack(){
+  if(!FROM_LS)return false;
+  try{
+    const j=localStorage.getItem(LS_KEY);if(!j)return false;
+    const st=JSON.parse(j);if(!Array.isArray(st.tokens))return false;
+    const i=st.tokens.findIndex(x=>x.id===TOKEN.id);if(i<0)return false;
+    st.tokens[i]=TOKEN;
+    localStorage.setItem(LS_KEY,JSON.stringify(st));
+    return true;
+  }catch(e){return false;}
+}
+function downloadAnswer(){
+  const payload={schema:1,tokens:[JSON.parse(JSON.stringify(TOKEN))]};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='ticketantwort_'+TOKEN.id+'.json';
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},0);
+}
+
+/* ============ Erfolg ============ */
+function gtSuccess(already,needFile){
+  const v=$('view');v.innerHTML='';
+  const s=ael('div','sec');const c=ael('div','card hl');
+  c.appendChild(ael('div','okmark',already?T('alreadyRedeemed'):T('doneTitle')));
+  c.appendChild(ael('div','small muted',already?T('alreadyText'):T('doneText')));
+  const list=ael('div');list.style.margin='8px 0';
+  (TOKEN.ausgewaehltePlaetze||[]).forEach(p=>{const row=ael('div','sumrow');row.appendChild(ael('span',null,platzLabel(p)));row.appendChild(ael('span',null,''));list.appendChild(row);});
+  if(!TOKEN.ausgewaehltePlaetze||!TOKEN.ausgewaehltePlaetze.length)list.appendChild(ael('div','small muted',T('keineAuswahl')));
+  c.appendChild(list);
+  const cl=ael('div','f');cl.appendChild(ael('div','small muted',T('ticketCodeLabel')));
+  const code=ael('div','tcode',TOKEN.id);cl.appendChild(code);
+  if(window.QR&&typeof window.QR.svg==='function'){
+    try{
+      const svg=window.QR.svg(TOKEN.id,{size:160,margin:2,dark:'#161616',light:'#ffffff'});
+      if(svg){const qw=ael('div','qrwrap');qw.innerHTML=svg;cl.appendChild(qw);}
+    }catch(e){/* QR ist rein dekorativ, Fehler still ignorieren */}
+  }
+  c.appendChild(cl);
+  s.appendChild(c);
+  if(needFile){
+    const w=ael('div','hint tape',T('needFileHint'));
+    s.appendChild(w);
+  }
+  v.appendChild(s);
+  const btns=[];
+  if(needFile)btns.push({label:T('downloadAnswerBtn'),cls:'primary',on:downloadAnswer});
+  setTools(btns);
+}
+
+/* ============ Service Worker (nur https/localhost) ============ */
+if('serviceWorker' in navigator && (location.protocol==='https:' || ['localhost','127.0.0.1'].includes(location.hostname))){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
+}
+
+loadLang();
+applyStaticLang();
+applyArtistHeader();
+$('langSw').onclick=toggleLang;
+gtResolve();
+</script>
+</body>
+</html>

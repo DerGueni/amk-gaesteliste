@@ -1,0 +1,3006 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17181C">
+<title>AMK Live 2026 · Gästeliste</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --case:#17181C; --panel:#1F2126; --panel2:#26282E; --line:#33363E;
+  --ink:#E9EAEE; --dim:#9BA0AB; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
+  --kat-guest:#64A85C; --kat-aaa:#FFD23F; --kat-working:#4098D7; --kat-photo:#C25CA8; --kat-aftershow:#8B93A1;
+  --disp:'Archivo Black',sans-serif;
+  --body:'Barlow Semi Condensed',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --zoom:1;
+  --tape-ink:#FFD23F;   /* Gelb als Textfarbe — im Hell-Theme dunkler, siehe unten */
+}
+/* F4.2 Light-Theme — zweiter Variablensatz, Default bleibt Dark/unveraendert */
+:root[data-theme="light"]{
+  --case:#F4F3EF; --panel:#FFFFFF; --panel2:#ECEAE3; --line:#D8D5CC;
+  --ink:#1B1C1F; --dim:#63666F;
+  --tape-ink:#8A6A00;   /* Gelb waere auf hellem Grund nicht lesbar */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+/* F4.3 Schriftgroesse S/M/L (root 15/16/18px) — als Seiten-Zoom, da Groessen im Formular ueberwiegend in px stehen */
+html{zoom:var(--zoom,1)}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.4;padding-bottom:90px}
+
+/* ---------- Kopf ---------- */
+header{background:var(--panel);border-bottom:3px solid var(--tape);padding:12px 16px 10px;position:relative}
+.hdrgear{position:absolute;top:10px;right:12px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--tape-ink);font-size:18px;line-height:1;padding:7px 9px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+/* F3.1 Icon-Sprite */
+.icon{width:18px;height:18px;flex:0 0 auto;display:block}
+.tabicon{width:15px;height:15px;flex:0 0 auto}
+.tlbicon{width:15px;height:15px;flex:0 0 auto;vertical-align:-3px;margin-right:5px}
+/* F1.7 Erklär-Tooltip */
+.tipbtn{width:16px;height:16px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:10px;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:help;margin-left:5px;padding:0;flex:0 0 auto;vertical-align:1px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape-ink);text-transform:uppercase}
+h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:.01em;margin:2px 0 2px;text-transform:uppercase}
+.sub{font-size:13px;color:var(--dim)}
+.backbtn{background:none;border:1px solid var(--line);border-radius:4px;color:var(--tape-ink);font-family:var(--mono);font-size:12px;padding:5px 10px;cursor:pointer;margin-bottom:8px}
+
+/* ---------- Tabs ---------- */
+.tabs{display:flex;margin:14px 16px 0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;background:var(--panel);border:none;color:var(--dim);font-family:var(--disp);font-size:12px;text-transform:uppercase;letter-spacing:.04em;padding:11px 2px;cursor:pointer}
+.tabs button.active{background:var(--tape);color:#161616}
+
+/* ---------- Karten / Blöcke ---------- */
+.sec{margin:14px 16px}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;margin:16px 16px 6px}
+.sechead h2{font-family:var(--disp);font-size:14px;text-transform:uppercase;letter-spacing:.05em}
+.sechead span{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:11px 12px;margin-bottom:8px}
+.card.hl{border-color:var(--tape);box-shadow:0 0 0 1px var(--tape)}
+.row{display:flex;align-items:center;gap:10px}
+.grow{flex:1;min-width:0}
+.chip{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;padding:2px 6px;display:inline-block}
+.badge{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;border-radius:2px;padding:2px 5px;font-weight:700;display:inline-block}
+.b-plan{background:var(--panel2);color:var(--dim)} .b-ok{background:var(--ok);color:#161616}
+.b-warn{background:var(--now);color:#fff} .b-tape{background:var(--tape);color:#161616}
+.b-final{background:var(--tape);color:#161616} .b-abg{background:#5a2b28;color:#ffb4ad}
+
+/* Statusampel (Einladen) */
+.amp{width:11px;height:11px;border-radius:50%;display:inline-block;flex:0 0 auto}
+.amp-angefragt{background:var(--dim)} .amp-genehmigt{background:var(--ok)}
+.amp-abgelehnt{background:var(--now)} .amp-final{background:var(--tape)}
+
+.hint{margin:10px 16px;font-size:12px;color:var(--dim);border-left:3px solid var(--line);padding-left:8px}
+.hint.warn{border-left-color:var(--now);color:#ffb9b2}
+.hint.tape{border-left-color:var(--tape);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--tape);border-radius:5px;padding:10px 12px}
+.hint.close{position:relative;padding-right:26px}
+.hint .x{position:absolute;top:6px;right:8px;background:none;border:none;color:var(--dim);font-size:16px;cursor:pointer}
+.muted{color:var(--dim)}
+.mono{font-family:var(--mono)}
+.small{font-size:12px}
+
+/* ---------- Fortschrittsbalken ---------- */
+.pg{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:7px 8px}
+.pg .n{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.pg .b{height:6px;background:var(--panel2);border-radius:3px;margin-top:5px;overflow:hidden}
+.pg .b i{display:block;height:100%;background:var(--ok)}
+.pg .b i.over{background:var(--now)}
+.pg .v{font-family:var(--mono);font-size:11px;color:var(--ink);margin-top:3px}
+.pggrid{margin:10px 16px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.minib{height:5px;background:var(--panel2);border-radius:3px;overflow:hidden;margin-top:3px}
+.minib i{display:block;height:100%;background:var(--ok)} .minib i.over{background:var(--now)}
+
+/* ---------- Matrix-Tabelle ---------- */
+.tlwrap{margin:10px 16px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:6px}
+table.mx{border-collapse:collapse;min-width:100%;font-size:13px}
+table.mx th,table.mx td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mx th{background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap;position:sticky;top:0}
+table.mx td.grp{font-weight:700;cursor:pointer;white-space:nowrap;background:var(--panel)}
+table.mx td.sub{padding-left:18px;color:var(--dim);cursor:pointer;background:var(--panel)}
+table.mx td.cell{font-family:var(--mono);cursor:pointer;min-width:96px}
+table.mx td.cell .qv{font-size:11px;line-height:1.35}
+table.mx tr.grprow{background:var(--panel)}
+
+/* ---------- Formularfelder / Dialog ---------- */
+.f{margin-bottom:10px}
+.f label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:3px}
+.f input,.f select,.f textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--body);font-size:15px;padding:8px 9px}
+.f textarea{resize:vertical;min-height:52px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.f3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--tape);outline-offset:1px}
+.seg{display:flex;gap:5px;flex-wrap:wrap}
+.seg button{flex:1;min-width:44px;background:var(--panel2);border:1px solid var(--line);border-radius:5px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:15px;padding:9px 2px;cursor:pointer}
+.seg button.on{background:var(--tape);color:#161616;border-color:var(--tape)}
+.linkbtn{background:none;border:1px solid var(--line);border-radius:4px;color:var(--tape-ink);font-size:12px;padding:5px 9px;cursor:pointer}
+.smallbtn{background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-size:12px;padding:5px 9px;cursor:pointer}
+.smallbtn.ok{border-color:var(--ok);color:#bfe6b8} .smallbtn.no{border-color:var(--now);color:#ffb4ad}
+.smallbtn:disabled,.toolbar button:disabled{opacity:.4;cursor:not-allowed}
+/* F4.5 Einfach-Modus — rein visuelle Ausblendung */
+body.mode-einfach .einfach-hide{display:none!important}
+/* F2.4 Bulk-Auswahl */
+.glbulk{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:8px}
+.glbulk .bkinfo{font-size:12px;color:var(--dim);margin-right:auto}
+.glcb{flex:0 0 auto;width:20px;height:20px;margin-right:2px}
+/* F2.6 Shortcut-Hilfe */
+.schelp{list-style:none;margin:4px 0 0}
+.schelp li{display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--line)}
+.schelp kbd{font-family:var(--mono);font-size:12px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;min-width:34px;text-align:center;color:var(--tape-ink)}
+/* F2.5 Begleitungs-Treffer */
+.compbtn.qhit{border-color:var(--tape);box-shadow:0 0 0 2px var(--tape) inset}
+.elhitcount{font-size:12px;color:var(--tape-ink);font-family:var(--mono);margin:0 16px 6px}
+/* F5.1/F6.8 QR */
+.qrbox{display:flex;flex-direction:column;align-items:center;gap:10px}
+.qrbox .qrframe{background:#fff;padding:12px;border-radius:8px;line-height:0}
+.qrbox .qrframe svg{display:block;width:220px;height:220px}
+.qrbox .qrlink{font-family:var(--mono);font-size:11px;color:var(--dim);word-break:break-all;text-align:center}
+
+dialog{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--tape);border-radius:8px;padding:16px;width:min(460px,93vw);font-family:var(--body);max-height:92vh;overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.65)}
+dialog h2{font-family:var(--disp);font-size:16px;text-transform:uppercase;margin-bottom:12px}
+.dlgbtns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.dlgbtns button{flex:1;min-width:90px;padding:10px;border-radius:5px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);font-weight:700;cursor:pointer}
+.dlgbtns .save{background:var(--tape);color:#161616;border-color:var(--tape)}
+.dlgbtns .del{color:var(--now);border-color:var(--now)}
+.dlgwarn{border-left:3px solid var(--now);background:#2a1e1d;color:#ffc4bd;font-size:12px;padding:7px 9px;border-radius:4px;margin-bottom:10px}
+
+/* ---------- Sticky Toolbar ---------- */
+.toolbar{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));z-index:20}
+.toolbar button{flex:1;border-radius:5px;font-family:var(--body);font-weight:700;font-size:13px;padding:11px 2px;cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink)}
+.toolbar .primary{background:var(--tape);color:#161616;border-color:var(--tape)}
+
+/* ---------- Einlass (große Zeilen) ---------- */
+.searchbar{margin:12px 16px 0}
+.searchbar input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--ink);font-family:var(--body);font-size:20px;padding:14px 14px}
+.eltop{margin:10px 16px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:15;background:var(--case);padding:6px 0}
+.eltop .cnt{font-family:var(--mono);font-size:15px;color:var(--tape-ink);font-weight:700}
+.filterchips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 16px 0}
+.filterchips button{background:var(--panel2);border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:12px;padding:5px 11px;cursor:pointer}
+.filterchips button.on{background:var(--tape);color:#161616;border-color:var(--tape)}
+.elrow{display:flex;align-items:center;gap:12px;min-height:64px;background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--dim);border-radius:6px;padding:10px 12px;margin:8px 16px 0;cursor:pointer}
+.elrow.in{background:#1c2a1c;border-color:var(--ok)}
+.elname{font-size:20px;font-weight:700;flex:1;min-width:0}
+.elmeta{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.elcheck{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ok);white-space:nowrap}
+.elcheck.part{color:var(--tape-ink)}
+.elcomp{display:flex;flex-direction:column;gap:6px;margin:6px 16px 0}
+.compbtn{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:52px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--ink);font-size:17px;padding:8px 14px;cursor:pointer;text-align:left}
+.compbtn.in{background:#1c2a1c;border-color:var(--ok)}
+.compbtn .t{font-family:var(--mono);font-size:13px;color:var(--dim)}
+.compbtn.in .t{color:var(--ok)}
+.dupwarn{color:var(--now);font-weight:700}
+
+/* ---------- Druckliste-Ansicht ---------- */
+.printview{margin:12px 16px}
+.printview h2{font-family:var(--disp);font-size:18px;text-transform:uppercase}
+table.plist{border-collapse:collapse;width:100%;margin-top:10px;font-size:13px}
+table.plist th,table.plist td{border:1px solid var(--line);padding:6px 8px;text-align:left}
+table.plist th{background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+table.plist td.bar{width:10px;padding:0}
+table.plist td.sign{width:30mm}
+.printview .pfoot{margin-top:10px}
+
+/* ---------- Toasts ---------- */
+.toasts{position:fixed;left:0;right:0;bottom:76px;z-index:30;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none;padding:0 12px}
+.toast{pointer-events:auto;max-width:520px;width:100%;display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--tape);border-radius:6px;padding:10px 12px;font-family:var(--body);font-size:14px;color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.45)}
+.toast.ok{border-left-color:var(--ok)} .toast.warn{border-left-color:var(--now)}
+.toast-msg{flex:1;min-width:0}
+.toast-act{background:var(--tape);color:#161616;border:none;border-radius:4px;font-family:var(--body);font-weight:700;font-size:13px;padding:6px 10px;cursor:pointer;white-space:nowrap}
+.toast-x{background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;line-height:1;padding:0 2px}
+
+/* ---------- Gästeliste Suche / Chips / Sortierung ---------- */
+.glbar{margin:6px 16px 0}
+.glbar .glsearch{position:relative}
+.glbar .glsearch input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--ink);font-family:var(--body);font-size:15px;padding:9px 32px 9px 10px}
+.glbar .glsearch .glx{position:absolute;top:50%;right:6px;transform:translateY(-50%);background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;line-height:1}
+.glcount{font-family:var(--mono);font-size:11px;color:var(--dim);margin:5px 0 0}
+.glchips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0}
+.glchips button{background:var(--panel2);border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:12px;padding:5px 11px;cursor:pointer}
+.glchips button.on{background:var(--tape);color:#161616;border-color:var(--tape)}
+.glsort{display:flex;gap:0;flex-wrap:wrap;margin:8px 0 0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.glsort button{flex:1;min-width:70px;background:var(--panel);border:none;border-right:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:8px 4px;cursor:pointer}
+.glsort button:last-child{border-right:none}
+.glsort button.on{background:var(--tape);color:#161616}
+.emptybox{margin:12px 16px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--tape);border-radius:6px;padding:14px 14px}
+.emptybox .et{font-size:14px;color:var(--ink);margin-bottom:8px}
+.emptybox .ea{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- Künstler-/Band-Auswahl (Combobox, 15 Zeilen sichtbar + Scroll) ---------- */
+.artsel{position:relative}
+.artsel .artbtn{width:100%;display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--body);font-size:15px;padding:8px 9px;cursor:pointer;text-align:left}
+.artsel .artbtn .artname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.artsel .artbtn .artcar{flex:0 0 auto;color:var(--tape-ink);font-size:10px}
+.artsel .artpop{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:25;background:var(--panel);border:1px solid var(--tape);border-radius:6px;box-shadow:0 10px 26px rgba(0,0,0,.5);padding:6px}
+.artsel .artq{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--body);font-size:14px;padding:7px 8px;margin-bottom:6px}
+.artsel .artlist{list-style:none;margin:0;padding:0;max-height:calc(15 * 34px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.artsel .artlist li{height:34px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:4px;font-size:14px;cursor:pointer}
+.artsel .artlist li span.n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.artsel .artlist li.on{background:var(--panel2)}
+.artsel .artlist li.cur{color:var(--tape-ink);font-weight:700}
+.artsel .artlist li .artcheck{flex:0 0 auto;color:var(--tape-ink);font-family:var(--mono);font-size:12px}
+.artsel .artempty{padding:9px 8px;font-size:13px;color:var(--dim)}
+.artsel .artfoot{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);padding:6px 4px 1px}
+
+/* F4.2 Light-Theme — Korrekturen fuer fest verdrahtete Dunkel-Farben (kein heller Text auf hell) */
+:root[data-theme="light"] .hint.warn{color:#B23A2E}
+:root[data-theme="light"] .smallbtn.ok{color:#2E7D32}
+:root[data-theme="light"] .smallbtn.no{color:#B23A2E}
+:root[data-theme="light"] .elrow.in,:root[data-theme="light"] .compbtn.in{background:#DFEEDC}
+:root[data-theme="light"] .dlgwarn{background:#FBE4E1;color:#8A241B}
+
+/* ---------- Druck ---------- */
+@media print{
+  body{background:#fff;color:#000;padding:0}
+  header{background:#fff;border-bottom:3px solid #000}
+  .kicker{color:#000}
+  .tabs,.toolbar,.hint,.searchbar,.filterchips,.sechead span,.linkbtn,.smallbtn,.seg,.toasts,.hdrgear,.glbar,.glchips,.glsort,.glsearch,.emptybox,.artsel{display:none!important}
+  .card,.elrow,.pg{background:#fff;color:#000;border-color:#999;break-inside:avoid}
+  .printview table.plist th{background:#eee;color:#000}
+  .printview table.plist td,.printview table.plist th{border-color:#000}
+  table.plist tr{break-inside:avoid}
+  .printview h2,.printview .phead{color:#000}
+  .printview .pfoot{color:#555;margin-top:10px;border-top:1px solid #999;padding-top:6px}
+  td.bar,.chip,.badge,.elrow{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media (min-width:700px){.f3{grid-template-columns:1fr 1fr 1fr}}
+
+/* ---------- F3.6 Mobil-Pass (<480px): Karten-/Stapel-Tabellen, priorisierte Toolbar ---------- */
+@media (max-width:479px){
+  html,body{overflow-x:hidden}
+  .tabicon{display:none}
+  .toolbar{flex-wrap:wrap}
+  .toolbar button{flex:1 1 44%;font-size:12px;padding:10px 4px}
+  table.mx thead{display:none}
+  table.mx,table.mx tbody{display:block;width:100%}
+  table.mx tr{display:block;border:1px solid var(--line);border-radius:6px;margin-bottom:8px;overflow:hidden}
+  table.mx tr.grprow{background:var(--panel)}
+  table.mx td{display:flex;flex-direction:column;gap:2px;border:none;border-bottom:1px solid var(--line);white-space:normal!important;min-width:0}
+  table.mx td:last-child{border-bottom:none}
+  table.mx td[data-label]::before{content:attr(data-label);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+  table.mx td.cell{min-width:0}
+}
+
+/* ---------- F3.3 Dezente Übergänge ---------- */
+button,.tabs button,.toolbar button,.chip,.badge{transition:background-color .12s ease,border-color .12s ease,color .12s ease}
+#view.fade-in{animation:viewFade .12s ease}
+@keyframes viewFade{from{opacity:0}to{opacity:1}}
+dialog{animation:dlgPop .14s ease}
+dialog::backdrop{animation:backdropFade .14s ease}
+@keyframes dlgPop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+@keyframes backdropFade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" focusable="false">
+<symbol id="icon-verwaltung" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M9 3v2h6V3M8 10h8M8 14h8M8 18h5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+<symbol id="icon-einladen" viewBox="0 0 24 24"><circle cx="9" cy="9" r="4" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M18 8v6M15 11h6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+<symbol id="icon-einlass" viewBox="0 0 24 24"><path d="M13 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M4 12h11m0 0-4-4m4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="icon-ticket" viewBox="0 0 24 24"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1.2a1.8 1.8 0 0 0 0 3.6V14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1.2a1.8 1.8 0 0 0 0-3.6V8Z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M14 6v12" stroke="currentColor" stroke-width="1.75" stroke-dasharray="2.2 2.2"/></symbol>
+<symbol id="icon-gastplus" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M3.5 20c0-3.3 2.8-5.8 6.5-5.8M18 9v6M15 12h6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+<symbol id="icon-export" viewBox="0 0 24 24"><path d="M12 3v11m0 0-3.5-3.5M12 14l3.5-3.5M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="icon-print" viewBox="0 0 24 24"><path d="M6 9V4h12v5M6 18H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1M6 14h12v6H6z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></symbol>
+<symbol id="icon-json" viewBox="0 0 24 24"><path d="M9 4c-2 0-3 1-3 3v2c0 1.2-.5 2-2 2 1.5 0 2 .8 2 2v2c0 2 1 3 3 3M15 4c2 0 3 1 3 3v2c0 1.2.5 2 2 2-1.5 0-2 .8-2 2v2c0 2-1 3-3 3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="icon-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M12 3v2.2M12 18.8V21M21 12h-2.2M5.2 12H3M18.4 5.6l-1.55 1.55M7.15 16.85l-1.55 1.55M18.4 18.4l-1.55-1.55M7.15 7.15 5.6 5.6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></symbol>
+<symbol id="icon-qr" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="6" height="6" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="14.5" y="3.5" width="6" height="6" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="3.5" y="14.5" width="6" height="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14.5 14.5h3v3h3v3h-6v-3h-3v-3h3zM17.8 17.8h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></symbol>
+</svg>
+
+<header id="hdr">
+  <button class="hdrgear" id="gearBtn" aria-label="Einstellungen" title="Einstellungen"><svg class="icon" aria-hidden="true"><use href="#icon-gear"></use></svg></button>
+  <div class="kicker">Tourmanagement · Gästeliste</div>
+  <h1>AnnenMayKantereit · Live 2026</h1>
+  <div class="sub">Gästelisten-System · krasserstoff-Ticketing · Gespeichert <span id="savedAt">–</span></div>
+</header>
+
+<div class="tabs" id="tabs" role="tablist">
+  <button data-m="verwaltung" role="tab" id="tab-verwaltung" aria-selected="false" aria-controls="view"><svg class="icon tabicon" aria-hidden="true"><use href="#icon-verwaltung"></use></svg>Verwaltung</button>
+  <button data-m="einladen" role="tab" id="tab-einladen" aria-selected="false" aria-controls="view"><svg class="icon tabicon" aria-hidden="true"><use href="#icon-einladen"></use></svg>Einladen</button>
+  <button data-m="einlass" role="tab" id="tab-einlass" aria-selected="false" aria-controls="view"><svg class="icon tabicon" aria-hidden="true"><use href="#icon-einlass"></use></svg>Einlass</button>
+  <button data-m="ticket" role="tab" id="tab-ticket" aria-selected="false" aria-controls="view"><svg class="icon tabicon" aria-hidden="true"><use href="#icon-ticket"></use></svg>Ticket</button>
+</div>
+
+<div id="hintzone"></div>
+<main id="view" role="tabpanel" tabindex="-1" aria-labelledby="tab-verwaltung"></main>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="toolbar" id="tools"></div>
+
+<input type="file" id="fileImport" accept=".json" style="display:none">
+<input type="file" id="tokenImport" accept=".json" style="display:none">
+<div id="dlgs"></div>
+
+<script src="seatmaps.js"></script>
+<script src="qr.js"></script>
+<script>
+'use strict';
+
+/* ================= Helfer ================= */
+const $=id=>document.getElementById(id);
+const deepCopy=o=>JSON.parse(JSON.stringify(o));
+const uid=p=>(p||'g')+Date.now()+Math.floor(Math.random()*1e5);
+const esc=s=>String(s==null?'':s);
+const fmtDate=d=>{if(!d)return '–';const p=String(d).split('-');return p.length===3?p[2]+'.'+p[1]+'.'+p[0]:d;};
+const fmtDateShort=d=>{if(!d)return '–';const p=String(d).split('-');return p.length===3?p[2]+'.'+p[1]+'.':d;};
+const wday=d=>{try{return ['SO','MO','DI','MI','DO','FR','SA'][new Date(d+'T12:00:00').getDay()];}catch(e){return '';}};
+const todayISO=()=>{const n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');};
+const toMin=s=>{const m=/^(\d{1,2}):(\d{2})$/.exec((s||'').trim());return m?(+m[1])*60+(+m[2]):null;};
+const hhmm=ms=>{const d=new Date(ms);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
+function slug(s){return String(s||'').toLowerCase()
+  .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
+  .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+function stampNow(){const d=new Date();return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0');}
+// set text safely (nie innerHTML mit Nutzernamen)
+function txt(el,s){el.textContent=esc(s);return el;}
+function ael(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+
+/* ================= Künstler/Bands · Landstreicher Booking ================= */
+/* Roster-Stand 28.07.2026 (landstreicher-booking.de/artists) — Reihenfolge egal,
+   die Anzeige sortiert selbst alphabetisch nach deutscher Sortierung. */
+const LS_ARTISTS=[
+  '$OHO BANI','$ONO$ CLIQ','Alli Neumann','AnnenMayKantereit','Apsilon','Audio88','Audio88 & Yassin',
+  'Berq','BHZ','Blond','Blumengarten','BRANDÃO FABER HUNGER','Casper','Ceren','CIVAN',
+  'Da muss man dabei gewesen sein - Der Podcast','Datteltäter','Deichkind','Dilla','Domiziana',
+  'doubtboy','doubtboy & goldy.mp3','DRUNKEN MASTERS','Edwin Rosen','ELEF','Eli Preiss','Emma Rose',
+  'ENNIO','Faber','Filow','GbR','goldy.mp3','GRENZKONTROLLE','Jassin','K.I.Z','KRAFTKLUB','KUMMER',
+  'lovehead','Lugatti','Lugatti & 9ine','Magda','Max "Rockstah" Nachtsheim','Milky Chance','OSWALD',
+  'Paula Hartmann','Provinz','RAPK','Rikas','RIN','Schmyt','SSIO','The toten Crackhuren im Kofferraum',
+  'TRÄNEN','VAN HOLZEN','Verifiziert','viko & penglord','Von Wegen Lisbeth','Wa22ermann','Yassin','Yosho'
+];
+const ARTIST_DEFAULT='AnnenMayKantereit';
+let curArtist=ARTIST_DEFAULT;   // aktiver Arbeitsbereich (Spiegel von prefs.artist)
+function artistsSorted(){return LS_ARTISTS.slice().sort((a,b)=>a.localeCompare(b,'de',{sensitivity:'base'}));}
+function isArtist(n){return LS_ARTISTS.indexOf(n)>=0;}
+
+/* ================= Voreinstellungen ================= */
+const SHOWS_INIT=[
+  {datum:'2026-07-03',stadt:'Frankfurt',venue:'Festhalle'},
+  {datum:'2026-07-10',stadt:'Dortmund',venue:'Westfalenpark'},
+  {datum:'2026-07-11',stadt:'Köln',venue:'RheinEnergieStadion'},
+  {datum:'2026-07-17',stadt:'Neu-Ulm',venue:'Wiley Sportpark'},
+  {datum:'2026-07-18',stadt:'Mönchengladbach',venue:'Sparkassenpark'},
+  {datum:'2026-07-28',stadt:'Ludwigsburg',venue:'KSK Music Open'},
+  {datum:'2026-08-14',stadt:'Berlin',venue:'Parkbühne Wuhlheide'},
+  {datum:'2026-08-20',stadt:'Hamburg',venue:'Trabrennbahn Bahrenfeld'},
+  {datum:'2026-09-03',stadt:'Hannover',venue:'ZAG Arena'},
+  {datum:'2026-09-10',stadt:'Leipzig',venue:'Quarterback Immobilien Arena'},
+  {datum:'2026-09-16',stadt:'München',venue:'Olympiahalle'},
+  {datum:'2026-09-27',stadt:'Zürich',venue:'Hallenstadion'}
+];
+const KAT_INIT=[
+  {id:'guest',    name:'Guest (Zuschauerraum)',             farbe:'#64A85C'},
+  {id:'aaa',      name:'AAA',                               farbe:'#FFD23F'},
+  {id:'working',  name:'Working',                           farbe:'#4098D7'},
+  {id:'photo',    name:'Photo · erste 3 Songs, ohne Blitz', farbe:'#C25CA8'},
+  {id:'aftershow',name:'Aftershow-only',                    farbe:'#8B93A1'}
+];
+const GRP_INIT=[
+  'Band','Management','Crew','Label','Booking-Agentur','Presse/Promo',
+  'Örtlicher Veranstalter','Partner/Sponsoren','Familie & Freunde'
+];
+const ALLKAT=()=>state.kategorien.map(k=>k.id);
+
+function defaultState(){
+  // Der AMK-Arbeitsbereich startet mit der bekannten Tour, jeder andere Künstler mit leerem Tourplan.
+  const artist=curArtist||ARTIST_DEFAULT;
+  const isAmk=(artist===ARTIST_DEFAULT);
+  const shows=(isAmk?SHOWS_INIT:[]).map(s=>({
+    id:uid('sh'),datum:s.datum,stadt:s.stadt,venue:s.venue,
+    deckel:400,vertragskontingent:null,deadline:'16:00',deadlineDatum:'',
+    final:false,finalVersion:0,finalAt:null,changedSinceFinal:false,banner:'',geloescht:false,statistikSnapshot:null
+  }));
+  const gruppen=GRP_INIT.map((n,i)=>({
+    id:uid('gr'),name:n,autoGenehmigen:false,
+    erlaubteKategorien:ALLKAT_FROM(KAT_INIT),
+    aftershowErlaubt:true
+  }));
+  // 1 Beispiel-Einladender je Gruppe, damit Matrix/Dropdown nicht leer sind
+  const einladende=gruppen.map(g=>({id:uid('p'),name:g.name+' · N.N.',gruppeId:g.id,stdKontingent:10,ausnahmen:{}}));
+  const gruppenKontingente={};
+  gruppen.forEach(g=>{gruppenKontingente[g.id]={std:20,ausnahmen:{}};});
+  return {
+    schema:2,
+    kuenstler:artist,tour:(isAmk?'Live 2026':''),
+    meta:{savedAt:0,autoLoeschTage:14},
+    shows,gruppen,kategorien:deepCopy(KAT_INIT),einladende,gaeste:[],tokens:[],
+    gruppenKontingente,
+    ui:{modus:'verwaltung',aktiveShowId:shows[0]?shows[0].id:null,einlassShowId:null,werBinIch:null}
+  };
+}
+function ALLKAT_FROM(arr){return arr.map(k=>k.id);}
+
+/* ================= migrate ================= */
+function migrate(s){
+  if(!s||typeof s!=='object')return defaultState();
+  // schema:2 additiv — kein bestehendes Feld ändern, schema:1-Importe laufen durch
+  if(!Array.isArray(s.tokens))s.tokens=[];
+  if(!s.schema||s.schema<2)s.schema=2;
+  if(typeof s.kuenstler!=='string'||!s.kuenstler)s.kuenstler=ARTIST_DEFAULT;
+  if(typeof s.tour!=='string')s.tour=(s.kuenstler===ARTIST_DEFAULT?'Live 2026':'');
+  s.meta=s.meta||{};
+  if(typeof s.meta.savedAt!=='number')s.meta.savedAt=0;
+  if(typeof s.meta.autoLoeschTage!=='number')s.meta.autoLoeschTage=14;
+  s.shows=Array.isArray(s.shows)?s.shows:[];
+  s.gruppen=Array.isArray(s.gruppen)?s.gruppen:[];
+  s.kategorien=Array.isArray(s.kategorien)&&s.kategorien.length?s.kategorien:deepCopy(KAT_INIT);
+  s.einladende=Array.isArray(s.einladende)?s.einladende:[];
+  s.gaeste=Array.isArray(s.gaeste)?s.gaeste:[];
+  s.gruppenKontingente=s.gruppenKontingente||{};
+  s.ui=s.ui||{};
+  if(!s.ui.modus)s.ui.modus='verwaltung';
+  if(s.ui.werBinIch===undefined)s.ui.werBinIch=null;
+  if(s.ui.einlassShowId===undefined)s.ui.einlassShowId=null;
+  s.shows.forEach(sh=>{
+    if(sh.id==null)sh.id=uid('sh');
+    if(typeof sh.deckel!=='number')sh.deckel=400;
+    if(sh.vertragskontingent===undefined)sh.vertragskontingent=null;
+    if(!sh.deadline)sh.deadline='16:00';
+    if(sh.deadlineDatum===undefined)sh.deadlineDatum='';
+    if(typeof sh.final!=='boolean')sh.final=false;
+    if(typeof sh.finalVersion!=='number')sh.finalVersion=0;
+    if(sh.finalAt===undefined)sh.finalAt=null;
+    if(sh.changedSinceFinal===undefined)sh.changedSinceFinal=false;
+    if(sh.banner===undefined)sh.banner='';
+    if(typeof sh.geloescht!=='boolean')sh.geloescht=false;
+    if(sh.statistikSnapshot===undefined)sh.statistikSnapshot=null;
+  });
+  s.gruppen.forEach(g=>{
+    if(g.id==null)g.id=uid('gr');
+    if(typeof g.autoGenehmigen!=='boolean')g.autoGenehmigen=false;
+    if(!Array.isArray(g.erlaubteKategorien))g.erlaubteKategorien=ALLKAT_FROM(s.kategorien);
+    if(typeof g.aftershowErlaubt!=='boolean')g.aftershowErlaubt=true;
+    if(!s.gruppenKontingente[g.id])s.gruppenKontingente[g.id]={std:20,ausnahmen:{}};
+  });
+  s.einladende.forEach(p=>{
+    if(p.id==null)p.id=uid('p');
+    if(typeof p.stdKontingent!=='number')p.stdKontingent=10;
+    if(!p.ausnahmen)p.ausnahmen={};
+  });
+  s.gaeste.forEach(g=>{
+    if(g.id==null)g.id=uid('g');
+    if(!Array.isArray(g.begleitungen))g.begleitungen=[];
+    g.begleitungen.forEach(b=>{if(b.checkinAt===undefined)b.checkinAt=null;if(b.name===undefined)b.name='';});
+    if(!g.status)g.status='angefragt';
+    if(g.checkinAt===undefined)g.checkinAt=null;
+    if(g.notiz===undefined)g.notiz='';
+    if(typeof g.aftershow!=='boolean')g.aftershow=false;
+    if(typeof g.nachtrag!=='boolean')g.nachtrag=false;
+    if(typeof g.autoGenehmigt!=='boolean')g.autoGenehmigt=false;
+    if(g.createdAt===undefined)g.createdAt=Date.now();
+  });
+  return s;
+}
+
+/* ================= Persistenz ================= */
+/* Jeder Künstler hat einen eigenen Arbeitsbereich (eigener Speicher-Schlüssel).
+   AnnenMayKantereit behält den bisherigen Schlüssel — bestehende Stände bleiben erhalten. */
+const LS_BASE='amk-gl-2026';
+function wsKey(artist){return (!artist||artist===ARTIST_DEFAULT)?LS_BASE:LS_BASE+'::'+slug(artist);}
+let LS_KEY=LS_BASE;
+let memFallback={};
+let state=defaultState();
+
+let stateGen=0;
+function save(){
+  stateGen++;
+  if(pendingUndo&&pendingUndo.gen!==stateGen){
+    if(pendingUndo.dismiss){try{pendingUndo.dismiss();}catch(e){}}
+    pendingUndo=null;
+  }
+  state.meta.savedAt=Date.now();
+  const j=JSON.stringify(state);
+  try{localStorage.setItem(LS_KEY,j);}catch(e){memFallback[LS_KEY]=j;}
+  if(prefs&&prefs.changedSinceExport!==true){prefs.changedSinceExport=true;savePrefs();}
+  const d=new Date(state.meta.savedAt);
+  const el=$('savedAt');
+  if(el)el.textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+function load(){
+  let j=null;
+  try{j=localStorage.getItem(LS_KEY);}catch(e){j=null;}
+  if(!j)j=memFallback[LS_KEY]||null;
+  if(j){try{state=migrate(JSON.parse(j));}catch(e){state=defaultState();}}
+  else state=defaultState();
+  // Der Arbeitsbereich bestimmt den Künstler — nicht umgekehrt (schützt vor falsch beschrifteten Ständen).
+  const a=curArtist||ARTIST_DEFAULT;
+  if(state.kuenstler!==a){state.kuenstler=a;if(a!==ARTIST_DEFAULT&&state.tour==='Live 2026')state.tour='';}
+}
+// Zustandsmaschinen-Guard: Status-Rang verhindert Downgrade (widerrufen/eingelöst bleiben).
+const TOKEN_STATUS_RANK={offen:0,eingeloest:1,widerrufen:2};
+function tokenRank(s){return TOKEN_STATUS_RANK[s]!=null?TOKEN_STATUS_RANK[s]:0;}
+function mergeToken(current,incoming){
+  const rc=tokenRank(current.status),ri=tokenRank(incoming.status);
+  if(ri>rc){Object.assign(current,incoming);return current;} // erlaubter Übergang
+  if(ri<rc)return current; // kein Downgrade
+  if((incoming.updatedAt||0)>(current.updatedAt||0))Object.assign(current,incoming); // gleicher Rang: neuer gewinnt
+  return current;
+}
+// Befund #1: NUR state.tokens aus localStorage neu einlesen und per id mergen.
+// Gäste/Shows/Einstellungen bleiben unangetastet, damit laufende TM-Eingaben nicht verloren gehen.
+function syncTokensFromStorage(){
+  let stored;
+  try{const j=localStorage.getItem(LS_KEY)||memFallback[LS_KEY];if(!j)return;stored=JSON.parse(j);}catch(e){return;}
+  if(!stored||!Array.isArray(stored.tokens))return;
+  if(!Array.isArray(state.tokens))state.tokens=[];
+  const byId={};state.tokens.forEach(t=>{if(t&&t.id)byId[t.id]=t;});
+  stored.tokens.forEach(st=>{
+    if(!st||!st.id)return;
+    const cur=byId[st.id];
+    if(!cur){state.tokens.push(st);byId[st.id]=st;return;}
+    mergeToken(cur,st);
+  });
+}
+
+/* ================= Toast (F1.2) ================= */
+const Toast={
+  show(text,opts){
+    opts=opts||{};
+    const wrap=$('toasts');if(!wrap)return ()=>{};
+    const t=ael('div','toast '+(opts.type||'info'));
+    t.appendChild(ael('span','toast-msg',text));
+    let tm=null;
+    const dismiss=()=>{if(tm)clearTimeout(tm);tm=null;if(t.parentNode)t.parentNode.removeChild(t);};
+    if(opts.action){
+      const b=ael('button','toast-act',opts.action.label);
+      b.onclick=()=>{try{opts.action.on();}catch(e){}dismiss();};
+      t.appendChild(b);
+    }
+    const x=ael('button','toast-x','×');x.setAttribute('aria-label','Schließen');x.onclick=dismiss;
+    t.appendChild(x);
+    wrap.appendChild(t);
+    tm=setTimeout(dismiss,opts.ms||3500);
+    return dismiss;
+  }
+};
+
+/* ================= Einstellungen-Träger (F4.1/F4.6) — strikt getrennt vom Datenmodell ================= */
+const PREFS_KEY='amk-gl-prefs';
+let prefs={};
+function loadPrefs(){
+  try{const j=localStorage.getItem(PREFS_KEY);prefs=j?JSON.parse(j):{};}catch(e){prefs={};}
+  if(!prefs||typeof prefs!=='object')prefs={};
+}
+function savePrefs(){try{localStorage.setItem(PREFS_KEY,JSON.stringify(prefs));}catch(e){}}
+
+/* ================= Undo (F1.3) — Ein-Slot-Snapshot ================= */
+let pendingUndo=null;
+function withUndo(label,mutator,refresh){
+  refresh=refresh||render;
+  // Ein-Slot-Prinzip auch im UI: alten „Rückgängig"-Toast entfernen, bevor ein neuer erscheint
+  if(pendingUndo&&pendingUndo.dismiss){try{pendingUndo.dismiss();}catch(e){}}
+  pendingUndo=null;
+  const snap=deepCopy(state);
+  mutator();
+  save();refresh(); // save() bumpt stateGen und invalidiert evtl. altes pendingUndo
+  const gen=stateGen;
+  const dismiss=Toast.show(label,{type:'info',ms:8000,action:{label:'Rückgängig',on:()=>{
+    if(!pendingUndo||pendingUndo.gen!==stateGen){Toast.show('Rückgängig nicht mehr möglich (zwischenzeitliche Änderung).',{type:'warn'});return;}
+    const snapBack=pendingUndo.snap;pendingUndo=null;
+    state=snapBack;save();refresh();
+    Toast.show('Rückgängig gemacht.',{type:'ok'});
+  }}});
+  pendingUndo={snap:snap,gen:gen,dismiss:dismiss};
+  setTimeout(()=>{if(pendingUndo&&pendingUndo.gen===gen)pendingUndo=null;},8200);
+}
+
+/* ================= Demo-Daten (F1.1) — jeder Datensatz mit _demo:true ================= */
+const DEMO_VN=['Anna','Lukas','Marie','Jonas','Laura','Felix','Sophie','Max','Emma','Paul','Lena','Tim','Julia','Ben','Clara','Noah','Mia','Leon','Hannah','Finn','Lea','Elias','Nele','Jan','Sarah','Moritz','Katharina','David','Johanna','Simon','Pia','Tobias','Greta','Niklas','Verena','Kilian','Amelie','Fabian','Marlene','Philipp'];
+const DEMO_NN=['Bauer','Wagner','Hoffmann','Schulz','Richter','Klein','Wolf','Neumann','Schwarz','Braun','Krüger','Hofmann','Hartmann','Lange','Werner','Schmitt','Köhler','Maier','Frank','Berger','Winkler','Roth','Beck','Lorenz','Baumann','Franke','Albrecht','Ludwig','Winter','Kraus','Fuchs','Vogel','Böhm','Sommer','Seidel','Brandt','Haas','Peters','Kaiser','Arnold'];
+function demoDataPresent(){return state.gaeste.some(g=>g._demo)||(state.tokens||[]).some(t=>t._demo);}
+function loadDemoData(){
+  const shows=state.shows.filter(s=>!s.geloescht).slice(0,5);
+  if(!shows.length){Toast.show('Keine Shows vorhanden.',{type:'warn'});return;}
+  const einl=state.einladende;
+  if(!einl.length){Toast.show('Keine Einladenden vorhanden.',{type:'warn'});return;}
+  const catIds=state.kategorien.map(k=>k.id);
+  const now=Date.now();
+  const statusPlan=['genehmigt','genehmigt','final','angefragt','genehmigt','abgelehnt','angefragt','final','genehmigt','angefragt'];
+  const created=[];
+  for(let i=0;i<40;i++){
+    const sh=shows[i%shows.length];
+    const p=einl[i%einl.length];
+    const kat=catIds[i%catIds.length];
+    const status=statusPlan[i%statusPlan.length];
+    const nComp=(i%4===0)?(i%3):0;
+    const begl=[];
+    for(let c=0;c<nComp;c++)begl.push({name:(c%2===0?DEMO_VN[(i+c+5)%40]+' '+DEMO_NN[(i+c+7)%40]:''),checkinAt:null});
+    const approved=(status==='genehmigt'||status==='final');
+    let checkinAt=null;
+    if(approved&&i%3===0)checkinAt=now-3600000+i*60000;
+    if(checkinAt&&begl.length&&i%2===0)begl[0].checkinAt=now-1800000;
+    state.gaeste.push({
+      id:uid('g'),vorname:DEMO_VN[i%40],nachname:DEMO_NN[i%40],
+      begleitungen:begl,kategorieId:kat,einladenderId:p.id,gruppeId:p.gruppeId,
+      showId:sh.id,status:status,checkinAt:checkinAt,
+      notiz:(i%7===0?'VIP-Gast, bitte am Eingang abholen':''),
+      aftershow:(i%5===0),nachtrag:false,autoGenehmigt:false,
+      createdAt:now-((40-i)*90000),_demo:true
+    });
+    created.push(state.gaeste[state.gaeste.length-1]);
+  }
+  if(!Array.isArray(state.tokens))state.tokens=[];
+  const cand=created.filter(g=>g.status==='genehmigt'||g.status==='final');
+  [{modus:'kontingent',max:1},{modus:'kauf',max:2},{modus:'kontingent',max:1}].forEach((tp,ix)=>{
+    const g=cand[ix*3];if(!g)return;
+    state.tokens.push({
+      id:'tk'+now+ix+Math.floor(Math.random()*1e5),
+      gastRef:g.id,email:slug(g.vorname)+'.'+slug(g.nachname)+'@example.com',
+      showId:g.showId,modus:tp.modus,maxPlaetze:tp.max,kategorieRahmen:null,
+      status:'offen',ausgewaehltePlaetze:[],createdAt:now,redeemedAt:null,updatedAt:now,_demo:true
+    });
+  });
+  save();render();
+  Toast.show(created.length+' Demo-Gäste geladen.',{type:'ok'});
+}
+function removeDemoData(){
+  const gc=state.gaeste.filter(g=>g._demo).length;
+  const tc=(state.tokens||[]).filter(t=>t._demo).length;
+  if(!gc&&!tc){Toast.show('Keine Demo-Daten vorhanden.',{type:'info'});return;}
+  if(!confirm('Demo-Daten entfernen: '+gc+' Gäste und '+tc+' Token werden gelöscht. Fortfahren?'))return;
+  state.gaeste=state.gaeste.filter(g=>!g._demo);
+  state.tokens=(state.tokens||[]).filter(t=>!t._demo);
+  save();render();
+  Toast.show('Demo-Daten entfernt ('+gc+' Gäste, '+tc+' Token).',{type:'ok'});
+}
+
+/* ================= Lookups ================= */
+const showById=id=>state.shows.find(s=>s.id===id);
+const grpById=id=>state.gruppen.find(g=>g.id===id);
+const katById=id=>state.kategorien.find(k=>k.id===id)||{name:'—',farbe:'#8B93A1'};
+const pById=id=>state.einladende.find(p=>p.id===id);
+const aktiveShow=()=>showById(state.ui.aktiveShowId)||state.shows[0]||null;
+function gaesteForShow(showId){return state.gaeste.filter(g=>g.showId===showId);}
+
+/* Personen-Zählung (Hauptgast + Begleitungen) */
+function personsPlanned(g){return 1+(g.begleitungen?g.begleitungen.length:0);}
+function personsCheckedIn(g){
+  let n=g.checkinAt?1:0;
+  (g.begleitungen||[]).forEach(b=>{if(b.checkinAt)n++;});
+  return n;
+}
+const APPROVED=g=>g.status==='genehmigt'||g.status==='final';
+
+/* Wirksames Kontingent (Ausnahme schlägt Standard) */
+function grpQuota(gruppeId,showId){
+  const q=state.gruppenKontingente[gruppeId];if(!q)return null;
+  const ex=q.ausnahmen&&q.ausnahmen[showId];
+  return (ex!=null&&ex!=='')?+ex:(q.std!=null?+q.std:null);
+}
+function personQuota(pId,showId){
+  const p=pById(pId);if(!p)return null;
+  const ex=p.ausnahmen&&p.ausnahmen[showId];
+  return (ex!=null&&ex!=='')?+ex:(p.stdKontingent!=null?+p.stdKontingent:null);
+}
+
+/* Zähler je Gruppe/Person/Show — Personen-genau (mit +N) */
+function tally(list){
+  let beantragt=0,genehmigt=0,eingecheckt=0;
+  list.forEach(g=>{
+    const pers=personsPlanned(g);
+    if(g.status==='angefragt')beantragt+=pers;
+    if(APPROVED(g)){genehmigt+=pers;eingecheckt+=personsCheckedIn(g);}
+  });
+  return {beantragt,genehmigt,eingecheckt};
+}
+const tallyGrpShow=(gruppeId,showId)=>tally(state.gaeste.filter(g=>g.gruppeId===gruppeId&&g.showId===showId));
+const tallyPersonShow=(pId,showId)=>tally(state.gaeste.filter(g=>g.einladenderId===pId&&g.showId===showId));
+
+/* Deckel-Nutzung: genehmigte Personen der Show */
+function deckelUsed(showId){
+  return state.gaeste.filter(g=>g.showId===showId&&APPROVED(g))
+    .reduce((s,g)=>s+personsPlanned(g),0);
+}
+
+/* Deadline */
+function deadlineMs(show){
+  const dstr=(show.deadlineDatum&&show.deadlineDatum.length)?show.deadlineDatum:show.datum;
+  if(!dstr)return null;
+  const m=toMin(show.deadline||'16:00');if(m==null)return null;
+  const d=new Date(dstr+'T00:00:00');if(isNaN(d))return null;
+  d.setMinutes(m);return d.getTime();
+}
+function deadlinePassed(show){const ms=deadlineMs(show);return ms!=null&&Date.now()>=ms;}
+function countdownText(show){
+  const ms=deadlineMs(show);if(ms==null)return {t:'—',red:false};
+  let diff=Math.floor((ms-Date.now())/60000);
+  if(diff<=0)return {t:'Redaktionsschluss',red:true};
+  const h=Math.floor(diff/60),mm=diff%60;
+  const t=h>0?(h+':'+String(mm).padStart(2,'0')+' h'):(mm+' min');
+  return {t,red:diff<60};
+}
+
+/* Duplikate innerhalb einer Show */
+function normName(v,n){return ((v||'')+' '+(n||'')).replace(/\s+/g,' ').trim().toLowerCase();}
+function isDuplicate(g){
+  const key=normName(g.vorname,g.nachname);
+  return state.gaeste.some(o=>o.id!==g.id&&o.showId===g.showId&&normName(o.vorname,o.nachname)===key);
+}
+
+/* ================= Router / Tabs ================= */
+function render(){
+  const m=state.ui.modus;
+  document.querySelectorAll('#tabs button').forEach(b=>{const on=b.dataset.m===m;b.classList.toggle('active',on);b.setAttribute('aria-selected',on?'true':'false');});
+  const v=$('view');v.innerHTML='';v.setAttribute('aria-labelledby','tab-'+m);
+  renderHint();
+  if(m==='verwaltung')renderVerwaltung();
+  else if(m==='einladen')renderEinladen();
+  else if(m==='ticket')renderTicket();
+  else renderEinlass();
+  v.classList.remove('fade-in');void v.offsetWidth;v.classList.add('fade-in');
+}
+function setModus(m){state.ui.modus=m;save();render();window.scrollTo(0,0);}
+function setAktiveShow(id){state.ui.aktiveShowId=id;save();render();}
+
+document.querySelectorAll('#tabs button').forEach(b=>{
+  b.onclick=()=>setModus(b.dataset.m);
+});
+
+/* ================= Künstler-Arbeitsbereich ================= */
+function tourLabel(){
+  const t=(state.tour||'').trim();
+  return (state.kuenstler||ARTIST_DEFAULT)+(t?' · '+t:'');
+}
+function applyHeader(){
+  const h=document.querySelector('header h1');
+  if(h)h.textContent=tourLabel();
+  document.title=tourLabel()+' · Gästeliste';
+}
+/* Filter, Suchen, aufgeklappte Zeilen und Undo gehören zum alten Stand — beim Wechsel zurücksetzen. */
+function resetViewState(){
+  glFilter={q:'',status:new Set(),kat:new Set(),grp:new Set(),aftershow:false,nachtrag:false,sort:'name'};
+  einlassSearch='';einlassFilter='';einlassLastList=[];
+  mxExpand={};freigabeSel=new Set();
+  if(pendingUndo&&pendingUndo.dismiss){try{pendingUndo.dismiss();}catch(e){}}
+  pendingUndo=null;
+}
+/* Wechsel: aktuellen Stand sichern, Arbeitsbereich des Ziel-Künstlers laden, Ansicht neu aufbauen. */
+/* Leere, nie benutzte Arbeitsbereiche nicht speichern — sonst legt bloßes Durchblättern 60 leere Stände an. */
+function worthSaving(){
+  return (state.meta&&state.meta.savedAt>0)||state.shows.length>0||state.gaeste.length>0||(state.tokens||[]).length>0;
+}
+function switchArtist(name){
+  if(!isArtist(name)||name===state.kuenstler)return;
+  if(worthSaving())save();
+  curArtist=name;prefs.artist=name;savePrefs();
+  LS_KEY=wsKey(name);
+  load();
+  resetViewState();
+  applyHeader();
+  render();window.scrollTo(0,0);
+  const n=state.shows.filter(s=>!s.geloescht).length,g=state.gaeste.length;
+  Toast.show(name+' geladen · '+n+' Show'+(n===1?'':'s')+', '+g+' Gäste.',{type:'ok'});
+}
+/* Ausklappbare Auswahl: 15 Zeilen sichtbar, darüber hinaus scrollbar, mit Sofortsuche */
+function artistCombo(){
+  const wrap=ael('div','artsel');
+  const btn=ael('button','artbtn');btn.type='button';
+  btn.setAttribute('aria-haspopup','listbox');
+  btn.setAttribute('aria-expanded','false');
+  btn.appendChild(ael('span','artname',state.kuenstler||ARTIST_DEFAULT));
+  btn.appendChild(ael('span','artcar','▼'));
+  wrap.appendChild(btn);
+  let pop=null,items=[],idx=-1;
+  const onDoc=e=>{if(pop&&!wrap.contains(e.target))close();};
+  function close(){
+    if(pop){pop.remove();pop=null;}
+    btn.setAttribute('aria-expanded','false');
+    document.removeEventListener('mousedown',onDoc,true);
+  }
+  function open(){
+    if(pop)return;
+    pop=ael('div','artpop');
+    const q=document.createElement('input');
+    q.className='artq';q.type='search';q.placeholder='Suchen …';
+    q.setAttribute('aria-label','Künstler oder Band suchen');
+    const ul=document.createElement('ul');ul.className='artlist';
+    ul.setAttribute('role','listbox');ul.setAttribute('aria-label','Künstler und Bands');
+    const foot=ael('div','artfoot','');
+    pop.appendChild(q);pop.appendChild(ul);pop.appendChild(foot);
+    wrap.appendChild(pop);
+    btn.setAttribute('aria-expanded','true');
+    function mark(scroll){
+      const lis=ul.querySelectorAll('li');
+      lis.forEach((li,i)=>li.classList.toggle('on',i===idx));
+      if(scroll&&lis[idx])lis[idx].scrollIntoView({block:'nearest'});
+    }
+    function draw(){
+      const term=q.value.trim().toLowerCase();
+      items=artistsSorted().filter(a=>!term||a.toLowerCase().indexOf(term)>=0);
+      ul.innerHTML='';
+      if(!items.length){ul.appendChild(ael('div','artempty','Kein Treffer.'));}
+      items.forEach(a=>{
+        const li=document.createElement('li');li.setAttribute('role','option');
+        li.appendChild(ael('span','n',a));
+        const cur=(a===state.kuenstler);
+        li.setAttribute('aria-selected',cur?'true':'false');
+        if(cur){li.classList.add('cur');li.appendChild(ael('span','artcheck','✓'));}
+        li.onmousedown=e=>e.preventDefault();   // Fokus bleibt im Suchfeld
+        li.onclick=()=>{close();switchArtist(a);};
+        ul.appendChild(li);
+      });
+      foot.textContent=items.length+' von '+LS_ARTISTS.length+' · 15 Zeilen sichtbar, scrollbar';
+      idx=Math.max(0,items.indexOf(state.kuenstler));
+      mark(false);
+    }
+    q.oninput=draw;
+    q.onkeydown=e=>{
+      if(e.key==='ArrowDown'){e.preventDefault();if(idx<items.length-1)idx++;mark(true);}
+      else if(e.key==='ArrowUp'){e.preventDefault();if(idx>0)idx--;mark(true);}
+      else if(e.key==='Home'){e.preventDefault();idx=0;mark(true);}
+      else if(e.key==='End'){e.preventDefault();idx=items.length-1;mark(true);}
+      else if(e.key==='Enter'){e.preventDefault();const a=items[idx];if(a){close();switchArtist(a);}}
+      else if(e.key==='Escape'){e.preventDefault();e.stopPropagation();close();btn.focus();}
+      else if(e.key==='Tab'){close();}
+    };
+    draw();
+    setTimeout(()=>{
+      const lis=ul.querySelectorAll('li');
+      if(lis[idx])lis[idx].scrollIntoView({block:'center'});
+      q.focus();
+    },0);
+    document.addEventListener('mousedown',onDoc,true);
+  }
+  btn.onclick=()=>{pop?close():open();};
+  return wrap;
+}
+function vKuenstler(){
+  const sec=ael('div','sec');
+  const f=ael('div','f');
+  const lb=ael('label',null,'Künstler / Band · Landstreicher Booking');
+  lb.appendChild(mkTip('Wählt den Arbeitsbereich: jeder Künstler und jede Band hat eigene Shows, Gäste, Kontingente und Exporte. Beim Wechsel wird der aktuelle Stand automatisch gespeichert.'));
+  f.appendChild(lb);
+  f.appendChild(artistCombo());
+  sec.appendChild(f);
+  const ft=ael('div','f');
+  ft.appendChild(ael('label',null,'Tour / Anlass (optional — steht im Kopf und auf den Listen)'));
+  const ti=document.createElement('input');
+  ti.value=state.tour||'';ti.placeholder='z. B. Live 2026';
+  ti.onchange=()=>{state.tour=ti.value.trim();save();applyHeader();};
+  ft.appendChild(ti);sec.appendChild(ft);
+  return sec;
+}
+
+/* ================= Sitzungshinweis (1× pro Sitzung) ================= */
+function renderHint(){
+  const z=$('hintzone');z.innerHTML='';
+  let shown=false;
+  try{shown=sessionStorage.getItem('amk-gl-hint')==='1';}catch(e){}
+  if(shown)return;
+  const d=ael('div','hint close');
+  d.appendChild(ael('span',null,'Wichtige Stände zusätzlich per JSON-Export in _daten/ sichern — localStorage kann durch Browser-Bereinigung verloren gehen.'));
+  const x=ael('button','x','×');
+  x.setAttribute('aria-label','Hinweis schließen');
+  x.onclick=()=>{try{sessionStorage.setItem('amk-gl-hint','1');}catch(e){}z.innerHTML='';};
+  d.appendChild(x);
+  z.appendChild(d);
+}
+
+/* ================= Intervalle ================= */
+setInterval(()=>{
+  // Countdown/Deadline-abhängige Ansichten aktualisieren — aber nicht während der
+  // Nutzer tippt, eine Mehrfachauswahl offen hat oder ein Dialog offen ist (kein Datenverlust).
+  if(state.ui.modus!=='verwaltung'&&state.ui.modus!=='einladen')return;
+  const ae=document.activeElement;
+  const busy=(ae&&/^(INPUT|SELECT|TEXTAREA)$/.test(ae.tagName)&&$('view').contains(ae))
+    ||freigabeSel.size>0||document.querySelector('dialog[open]')||document.querySelector('.artpop');
+  if(busy)return;
+  render();
+},30000);
+
+/* ================= Toolbar-Helfer ================= */
+/* F3.1 dezente Icons vor Toolbar-Beschriftungen — Text/Reihenfolge unveraendert */
+function toolIcon(label){
+  if(/^\+ ?Gast/.test(label))return 'icon-gastplus';
+  if(/^(Exporte|Token-Export)/.test(label))return 'icon-export';
+  if(/^(JSON-Export|JSON-Import|Token-Import)/.test(label))return 'icon-json';
+  if(/^Drucken/.test(label))return 'icon-print';
+  return null;
+}
+function setTools(btns){
+  const tb=$('tools');tb.innerHTML='';
+  btns.forEach(b=>{
+    const el=document.createElement('button');
+    if(b.cls)el.className=b.cls;
+    const ic=toolIcon(b.label);
+    if(ic){
+      const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.setAttribute('class','icon tlbicon');svg.setAttribute('aria-hidden','true');
+      const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href','#'+ic);
+      svg.appendChild(use);el.appendChild(svg);
+    }
+    el.appendChild(document.createTextNode(b.label));
+    if(b.hideEinfach)el.classList.add('einfach-hide');
+    if(b.disabled)el.disabled=true;
+    if(b.title)el.title=b.title;
+    el.onclick=b.on;
+    tb.appendChild(el);
+  });
+}
+function showLabel(sh){
+  const st=(sh.stadt||'—');
+  return fmtDateShort(sh.datum)+' '+(st.length>10?st.slice(0,10):st);
+}
+
+/* ================= Auto-Genehmigung (V3) ================= */
+// g ist bereits mit status 'angefragt' in state.gaeste; prüft beide Kontingent-Ebenen + Deckel + Deadline
+function tryAutoApprove(g){
+  const grp=grpById(g.gruppeId);if(!grp||!grp.autoGenehmigen)return false;
+  const show=showById(g.showId);if(!show||show.final||deadlinePassed(show))return false;
+  const pers=personsPlanned(g);
+  const gq=grpQuota(g.gruppeId,g.showId);
+  const pq=personQuota(g.einladenderId,g.showId);
+  const curG=tallyGrpShow(g.gruppeId,g.showId).genehmigt;
+  const curP=tallyPersonShow(g.einladenderId,g.showId).genehmigt;
+  if(gq!=null&&curG+pers>gq)return false;
+  if(pq!=null&&curP+pers>pq)return false;
+  if(show.deckel!=null&&deckelUsed(g.showId)+pers>show.deckel)return false;
+  g.status='genehmigt';g.autoGenehmigt=true;
+  return true;
+}
+
+/* ================= Modus Verwaltung ================= */
+let mxExpand={};                 // gruppeId -> aufgeklappt
+let freigabeSel=new Set();
+
+function renderVerwaltung(){
+  const v=$('view');
+  const sh=aktiveShow();
+  freigabeSel=new Set();
+  // Künstler/Band — Arbeitsbereich
+  v.appendChild(vKuenstler());
+  // Noch kein Tourplan in diesem Arbeitsbereich
+  if(!state.shows.length){
+    const box=ael('div','emptybox');
+    box.appendChild(ael('div','et','Für „'+(state.kuenstler||'')+'“ ist noch keine Show angelegt. Lege die erste Show an — danach stehen Gästeliste, Freigabe, Einlass und Exporte bereit.'));
+    const ea=ael('div','ea');
+    const b1=ael('button','smallbtn ok','+ Erste Show anlegen');b1.onclick=()=>openShowDlg(true);
+    ea.appendChild(b1);
+    box.appendChild(ea);
+    v.appendChild(box);
+    v.appendChild(vEinstellungen());
+    v.appendChild(vKrasserstoff());
+    setTools([
+      {label:'+ Show',cls:'primary',on:()=>openShowDlg(true)},
+      {label:'JSON-Export',on:jsonExport},
+      {label:'JSON-Import',on:()=>$('fileImport').click(),hideEinfach:true}
+    ]);
+    return;
+  }
+  // Show-Auswahl
+  const selWrap=ael('div','sec');
+  const lab=ael('div','f');
+  lab.appendChild(ael('label',null,'Aktive Show (für Freigabe, Deckel, Deadline, Finalisierung, Exporte)'));
+  const sel=document.createElement('select');
+  state.shows.forEach(s=>{
+    const o=document.createElement('option');o.value=s.id;
+    o.textContent=fmtDateShort(s.datum)+' · '+(s.stadt||'—')+(s.final?' · FINAL v'+s.finalVersion:'')+(s.geloescht?' · gelöscht':'');
+    if(sh&&s.id===sh.id)o.selected=true;
+    sel.appendChild(o);
+  });
+  sel.onchange=()=>setAktiveShow(sel.value);
+  const fbox=ael('div','f');fbox.appendChild(lab.firstChild);fbox.appendChild(sel);
+  selWrap.appendChild(fbox);
+  v.appendChild(selWrap);
+
+  if(sh){
+    v.appendChild(vAutoLoeschHinweis(sh));
+    v.appendChild(vDeckelDeadline(sh));
+    v.appendChild(vFreigabe(sh));
+    v.appendChild(vGaesteListe(sh));
+    v.appendChild(vShowDashboard(sh));
+  }
+  v.appendChild(vMatrix());
+  v.appendChild(vStatistik());
+  if(sh)v.appendChild(vDatenschutz(sh));
+  v.appendChild(vEinstellungen());
+  v.appendChild(vKrasserstoff());
+
+  setTools([
+    {label:'+ Gast',cls:'primary',on:()=>openGuestDlg(null,{})},
+    {label:'Exporte',on:()=>openExportDlg(aktiveShow())},
+    {label:'JSON-Export',on:jsonExport},
+    {label:'JSON-Import',on:()=>$('fileImport').click(),hideEinfach:true},
+    {label:'Drucken',on:()=>window.print()}
+  ]);
+}
+
+/* F5.2 Statistik-Dashboard je Show — rein lesend, nutzt vorhandene Zähler/Daten */
+function vShowDashboard(sh){
+  const sec=ael('div','sec');
+  sec.appendChild(sechead('Statistik-Dashboard',(sh.stadt||'')+' · '+fmtDateShort(sh.datum)));
+  const guests=state.gaeste.filter(g=>g.showId===sh.id);
+  const approved=guests.filter(APPROVED);
+  if(!approved.length){sec.appendChild(mkHint('Noch keine genehmigten Gäste für diese Show.'));return sec;}
+  // Kategorien-Verteilung
+  const katTot={};let katMax=0;
+  approved.forEach(g=>{katTot[g.kategorieId]=(katTot[g.kategorieId]||0)+personsPlanned(g);});
+  Object.values(katTot).forEach(n=>{if(n>katMax)katMax=n;});
+  const g1=ael('div','pggrid');
+  state.kategorien.forEach(k=>{
+    const n=katTot[k.id]||0;if(!n)return;
+    const p=ael('div','pg');p.appendChild(ael('div','n',k.name));
+    const wrap=ael('div','b');const i=ael('i',null);i.style.width=(katMax?Math.round(n/katMax*100):0)+'%';i.style.background=k.farbe;wrap.appendChild(i);p.appendChild(wrap);
+    p.appendChild(ael('div','v',n+' Pers.'));
+    g1.appendChild(p);
+  });
+  if(g1.children.length){sec.appendChild(ael('div','hint','Kategorien-Verteilung (genehmigt/final)'));sec.appendChild(g1);}
+  // Gruppen-Auslastung vs. Kontingent
+  const g2=ael('div','pggrid');
+  state.gruppen.forEach(gr=>{
+    const q=grpQuota(gr.id,sh.id);
+    const t=tallyGrpShow(gr.id,sh.id);
+    if(!t.genehmigt&&q==null)return;
+    const p=ael('div','pg');p.appendChild(ael('div','n',gr.name));
+    p.appendChild(bar(t.genehmigt,q));
+    p.appendChild(ael('div','v',t.genehmigt+'/'+(q==null?'∞':q)+' Pers.'));
+    g2.appendChild(p);
+  });
+  if(g2.children.length){sec.appendChild(ael('div','hint','Gruppen-Auslastung vs. Kontingent (diese Show)'));sec.appendChild(g2);}
+  // Einlass-Quote + Aftershow-Zahl
+  const genPers=approved.reduce((s,g)=>s+personsPlanned(g),0);
+  const inPers=approved.reduce((s,g)=>s+personsCheckedIn(g),0);
+  const quote=genPers>0?Math.round(inPers/genPers*100):0;
+  const asCount=approved.filter(g=>g.aftershow).reduce((s,g)=>s+personsPlanned(g),0);
+  const g3=ael('div','pggrid');
+  const pQ=ael('div','pg');pQ.appendChild(ael('div','n','Einlass-Quote'));
+  const wrapQ=ael('div','b');const iQ=ael('i',null);iQ.style.width=Math.min(100,quote)+'%';iQ.style.background='var(--ok)';wrapQ.appendChild(iQ);pQ.appendChild(wrapQ);
+  pQ.appendChild(ael('div','v',quote+'% · '+inPers+'/'+genPers+' da'));
+  g3.appendChild(pQ);
+  const pA=ael('div','pg');pA.appendChild(ael('div','n','Aftershow'));
+  const wrapA=ael('div','b');const iA=ael('i',null);iA.style.width=(genPers?Math.min(100,Math.round(asCount/genPers*100)):0)+'%';iA.style.background='var(--tape)';wrapA.appendChild(iA);pA.appendChild(wrapA);
+  pA.appendChild(ael('div','v',asCount+' Pers. Aftershow-only'));
+  g3.appendChild(pA);
+  sec.appendChild(ael('div','hint','Einlass-Quote + Aftershow-Anteil (genehmigt/final, diese Show)'));
+  sec.appendChild(g3);
+  return sec;
+}
+
+/* Balken-Helfer */
+function bar(used,max){
+  const wrap=ael('div','minib');const i=ael('i',null);
+  let pct=0,over=false;
+  if(max!=null&&max>0){pct=Math.round(used/max*100);over=used>max;}
+  else if(max===0&&used>0){pct=100;over=true;}
+  i.style.width=Math.min(100,pct)+'%';if(over)i.classList.add('over');
+  wrap.appendChild(i);return wrap;
+}
+
+/* V9-Erinnerung: Show >X Tage her */
+function vAutoLoeschHinweis(sh){
+  const box=ael('div');
+  if(sh.geloescht||!sh.datum)return box;
+  const days=(Date.now()-new Date(sh.datum+'T23:59:00').getTime())/86400000;
+  if(days>state.meta.autoLoeschTage){
+    const h=ael('div','hint warn');
+    h.textContent='Show „'+(sh.stadt||'')+'“ ist mehr als '+state.meta.autoLoeschTage+' Tage her — personenbezogene Daten löschen? (unten „Show-Daten löschen“)';
+    box.appendChild(h);
+  }
+  return box;
+}
+
+/* V2 + V4 + V6 Kopf der aktiven Show */
+function vDeckelDeadline(sh){
+  const sec=ael('div','sec');
+  const head=ael('div','row');head.style.marginBottom='6px';
+  const t=ael('div','grow');
+  t.appendChild(ael('div','kicker','Aktive Show'));
+  const h=ael('h1',null,(sh.stadt||'—')+' · '+fmtDate(sh.datum));
+  h.style.fontSize='18px';t.appendChild(h);
+  const vn=ael('div','sub');vn.textContent=sh.venue||'';t.appendChild(vn);
+  head.appendChild(t);
+  // Countdown
+  const cd=countdownText(sh);
+  const cbox=ael('div');cbox.style.textAlign='right';
+  cbox.appendChild(ael('div','kicker','Redaktionsschluss'));
+  const cv=ael('div','mono');cv.style.fontWeight='700';cv.style.fontSize='16px';
+  cv.style.color=cd.red?'var(--now)':'var(--tape-ink)';cv.textContent=cd.t;
+  cbox.appendChild(cv);
+  head.appendChild(cbox);
+  sec.appendChild(head);
+
+  // Felder Deckel / Vertragskontingent / Deadline
+  const grid=ael('div','f3');
+  grid.appendChild(numField('Gesamtdeckel',sh.deckel,val=>{sh.deckel=val===''?400:Math.max(0,+val||0);save();render();},null,'Maximale Personenzahl (Gäste + Begleitungen), die insgesamt für diese Show auf der Liste stehen dürfen.'));
+  grid.appendChild(numField('Vertragskontingent',sh.vertragskontingent,val=>{sh.vertragskontingent=val===''?null:Math.max(0,+val||0);save();render();},'z. B. 50','Vertraglich vereinbarte Freikarten-Obergrenze — separat vom Gesamtdeckel, nur zur Kontrolle.'));
+  const dl=ael('div','f');const dlLb=ael('label',null,'Deadline (HH:MM)');
+  dlLb.appendChild(mkTip('Redaktionsschluss: Anfragen/Änderungen nach dieser Uhrzeit gelten als Nachtrag und werden markiert.'));
+  dl.appendChild(dlLb);
+  const dli=document.createElement('input');dli.value=sh.deadline||'16:00';
+  dli.onchange=()=>{const mm=(dli.value||'').trim().match(/^(\d{1,2}):(\d{2})$/);if(!mm||+mm[1]>23||+mm[2]>59){Toast.show('Bitte gültige Uhrzeit 00:00–23:59.',{type:'warn'});dli.value=sh.deadline;return;}sh.deadline=(dli.value).trim();save();render();};
+  dl.appendChild(dli);grid.appendChild(dl);
+  sec.appendChild(grid);
+  // optional abweichendes Deadline-Datum
+  const dd=ael('div','f');dd.appendChild(ael('label',null,'Deadline-Datum (optional, Standard = Showtag)'));
+  const ddi=document.createElement('input');ddi.type='date';ddi.value=sh.deadlineDatum||'';
+  ddi.onchange=()=>{sh.deadlineDatum=ddi.value;save();render();};
+  dd.appendChild(ddi);sec.appendChild(dd);
+
+  // Warnbalken Deckel + Vertragskontingent
+  const used=deckelUsed(sh.id);
+  sec.appendChild(warnBar('Gästeliste vs. Deckel',used,sh.deckel,'Personen'));
+  if(sh.vertragskontingent!=null)
+    sec.appendChild(warnBar('Genehmigt vs. Vertragskontingent',used,sh.vertragskontingent,'Freikarten'));
+
+  // V6 Finalisierung
+  const fin=ael('div','card');fin.style.marginTop='8px';
+  const fr=ael('div','row');
+  const fl=ael('div','grow');
+  if(sh.final){
+    const b=ael('span','badge b-final','FINAL v'+sh.finalVersion);fl.appendChild(b);
+    const ts=ael('span','small muted');ts.style.marginLeft='8px';
+    ts.textContent=sh.finalAt?('finalisiert '+fmtDate(new Date(sh.finalAt).toISOString().slice(0,10))+' '+hhmm(sh.finalAt)):'';
+    fl.appendChild(ts);
+  }else{
+    fl.appendChild(ael('span','badge b-plan','NICHT FINAL — Exporte gesperrt'));
+  }
+  fl.appendChild(mkTip('Finalisierung friert die Gästeliste als offizielle Version für die Abendkasse ein. Änderungen danach zählen als Nachtrag und müssen neu exportiert werden.'));
+  fr.appendChild(fl);
+  const fb=ael('button','smallbtn'+(sh.final?'':' ok'),sh.final?'Finalisierung aufheben':'Liste finalisieren');
+  fb.onclick=()=>toggleFinal(sh);
+  fr.appendChild(fb);
+  fin.appendChild(fr);
+  if(sh.final){
+    // Änderung seit Finalisierung?
+    const changed=sh.changedSinceFinal||state.gaeste.some(g=>g.showId===sh.id&&g.createdAt>sh.finalAt);
+    if(changed){const w=ael('div','hint warn');w.style.margin='8px 0 0';w.textContent='Liste seit Finalisierung geändert (Nachtrag) — neu exportieren!';fin.appendChild(w);}
+  }
+  sec.appendChild(fin);
+
+  // TM-Banner (für Einladen-Modus)
+  const bn=ael('div','f');bn.style.marginTop='8px';
+  bn.appendChild(ael('label',null,'TM-Hinweisbanner für Einladen-Modus (z. B. „Köln: Liste voll, nur Warteliste“)'));
+  const bni=document.createElement('input');bni.value=sh.banner||'';bni.placeholder='leer = kein Banner';
+  bni.onchange=()=>{sh.banner=bni.value;save();};
+  bn.appendChild(bni);sec.appendChild(bn);
+  return sec;
+}
+function numField(label,val,on,ph,tip){
+  const f=ael('div','f');const lb=ael('label',null,label);f.appendChild(lb);
+  if(tip)lb.appendChild(mkTip(tip));
+  const i=document.createElement('input');i.type='number';i.min='0';i.value=val==null?'':val;if(ph)i.placeholder=ph;
+  i.onchange=()=>on(i.value.trim());
+  f.appendChild(i);return f;
+}
+function warnBar(title,used,max,unit){
+  const p=ael('div','pg');p.style.marginTop='8px';
+  const over=max!=null&&used>max;
+  const n=ael('div','n',title);p.appendChild(n);
+  p.appendChild(bar(used,max));
+  const v=ael('div','v');
+  v.textContent=used+' / '+(max==null?'—':max)+' '+unit+(over?'  ⚠ überschritten':'');
+  if(over)v.style.color='var(--now)';
+  p.appendChild(v);
+  return p;
+}
+
+function toggleFinal(sh){
+  if(sh.final){
+    if(!confirm('Finalisierung von „'+(sh.stadt||'')+'“ aufheben? Nächste Finalisierung zählt die Version hoch.'))return;
+    sh.final=false;
+    state.gaeste.forEach(g=>{if(g.showId===sh.id&&g.status==='final')g.status='genehmigt';});
+    save();render();Toast.show('Finalisierung aufgehoben.',{type:'info'});return;
+  }
+  const gen=state.gaeste.filter(g=>g.showId===sh.id&&g.status==='genehmigt').length;
+  const off=state.gaeste.filter(g=>g.showId===sh.id&&g.status==='angefragt').length;
+  if(!confirm('Liste „'+(sh.stadt||'')+'“ finalisieren?\n'+gen+' genehmigte Gäste werden eingefroren, '+off+' offene Anträge bleiben angefragt (nicht auf der finalen Liste).'))return;
+  sh.final=true;sh.finalVersion++;sh.finalAt=Date.now();sh.changedSinceFinal=false;
+  state.gaeste.forEach(g=>{if(g.showId===sh.id&&g.status==='genehmigt')g.status='final';});
+  save();render();Toast.show('Liste finalisiert (v'+sh.finalVersion+').',{type:'ok'});
+}
+
+/* krasserstoff-Info-Kasten */
+function vKrasserstoff(){
+  const box=ael('div','sec');
+  const k=ael('div','hint tape');
+  const h=ael('div');h.style.fontWeight='700';h.style.marginBottom='4px';
+  h.textContent='Anbindung krasserstoff — mit Ticketing-Ansprechpartner klären';
+  k.appendChild(h);
+  const ul=document.createElement('ul');ul.style.margin='0 0 0 16px';ul.style.fontSize='12px';ul.style.lineHeight='1.5';
+  ['0-€-Gästetickets: Export (c) liefert Namen im Format der harten Personalisierung — Export-Deadline an die krasserstoff-Frist koppeln.',
+   'krasserstoff bietet API-Tokens für automatischen Ticketzahlen-Abruf — perspektivisch VVK-Monitor (Tool 16) automatisch befüllen.',
+   'Bis dahin: CSV/Druck als verlässliche Brücke, keine Schnittstellen-Abhängigkeit am Showtag.'
+  ].forEach(t=>{const li=document.createElement('li');li.textContent=t;ul.appendChild(li);});
+  k.appendChild(ul);
+  box.appendChild(k);
+  return box;
+}
+
+/* V3 Freigabe-Workflow */
+function guestName(g){return (g.nachname||'')+' '+(g.vorname||'');}
+function setStatus(ids,st){
+  if(st==='genehmigt'){
+    const finalNachtrag=ids.some(id=>{const g=state.gaeste.find(x=>x.id===id);const sh=g&&showById(g.showId);return sh&&sh.final;});
+    if(finalNachtrag&&!confirm('Diese Show ist bereits finalisiert. Die Freigabe wird als Nachtrag auf die finale Liste gesetzt und die Liste als „geändert" markiert (bitte neu exportieren!). Fortfahren?'))return;
+  }
+  const apply=()=>{
+    ids.forEach(id=>{const g=state.gaeste.find(x=>x.id===id);if(!g)return;const sh=showById(g.showId);
+      if(st==='genehmigt'&&sh&&sh.final){g.status='final';g.nachtrag=true;g.autoGenehmigt=false;sh.changedSinceFinal=true;}
+      else{g.status=st;g.autoGenehmigt=false;}});
+  };
+  const n=ids.length;
+  if(st==='abgelehnt'){
+    withUndo(n>1?(n+' Anträge abgelehnt.'):'Antrag abgelehnt.',apply);
+  }else{
+    apply();save();render();
+    if(st==='genehmigt')Toast.show(n>1?(n+' Gäste genehmigt.'):'Gast genehmigt.',{type:'ok'});
+  }
+}
+function vFreigabe(sh){
+  const sec=ael('div');
+  sec.appendChild(sechead('Freigabe · '+(sh.stadt||''),''));
+  const offen=state.gaeste.filter(g=>g.showId===sh.id&&g.status==='angefragt')
+    .sort((a,b)=>a.createdAt-b.createdAt);
+  const wrap=ael('div','sec');
+  if(!offen.length){
+    const c=ael('div','hint');c.textContent='Keine offenen Anträge für diese Show.';wrap.appendChild(c);
+  }else{
+    // Mehrfach-Leiste
+    const multi=ael('div','card');
+    const mr=ael('div','row');
+    const info=ael('div','grow small muted','Auswahl treffen, dann Mehrfach-Aktion:');
+    mr.appendChild(info);
+    const bg=ael('button','smallbtn ok','Auswahl genehmigen');
+    bg.onclick=()=>{if(freigabeSel.size)setStatus([...freigabeSel],'genehmigt');};
+    const bn=ael('button','smallbtn no','Auswahl ablehnen');
+    bn.onclick=()=>{if(freigabeSel.size)setStatus([...freigabeSel],'abgelehnt');};
+    mr.appendChild(bg);mr.appendChild(bn);
+    multi.appendChild(mr);
+    wrap.appendChild(multi);
+
+    offen.forEach(g=>{
+      const c=ael('div','card');
+      const r=ael('div','row');
+      const cb=document.createElement('input');cb.type='checkbox';cb.style.flex='0 0 auto';cb.style.width='20px';cb.style.height='20px';
+      cb.onchange=()=>{cb.checked?freigabeSel.add(g.id):freigabeSel.delete(g.id);};
+      r.appendChild(cb);
+      const main=ael('div','grow');
+      const nm=ael('div');nm.style.fontWeight='700';
+      nm.textContent=guestName(g)+(personsPlanned(g)>1?' +'+(personsPlanned(g)-1):'');
+      if(isDuplicate(g)){c.style.borderLeft='4px solid var(--now)';const d=ael('span','badge b-warn','DOPPELT?');d.style.marginLeft='6px';nm.appendChild(d);}
+      if(g.nachtrag){const d=ael('span','badge b-tape','NACHTRAG');d.style.marginLeft='6px';d.title='Nach dem Redaktionsschluss (Deadline) angelegt oder geändert — Liste ggf. neu exportieren.';nm.appendChild(d);}
+      main.appendChild(nm);
+      const meta=ael('div','small muted');
+      const p=pById(g.einladenderId),grp=grpById(g.gruppeId),kat=katById(g.kategorieId);
+      meta.textContent=(kat.name)+' · '+(grp?grp.name:'—')+' · '+(p?p.name:'—');
+      main.appendChild(meta);
+      r.appendChild(main);
+      const bok=ael('button','smallbtn ok','Genehmigen');bok.onclick=()=>setStatus([g.id],'genehmigt');
+      const bno=ael('button','smallbtn no','Ablehnen');bno.onclick=()=>setStatus([g.id],'abgelehnt');
+      r.appendChild(bok);r.appendChild(bno);
+      c.appendChild(r);
+      wrap.appendChild(c);
+    });
+  }
+  // Automatik-Log
+  const autos=state.gaeste.filter(g=>g.showId===sh.id&&g.autoGenehmigt)
+    .sort((a,b)=>b.createdAt-a.createdAt);
+  if(autos.length){
+    const log=ael('div','card');
+    log.appendChild(ael('div','kicker','Automatik-Log · automatisch genehmigt'));
+    autos.forEach(g=>{
+      const l=ael('div','small');
+      l.textContent='✓ '+guestName(g)+(personsPlanned(g)>1?' +'+(personsPlanned(g)-1):'')+' · '+hhmm(g.createdAt);
+      log.appendChild(l);
+    });
+    wrap.appendChild(log);
+  }
+  sec.appendChild(wrap);
+  return sec;
+}
+function sechead(title,right){
+  const h=ael('div','sechead');
+  h.appendChild(ael('h2',null,title));
+  h.appendChild(ael('span',null,right||''));
+  return h;
+}
+
+/* Gästeliste der aktiven Show (Verwaltung: alles bearbeitbar außer bei final) */
+let glFilter={q:'',status:new Set(),kat:new Set(),grp:new Set(),aftershow:false,nachtrag:false,sort:'name'};
+const GL_STATUSORDER={angefragt:0,genehmigt:1,final:2,abgelehnt:3};
+function vGaesteListe(sh){
+  const sec=ael('div');
+  const all=gaesteForShow(sh.id);
+  const persAll=all.filter(APPROVED).reduce((s,g)=>s+personsPlanned(g),0);
+  sec.appendChild(sechead('Gäste · '+(sh.stadt||''),all.length+' Einträge · '+persAll+' Pers. genehmigt'));
+  // Leerzustand (F1.5): keine Gäste in dieser Show
+  if(!all.length){
+    const box=ael('div','emptybox');
+    box.appendChild(ael('div','et','Noch keine Gäste für „'+(sh.stadt||'')+'“. Lege den ersten Gast an — oder starte mit Beispieldaten.'));
+    const ea=ael('div','ea');
+    const b1=ael('button','smallbtn ok','+ Gast anlegen');b1.onclick=()=>openGuestDlg(null,{});
+    ea.appendChild(b1);
+    if(state.gaeste.length===0){
+      const b2=ael('button','smallbtn','Demo-Daten laden');
+      b2.onclick=()=>{if(confirm('Rund 40 Beispiel-Gäste über mehrere Shows laden? (Jederzeit über Einstellungen ⚙ entfernbar.)'))loadDemoData();};
+      ea.appendChild(b2);
+    }
+    box.appendChild(ea);sec.appendChild(box);return sec;
+  }
+  // Filterleiste
+  const fbar=ael('div','glbar');
+  const sb=ael('div','glsearch');
+  const inp=document.createElement('input');inp.type='search';
+  inp.placeholder='Suchen: Name, Begleitung, Einladender, Notiz …';inp.value=glFilter.q;
+  inp.setAttribute('aria-label','Gäste durchsuchen');
+  const xb=ael('button','glx','×');xb.setAttribute('aria-label','Suche zurücksetzen');
+  sb.appendChild(inp);sb.appendChild(xb);fbar.appendChild(sb);
+  const cnt=ael('div','glcount','');cnt.setAttribute('aria-live','polite');fbar.appendChild(cnt);
+  const chips=ael('div','glchips');fbar.appendChild(chips);
+  const sortRow=ael('div','glsort');fbar.appendChild(sortRow);
+  sec.appendChild(fbar);
+
+  // F2.4 Bulk-Auswahl (nur solange nicht finalisiert — Sperre wird nicht umgangen)
+  const bulkSel=new Set();
+  const bulkOn=!sh.final;
+  let bulkAct=[],bkinfo=null,selAll=null;
+  if(bulkOn){
+    const bulk=ael('div','glbulk');
+    selAll=document.createElement('input');selAll.type='checkbox';selAll.className='glcb';
+    selAll.setAttribute('aria-label','Alle sichtbaren auswählen');
+    selAll.onchange=()=>{
+      lastFiltered.forEach(g=>{selAll.checked?bulkSel.add(g.id):bulkSel.delete(g.id);});
+      paint();
+    };
+    bulk.appendChild(selAll);
+    bkinfo=ael('div','bkinfo','0 ausgewählt');bulk.appendChild(bkinfo);
+    const idsSel=()=>lastFiltered.filter(g=>bulkSel.has(g.id)).map(g=>g.id);
+    const mkAct=(cls,label,fn)=>{const b=ael('button','smallbtn'+(cls?' '+cls:''),label);
+      b.onclick=()=>{const ids=idsSel();if(!ids.length){Toast.show('Keine Auswahl.',{type:'info'});return;}fn(ids);};
+      bulk.appendChild(b);bulkAct.push(b);return b;};
+    mkAct('ok','Genehmigen',ids=>withUndo(ids.length+' Gäste genehmigt.',()=>{
+      ids.forEach(id=>{const g=state.gaeste.find(x=>x.id===id);if(g){g.status='genehmigt';g.autoGenehmigt=false;}});}));
+    mkAct('no','Ablehnen',ids=>withUndo(ids.length+' Anträge abgelehnt.',()=>{
+      ids.forEach(id=>{const g=state.gaeste.find(x=>x.id===id);if(g){g.status='abgelehnt';g.autoGenehmigt=false;}});}));
+    mkAct('','Kategorie ändern',ids=>{
+      modal((dlg,close)=>{
+        dlg.appendChild(ael('h2',null,'Kategorie ändern'));
+        dlg.appendChild(ael('div','small muted',ids.length+' Gäste erhalten eine neue Kategorie.'));
+        const f=ael('div','f');f.appendChild(ael('label',null,'Neue Kategorie'));
+        const ks=selectFrom(state.kategorien,k=>k.id,k=>k.name,state.kategorien[0]&&state.kategorien[0].id);
+        f.appendChild(ks);dlg.appendChild(f);
+        const btns=ael('div','dlgbtns');
+        const ok=ael('button','save','Übernehmen');
+        ok.onclick=()=>{const kid=ks.value,kn=katById(kid).name;close();
+          withUndo(ids.length+' × Kategorie „'+kn+'“.',()=>{
+            ids.forEach(id=>{const g=state.gaeste.find(x=>x.id===id);if(g)g.kategorieId=kid;});});};
+        const cl=ael('button',null,'Abbrechen');cl.onclick=close;
+        btns.appendChild(ok);btns.appendChild(cl);dlg.appendChild(btns);
+      });
+    });
+    mkAct('no','Löschen',ids=>{
+      if(!confirm(ids.length+' Gäste löschen? (Rückgängig für kurze Zeit möglich.)'))return;
+      withUndo(ids.length+' Gäste gelöscht.',()=>{state.gaeste=state.gaeste.filter(g=>ids.indexOf(g.id)<0);});
+    });
+    sec.appendChild(bulk);
+  }
+
+  const wrap=ael('div','sec');sec.appendChild(wrap);
+  let lastFiltered=[];
+  function updateBulkBar(){
+    if(!bulkOn)return;
+    const ids=lastFiltered.filter(g=>bulkSel.has(g.id));
+    if(bkinfo)bkinfo.textContent=ids.length+' ausgewählt';
+    bulkAct.forEach(b=>b.disabled=!ids.length);
+    if(selAll)selAll.checked=lastFiltered.length>0&&ids.length===lastFiltered.length;
+  }
+
+  const tgl=(set,v)=>{set.has(v)?set.delete(v):set.add(v);};
+  function matches(g){
+    if(glFilter.status.size&&!glFilter.status.has(g.status))return false;
+    if(glFilter.kat.size&&!glFilter.kat.has(g.kategorieId))return false;
+    if(glFilter.grp.size&&!glFilter.grp.has(g.gruppeId))return false;
+    if(glFilter.aftershow&&!g.aftershow)return false;
+    if(glFilter.nachtrag&&!g.nachtrag)return false;
+    const q=glFilter.q.trim().toLowerCase();
+    if(q){
+      const p=pById(g.einladenderId);
+      const hay=[guestName(g),(g.begleitungen||[]).map(b=>b.name).join(' '),p?p.name:'',g.notiz||''].join(' ').toLowerCase();
+      if(hay.indexOf(q)<0)return false;
+    }
+    return true;
+  }
+  function sortList(l){
+    const byName=(a,b)=>guestName(a).toLowerCase().localeCompare(guestName(b).toLowerCase(),'de');
+    if(glFilter.sort==='status')return l.sort((a,b)=>(GL_STATUSORDER[a.status]-GL_STATUSORDER[b.status])||byName(a,b));
+    if(glFilter.sort==='kat')return l.sort((a,b)=>katById(a.kategorieId).name.localeCompare(katById(b.kategorieId).name,'de')||byName(a,b));
+    if(glFilter.sort==='neu')return l.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    return l.sort(byName);
+  }
+  function guestCard(g){
+    const kat=katById(g.kategorieId);
+    const c=ael('div','card');c.style.borderLeft='6px solid '+kat.farbe;
+    if(isDuplicate(g))c.style.borderLeft='6px solid var(--now)';
+    const r=ael('div','row');
+    if(bulkOn){
+      const cb=document.createElement('input');cb.type='checkbox';cb.className='glcb';
+      cb.checked=bulkSel.has(g.id);cb.setAttribute('aria-label','Auswählen: '+guestName(g));
+      cb.onchange=()=>{cb.checked?bulkSel.add(g.id):bulkSel.delete(g.id);updateBulkBar();};
+      r.appendChild(cb);
+    }
+    const main=ael('div','grow');
+    const nm=ael('div');nm.style.fontWeight='700';
+    nm.textContent=guestName(g)+(personsPlanned(g)>1?' +'+(personsPlanned(g)-1):'');
+    nm.appendChild(statusBadge(g));
+    if(isDuplicate(g)){const d=ael('span','badge b-warn','DOPPELT?');d.style.marginLeft='6px';nm.appendChild(d);}
+    if(g.nachtrag){const d=ael('span','badge b-tape','NACHTRAG');d.style.marginLeft='6px';d.title='Nach dem Redaktionsschluss (Deadline) angelegt oder geändert — Liste ggf. neu exportieren.';nm.appendChild(d);}
+    main.appendChild(nm);
+    const meta=ael('div','small muted');
+    const p=pById(g.einladenderId),grp=grpById(g.gruppeId);
+    meta.textContent=kat.name+' · '+(grp?grp.name:'—')+' · '+(p?p.name:'—')+(g.aftershow?' · Aftershow':'');
+    main.appendChild(meta);
+    r.appendChild(main);
+    if(!sh.final){const be=ael('button','smallbtn','Bearb.');be.onclick=()=>openGuestDlg(g.id,{});r.appendChild(be);}
+    c.appendChild(r);return c;
+  }
+  function paint(){
+    chips.innerHTML='';
+    const addChip=(label,active,on)=>{const b=ael('button',active?'on':null,label);b.onclick=on;chips.appendChild(b);};
+    [['angefragt','angefragt'],['genehmigt','genehmigt'],['abgelehnt','abgelehnt'],['final','final']].forEach(([v,l])=>
+      addChip(l,glFilter.status.has(v),()=>{tgl(glFilter.status,v);paint();}));
+    state.kategorien.forEach(k=>addChip(k.name.split(' ')[0],glFilter.kat.has(k.id),()=>{tgl(glFilter.kat,k.id);paint();}));
+    [...new Set(all.map(g=>g.gruppeId))].forEach(id=>{const gr=grpById(id);if(gr)addChip(gr.name,glFilter.grp.has(id),()=>{tgl(glFilter.grp,id);paint();});});
+    addChip('nur Aftershow',glFilter.aftershow,()=>{glFilter.aftershow=!glFilter.aftershow;paint();});
+    addChip('nur Nachtrag',glFilter.nachtrag,()=>{glFilter.nachtrag=!glFilter.nachtrag;paint();});
+    sortRow.innerHTML='';
+    [['name','Name'],['status','Status'],['kat','Kategorie'],['neu','Zuletzt']].forEach(([v,l])=>{
+      const b=ael('button',glFilter.sort===v?'on':null,l);b.onclick=()=>{glFilter.sort=v;paint();};sortRow.appendChild(b);});
+    wrap.innerHTML='';
+    const filtered=sortList(all.filter(matches));
+    lastFiltered=filtered;
+    // Auswahl auf sichtbare (gefilterte) Menge begrenzen
+    const vis=new Set(filtered.map(g=>g.id));
+    [...bulkSel].forEach(id=>{if(!vis.has(id))bulkSel.delete(id);});
+    cnt.textContent=filtered.length+' von '+all.length+' angezeigt';
+    if(!filtered.length){const h=ael('div','hint');h.textContent='Keine Treffer für die aktuelle Auswahl.';wrap.appendChild(h);}
+    filtered.forEach(g=>wrap.appendChild(guestCard(g)));
+    updateBulkBar();
+  }
+  inp.oninput=()=>{glFilter.q=inp.value;paint();};
+  xb.onclick=()=>{glFilter.q='';inp.value='';paint();inp.focus();};
+  paint();
+  return sec;
+}
+function statusBadge(g){
+  const map={angefragt:['b-plan','angefragt'],genehmigt:['b-ok','genehmigt'],abgelehnt:['b-abg','abgelehnt'],final:['b-final','final']};
+  const m=map[g.status]||map.angefragt;
+  const b=ael('span','badge '+m[0],m[1]);b.style.marginLeft='6px';return b;
+}
+
+/* V1 Kontingent-Matrix */
+function cellNode(quota,tal,onClick){
+  const td=ael('td','cell');
+  const qv=ael('div','qv');
+  const eff=quota==null?'∞':quota;
+  qv.textContent='K '+eff+' · b '+tal.beantragt+' · g '+tal.genehmigt+' · e '+tal.eingecheckt;
+  td.appendChild(qv);
+  td.appendChild(bar(tal.genehmigt,quota));
+  td.onclick=onClick;
+  td.title='Kontingent / beantragt / genehmigt / eingecheckt — Klick: Show-Ausnahme setzen';
+  return td;
+}
+function vMatrix(){
+  const sec=ael('div','einfach-hide');
+  sec.appendChild(sechead('Kontingent-Matrix','Zeile = Gruppe · Klick klappt Einladende auf · Zelle = Ausnahme'));
+  const wrap=ael('div','tlwrap');
+  const tab=ael('table','mx');
+  // Kopf
+  const thead=document.createElement('thead');const htr=document.createElement('tr');
+  htr.appendChild(ael('th',null,'Gruppe / Einladender'));
+  state.shows.forEach(s=>{const th=ael('th',null,showLabel(s));htr.appendChild(th);});
+  thead.appendChild(htr);tab.appendChild(thead);
+  const tb=document.createElement('tbody');
+  state.gruppen.forEach(g=>{
+    const tr=document.createElement('tr');tr.className='grprow';
+    const gtd=ael('td','grp',(mxExpand[g.id]?'▾ ':'▸ ')+g.name);
+    gtd.dataset.label='Gruppe / Einladender';
+    gtd.onclick=()=>{mxExpand[g.id]=!mxExpand[g.id];render();};
+    tr.appendChild(gtd);
+    state.shows.forEach(s=>{
+      const c=cellNode(grpQuota(g.id,s.id),tallyGrpShow(g.id,s.id),
+        ()=>openQuotaDlg('grp',g.id,s.id));
+      c.dataset.label=showLabel(s);
+      tr.appendChild(c);
+    });
+    tb.appendChild(tr);
+    if(mxExpand[g.id]){
+      const persons=state.einladende.filter(p=>p.gruppeId===g.id);
+      if(!persons.length){
+        const tr2=document.createElement('tr');
+        const td=ael('td','sub','(keine Einladenden — unter Einstellungen anlegen)');
+        td.colSpan=1+state.shows.length;tr2.appendChild(td);tb.appendChild(tr2);
+      }
+      persons.forEach(p=>{
+        const tr2=document.createElement('tr');
+        const ptd=ael('td','sub',p.name);
+        ptd.dataset.label='Gruppe / Einladender';
+        ptd.onclick=()=>openEinlDlg(p.id);
+        tr2.appendChild(ptd);
+        state.shows.forEach(s=>{
+          const pq=personQuota(p.id,s.id),gq=grpQuota(g.id,s.id);
+          const eff=(pq==null)?gq:(gq==null?pq:Math.min(pq,gq)); // strengere Grenze
+          const c=cellNode(eff,tallyPersonShow(p.id,s.id),
+            ()=>openQuotaDlg('person',p.id,s.id));
+          c.dataset.label=showLabel(s);
+          tr2.appendChild(c);
+        });
+        tb.appendChild(tr2);
+      });
+    }
+  });
+  tab.appendChild(tb);
+  wrap.appendChild(tab);
+  sec.appendChild(wrap);
+  const h=ael('div','hint');h.textContent='K = wirksames Kontingent (Show-Ausnahme schlägt Standard) · b beantragt · g genehmigt · e eingecheckt (jeweils Personen inkl. Begleitungen).';
+  sec.appendChild(h);
+  return sec;
+}
+
+/* V8 Tour-Statistik (inkl. Snapshots gelöschter Shows) */
+function collectStats(){
+  const grp={},per={},stadt={};
+  let nachtragGesamt=0;
+  const ensure=(o,id)=>{if(!o[id])o[id]={genehmigt:0,eingecheckt:0};return o[id];};
+  // Live
+  state.gaeste.forEach(g=>{
+    if(g.nachtrag)nachtragGesamt++;
+    if(!APPROVED(g))return;
+    const pers=personsPlanned(g),ein=personsCheckedIn(g);
+    const a=ensure(grp,g.gruppeId);a.genehmigt+=pers;a.eingecheckt+=ein;
+    const b=ensure(per,g.einladenderId);b.genehmigt+=pers;b.eingecheckt+=ein;
+  });
+  state.gaeste.forEach(g=>{
+    if(!APPROVED(g))return;
+    const sh=showById(g.showId);if(!sh)return;
+    stadt[sh.stadt]=(stadt[sh.stadt]||0)+personsPlanned(g);
+  });
+  // Snapshots
+  state.shows.forEach(sh=>{
+    const snap=sh.statistikSnapshot;if(!snap)return;
+    nachtragGesamt+=snap.nachtraege||0;
+    Object.entries(snap.gruppen||{}).forEach(([id,v])=>{const a=ensure(grp,id);a.genehmigt+=v.genehmigt||0;a.eingecheckt+=v.eingecheckt||0;});
+    Object.entries(snap.einladende||{}).forEach(([id,v])=>{const a=ensure(per,id);a.genehmigt+=v.genehmigt||0;a.eingecheckt+=v.eingecheckt||0;});
+    if(snap.stadt)stadt[snap.stadt]=(stadt[snap.stadt]||0)+(snap.personen||0);
+  });
+  return {grp,per,stadt,nachtragGesamt};
+}
+function noShowPg(label,v){
+  const p=ael('div','pg');
+  p.appendChild(ael('div','n',label));
+  const noShow=v.genehmigt-v.eingecheckt;
+  const quote=v.genehmigt>0?Math.round(noShow/v.genehmigt*100):0;
+  const wrap=ael('div','b');const i=ael('i',null);i.style.width=Math.min(100,quote)+'%';
+  i.style.background=quote>40?'var(--now)':'var(--tape)';wrap.appendChild(i);p.appendChild(wrap);
+  p.appendChild(ael('div','v','No-Show '+quote+'% · '+v.eingecheckt+'/'+v.genehmigt+' da'));
+  return p;
+}
+function vStatistik(){
+  const sec=ael('div');
+  sec.appendChild(sechead('Tour-Statistik',''));
+  const st=collectStats();
+  // No-Show je Gruppe
+  const g1=ael('div','pggrid');
+  Object.entries(st.grp).forEach(([id,v])=>{if(v.genehmigt)g1.appendChild(noShowPg((grpById(id)||{name:'—'}).name,v));});
+  if(g1.children.length){sec.appendChild(ael('div','hint','No-Show-Quote je Gruppe'));sec.appendChild(g1);}
+  // No-Show je Einladender
+  const g2=ael('div','pggrid');
+  Object.entries(st.per).forEach(([id,v])=>{if(v.genehmigt)g2.appendChild(noShowPg((pById(id)||{name:'—'}).name,v));});
+  if(g2.children.length){sec.appendChild(ael('div','hint','No-Show-Quote je Einladendem'));sec.appendChild(g2);}
+  // Auslastung + Nachträge je Show
+  const g3=ael('div','pggrid');
+  state.shows.forEach(s=>{
+    const used=s.statistikSnapshot?(s.statistikSnapshot.personen||0):deckelUsed(s.id);
+    const nach=s.statistikSnapshot?(s.statistikSnapshot.nachtraege||0):state.gaeste.filter(x=>x.showId===s.id&&x.nachtrag).length;
+    const p=ael('div','pg');
+    p.appendChild(ael('div','n',fmtDateShort(s.datum)+' '+(s.stadt||'')));
+    p.appendChild(bar(used,s.deckel));
+    p.appendChild(ael('div','v',used+'/'+s.deckel+' Pers. · '+nach+' Nachtr.'));
+    g3.appendChild(p);
+  });
+  sec.appendChild(ael('div','hint','Auslastung Liste vs. Deckel + Nachträge nach Deadline je Show'));
+  sec.appendChild(g3);
+  // Top-Städte
+  const top=Object.entries(st.stadt).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  if(top.length){
+    const max=top[0][1]||1;
+    const g4=ael('div','pggrid');
+    top.forEach(([c,n])=>{const p=ael('div','pg');p.appendChild(ael('div','n',c||'—'));
+      const wrap=ael('div','b');const i=ael('i',null);i.style.width=Math.round(n/max*100)+'%';i.style.background='var(--ok)';wrap.appendChild(i);p.appendChild(wrap);
+      p.appendChild(ael('div','v',n+' Pers.'));g4.appendChild(p);});
+    sec.appendChild(ael('div','hint','Top-Städte (meiste Gäste)'));
+    sec.appendChild(g4);
+  }
+  sec.appendChild(ael('div','hint','Nachträge nach Redaktionsschluss gesamt (Tour): '+st.nachtragGesamt));
+  const h=ael('div','hint');h.textContent='No-Show-Quote als Basis für Kontingent-Anpassung der Rest-Tour.';
+  sec.appendChild(h);
+  return sec;
+}
+
+/* V9 Datenschutz */
+function makeSnapshot(sh){
+  const snap={stadt:sh.stadt,personen:0,nachtraege:0,gruppen:{},einladende:{}};
+  // Token nur als anonymes Aggregat (kein Personenbezug im Snapshot)
+  const tks=(state.tokens||[]).filter(t=>t.showId===sh.id);
+  snap.tokens={gesamt:tks.length,eingeloest:tks.filter(t=>t.status==='eingeloest').length,offen:tks.filter(t=>t.status==='offen').length};
+  const ens=(o,id)=>{if(!o[id])o[id]={genehmigt:0,eingecheckt:0,nachtraege:0};return o[id];};
+  state.gaeste.filter(g=>g.showId===sh.id).forEach(g=>{
+    if(g.nachtrag)snap.nachtraege++;
+    if(!APPROVED(g))return;
+    const pers=personsPlanned(g),ein=personsCheckedIn(g);
+    snap.personen+=pers;
+    const a=ens(snap.gruppen,g.gruppeId);a.genehmigt+=pers;a.eingecheckt+=ein;if(g.nachtrag)a.nachtraege++;
+    const b=ens(snap.einladende,g.einladenderId);b.genehmigt+=pers;b.eingecheckt+=ein;if(g.nachtrag)b.nachtraege++;
+  });
+  return snap;
+}
+function vDatenschutz(sh){
+  const sec=ael('div','sec');
+  const c=ael('div','card');
+  c.appendChild(ael('div','kicker','Datenschutz'));
+  const cnt=gaesteForShow(sh.id).length;
+  const tkc=(state.tokens||[]).filter(t=>t.showId===sh.id).length;
+  const info=ael('div','small muted');info.style.margin='4px 0 8px';
+  info.textContent=sh.geloescht?'Personendaten dieser Show wurden gelöscht — nur anonyme Statistik-Zahlen bleiben erhalten.':
+    (cnt+' Gäste, '+tkc+' Ticket-Token gespeichert. Löschung entfernt Namen, Statistik-Zahlen bleiben anonym erhalten.');
+  c.appendChild(info);
+  if(!sh.geloescht){
+    const b=ael('button','smallbtn no','Show-Daten löschen ('+cnt+' Gäste, '+tkc+' Token)');
+    b.onclick=()=>{
+      if(!cnt&&!tkc){Toast.show('Keine Daten zu löschen.',{type:'info'});return;}
+      if(!confirm('Personenbezogene Daten von „'+(sh.stadt||'')+'“ ('+cnt+' Gäste, '+tkc+' Ticket-Token) unwiderruflich löschen?\nEnthält auch alle Ticket-Zugänge samt E-Mails dieser Show.\nAnonyme Statistik-Zahlen bleiben erhalten.'))return;
+      sh.statistikSnapshot=makeSnapshot(sh);
+      state.gaeste=state.gaeste.filter(g=>g.showId!==sh.id);
+      state.tokens=(state.tokens||[]).filter(t=>t.showId!==sh.id);
+      sh.geloescht=true;save();render();Toast.show('Personendaten der Show gelöscht ('+cnt+' Gäste, '+tkc+' Token).',{type:'ok'});
+    };
+    c.appendChild(b);
+  }
+  sec.appendChild(c);
+  return sec;
+}
+
+/* Einstellungen */
+function vEinstellungen(){
+  const sec=ael('div','sec');
+  const c=ael('div','card');
+  c.appendChild(ael('div','kicker','Stammdaten & Einstellungen'));
+  const r=ael('div','row');r.style.flexWrap='wrap';r.style.gap='8px';r.style.marginTop='8px';
+  const b0=ael('button','smallbtn','Shows verwalten');b0.onclick=()=>openShowDlg(false);r.appendChild(b0);
+  const b1=ael('button','smallbtn','Kategorien bearbeiten');b1.onclick=openKatDlg;
+  const b2=ael('button','smallbtn','Gruppen bearbeiten');b2.onclick=openGrpDlg;
+  const b3=ael('button','smallbtn','Einladende verwalten');b3.onclick=()=>openEinlDlg(null);
+  r.appendChild(b1);r.appendChild(b2);r.appendChild(b3);
+  c.appendChild(r);
+  const f=ael('div','f');f.style.marginTop='10px';f.appendChild(ael('label',null,'Automatisch löschen X Tage nach Show (nur Erinnerung)'));
+  const i=document.createElement('input');i.type='number';i.min='1';i.value=state.meta.autoLoeschTage;
+  i.onchange=()=>{state.meta.autoLoeschTage=+i.value||14;save();render();};
+  f.appendChild(i);c.appendChild(f);
+  sec.appendChild(c);
+  return sec;
+}
+
+/* ================= Modus Einladen ================= */
+function renderEinladen(){
+  const v=$('view');
+  // Wer bin ich
+  const wb=ael('div','sec');
+  const f=ael('div','f');f.appendChild(ael('label',null,'Wer bin ich? (Tour-internes Vertrauensmodell)'));
+  const sel=document.createElement('select');
+  const o0=document.createElement('option');o0.value='';o0.textContent='— bitte wählen —';sel.appendChild(o0);
+  state.einladende.forEach(p=>{const o=document.createElement('option');o.value=p.id;
+    const grp=grpById(p.gruppeId);o.textContent=p.name+(grp?' ('+grp.name+')':'');
+    if(p.id===state.ui.werBinIch)o.selected=true;sel.appendChild(o);});
+  sel.onchange=()=>{state.ui.werBinIch=sel.value||null;save();render();};
+  f.appendChild(sel);wb.appendChild(f);
+  v.appendChild(wb);
+
+  const p=pById(state.ui.werBinIch);
+  if(!p){
+    const h=ael('div','hint');h.textContent='Bitte oben auswählen, um eigenes Kontingent und eigene Gäste zu sehen.';
+    v.appendChild(h);
+    setTools([{label:'+ Gast',cls:'primary',on:()=>Toast.show('Bitte zuerst „Wer bin ich“ wählen.',{type:'info'}),disabled:true}]);
+    return;
+  }
+  const grp=grpById(p.gruppeId);
+  // Code-Kommentar: Einzeldatei-Version = Dropdown; spätere Server-Version = persönliche Links pro Einladendem.
+
+  // TM-Banner (Shows mit Banner)
+  state.shows.forEach(s=>{if(s.banner&&s.banner.trim()){
+    const b=ael('div','hint warn');b.textContent=(s.stadt||'')+': '+s.banner;v.appendChild(b);
+  }});
+
+  // Eigenes Kontingent je Show
+  v.appendChild(sechead('Mein Kontingent · '+p.name,grp?grp.name:''));
+  const kwrap=ael('div','sec');
+  state.shows.forEach(s=>{
+    if(s.geloescht)return;
+    const q=personQuota(p.id,s.id);
+    const t=tallyPersonShow(p.id,s.id);
+    const vergeben=t.beantragt+t.genehmigt;
+    const c=ael('div','card');
+    const r=ael('div','row');
+    const main=ael('div','grow');
+    const nm=ael('div');nm.style.fontWeight='700';nm.textContent=(s.stadt||'—')+' · '+fmtDateShort(s.datum);
+    if(deadlinePassed(s)){const d=ael('span','badge b-warn','Redaktionsschluss');d.style.marginLeft='6px';nm.appendChild(d);}
+    else if(s.final){const d=ael('span','badge b-final','final');d.style.marginLeft='6px';nm.appendChild(d);}
+    main.appendChild(nm);
+    const meta=ael('div','small muted');meta.textContent=vergeben+' von '+(q==null?'∞':q)+' vergeben (beantragt+genehmigt, Personen)';
+    main.appendChild(meta);
+    main.appendChild(bar(vergeben,q));
+    r.appendChild(main);
+    c.appendChild(r);
+    kwrap.appendChild(c);
+  });
+  v.appendChild(kwrap);
+
+  // Eigene Gäste mit Ampel
+  const mine=state.gaeste.filter(g=>g.einladenderId===p.id)
+    .sort((a,b)=>b.createdAt-a.createdAt);
+  v.appendChild(sechead('Meine Gäste',mine.length+' Anträge'));
+  const gwrap=ael('div','sec');
+  if(!mine.length){const h=ael('div','hint');h.textContent='Noch keine eigenen Gäste. Unten „+ Gast“.';gwrap.appendChild(h);}
+  mine.forEach(g=>{
+    const sh=showById(g.showId);
+    const c=ael('div','card');
+    const r=ael('div','row');
+    r.appendChild(ael('span','amp amp-'+g.status));
+    const main=ael('div','grow');
+    const nm=ael('div');nm.style.fontWeight='700';
+    nm.textContent=guestName(g)+(personsPlanned(g)>1?' +'+(personsPlanned(g)-1):'');
+    if(g.nachtrag){const d=ael('span','badge b-tape','NACHTRAG');d.style.marginLeft='6px';d.title='Nach dem Redaktionsschluss (Deadline) angelegt oder geändert — Liste ggf. neu exportieren.';nm.appendChild(d);}
+    main.appendChild(nm);
+    const kat=katById(g.kategorieId);
+    const meta=ael('div','small muted');
+    meta.textContent=(sh?(sh.stadt||''):'')+' · '+kat.name+' · '+g.status+(g.aftershow?' · Aftershow':'');
+    main.appendChild(meta);
+    r.appendChild(main);
+    // Bearbeiten nur solange nicht final/abgelehnt und vor Deadline
+    if(sh&&!sh.final&&g.status!=='abgelehnt'&&!deadlinePassed(sh)){
+      const be=ael('button','smallbtn','Bearb.');be.onclick=()=>openGuestDlg(g.id,{einladen:true});
+      r.appendChild(be);
+    }
+    c.appendChild(r);
+    gwrap.appendChild(c);
+  });
+  v.appendChild(gwrap);
+
+  const anyOpen=state.shows.some(s=>!s.final&&!s.geloescht&&!deadlinePassed(s));
+  if(!anyOpen){
+    const h=ael('div','hint warn');h.textContent='Redaktionsschluss erreicht — bitte ans TM wenden.';v.appendChild(h);
+  }
+  setTools([{label:'+ Gast',cls:'primary',disabled:!anyOpen,
+    on:()=>anyOpen?openGuestDlg(null,{einladen:true}):Toast.show('Redaktionsschluss — bitte ans TM wenden.',{type:'warn'})}]);
+}
+
+/* ================= Modus Einlass ================= */
+let einlassSearch='';
+let einlassFilter='';   // kategorieId oder ''
+let einlassLastList=[]; // F2.5 aktuell gefilterte Einlass-Treffer
+function einlassEnterCheckin(sh){
+  const q=einlassSearch.trim().toLowerCase();
+  if(!q)return;
+  if(einlassLastList.length!==1){Toast.show(einlassLastList.length+' Treffer — bitte weiter eingrenzen.',{type:'info'});return;}
+  const g=einlassLastList[0];
+  if(g.checkinAt){Toast.show(guestName(g)+' ist bereits eingecheckt.',{type:'info'});return;}
+  checkinMain(g,sh);
+}
+function renderEinlass(){
+  const v=$('view');
+  const finals=state.shows.filter(s=>s.final&&!s.geloescht);
+  setTools([{label:'JSON-Export (Check-in-Stände sichern)',on:jsonExport}]);
+  if(!finals.length){
+    v.appendChild(mkHint('Noch keine finalisierte Show. Im Modus „Verwaltung“ eine Liste finalisieren.'));
+    return;
+  }
+  // Show wählen: heute bevorzugt. Eigene Auswahl, damit die aktive Show der Verwaltung nicht überschrieben wird.
+  const today=todayISO();
+  let cur=finals.find(s=>s.id===state.ui.einlassShowId&&s.final&&!s.geloescht);
+  if(!cur)cur=finals.find(s=>s.id===state.ui.aktiveShowId&&s.final&&!s.geloescht);
+  if(!cur)cur=finals.find(s=>s.datum===today)||finals[0];
+  state.ui.einlassShowId=cur.id;
+
+  const selWrap=ael('div','sec');
+  const f=ael('div','f');f.appendChild(ael('label',null,'Show (nur finalisierte)'));
+  const sel=document.createElement('select');
+  finals.forEach(s=>{const o=document.createElement('option');o.value=s.id;
+    o.textContent=fmtDateShort(s.datum)+' · '+(s.stadt||'')+' · v'+s.finalVersion+(s.datum===today?' · HEUTE':'');
+    if(s.id===cur.id)o.selected=true;sel.appendChild(o);});
+  sel.onchange=()=>{state.ui.einlassShowId=sel.value;einlassSearch='';einlassFilter='';save();render();};
+  f.appendChild(sel);selWrap.appendChild(f);
+  v.appendChild(selWrap);
+
+  // Suchfeld
+  const sb=ael('div','searchbar');
+  const si=document.createElement('input');si.placeholder='Suchen … (z. B. „mü“ → Müller)';si.value=einlassSearch;
+  si.oninput=()=>{einlassSearch=si.value;buildEinlassList(cur);};
+  si.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();einlassEnterCheckin(cur);}};
+  sb.appendChild(si);v.appendChild(sb);
+
+  // Kopf: Zähler + Filterchips
+  const top=ael('div','eltop');
+  const cnt=ael('div','cnt');cnt.id='elCnt';cnt.setAttribute('aria-live','polite');top.appendChild(cnt);
+  v.appendChild(top);
+  const chips=ael('div','filterchips');
+  const mkChip=(id,label)=>{const b=ael('button',einlassFilter===id?'on':null,label);
+    b.onclick=()=>{einlassFilter=id;buildEinlassList(cur);
+      chips.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');};
+    return b;};
+  chips.appendChild(mkChip('','Alle'));
+  state.kategorien.forEach(k=>chips.appendChild(mkChip(k.id,k.name.split(' ')[0])));
+  v.appendChild(chips);
+
+  const listc=ael('div');listc.id='elList';v.appendChild(listc);
+  buildEinlassList(cur);
+}
+function mkHint(t){const h=ael('div','hint');h.textContent=t;return h;}
+/* F1.7 Erklär-Tooltips — "?"-Icon mit title + kleinem Popover (Toast) */
+function mkTip(text){
+  const b=document.createElement('button');b.type='button';b.className='tipbtn';
+  b.title=text;b.setAttribute('aria-label','Erklärung: '+text);b.textContent='?';
+  b.onclick=(e)=>{e.preventDefault();e.stopPropagation();Toast.show(text,{type:'info',ms:7000});};
+  return b;
+}
+
+function buildEinlassList(sh){
+  const listc=$('elList');if(!listc)return;listc.innerHTML='';
+  let list=state.gaeste.filter(g=>g.showId===sh.id&&g.status==='final');
+  // Zähler (Personen-genau, über gesamte finale Liste)
+  let totalP=0,inP=0;
+  list.forEach(g=>{totalP+=personsPlanned(g);inP+=personsCheckedIn(g);});
+  const cnt=$('elCnt');if(cnt)cnt.textContent='Eingecheckt '+inP+' / '+totalP+' Personen';
+  // Filter
+  const q=einlassSearch.trim().toLowerCase();
+  if(einlassFilter)list=list.filter(g=>g.kategorieId===einlassFilter);
+  const compHit=g=>!!q&&(g.begleitungen||[]).some(b=>(b.name||'').toLowerCase().includes(q));
+  if(q)list=list.filter(g=>guestName(g).toLowerCase().includes(q)||(g.vorname||'').toLowerCase().includes(q)||compHit(g));
+  list.sort((a,b)=>((a.nachname||'')+a.vorname).toLowerCase().localeCompare(((b.nachname||'')+b.vorname).toLowerCase(),'de'));
+  einlassLastList=list;
+  if(q){const hc=ael('div','elhitcount');hc.textContent=list.length+' Treffer'+(list.length===1?' · Enter = Check-in':'');listc.appendChild(hc);}
+  if(!list.length){listc.appendChild(mkHint('Kein Treffer.'));return;}
+  list.forEach(g=>{
+    const kat=katById(g.kategorieId);
+    const row=ael('div','elrow'+(g.checkinAt?' in':''));
+    row.style.borderLeftColor=kat.farbe;
+    const nm=ael('div','elname');
+    nm.textContent=guestName(g)+(personsPlanned(g)>1?' +'+(personsPlanned(g)-1):'');
+    row.appendChild(nm);
+    const meta=ael('div','elmeta');meta.textContent=kat.name.split(' ')[0];row.appendChild(meta);
+    const chk=ael('div','elcheck'+(personsCheckedIn(g)<personsPlanned(g)&&personsCheckedIn(g)>0?' part':''));
+    chk.textContent=personsCheckedIn(g)+' von '+personsPlanned(g)+' da';
+    row.appendChild(chk);
+    // Einzeltap = Check-in bzw. Warnung; Doppeltap = Rücknahme (ohne vorherige Doppel-Alerts)
+    row.onclick=()=>{
+      if(!g.checkinAt){checkinMain(g,sh);return;}
+      if(row._t){clearTimeout(row._t);row._t=null;undoCheckinMain(g,sh);return;}
+      row._t=setTimeout(()=>{row._t=null;alert('⚠ '+guestName(g)+' bereits eingecheckt '+hhmm(g.checkinAt)+'.\nRücknahme per Doppelklick.');},260);
+    };
+    listc.appendChild(row);
+    // Begleitungen einzeln
+    if(g.begleitungen&&g.begleitungen.length){
+      const comp=ael('div','elcomp');
+      g.begleitungen.forEach((b,idx)=>{
+        const cb=ael('button','compbtn'+(b.checkinAt?' in':'')+((q&&(b.name||'').toLowerCase().includes(q))?' qhit':''));
+        const lab=ael('span',null,(b.name&&b.name.trim())?b.name:('Begleitung '+(idx+1)));
+        const t=ael('span','t',b.checkinAt?('da '+hhmm(b.checkinAt)):'antippen');
+        cb.appendChild(lab);cb.appendChild(t);
+        cb.onclick=()=>{
+          const bb=g.begleitungen[idx];
+          if(!bb||!bb.checkinAt){checkinComp(g,idx,sh);return;}
+          if(cb._t){clearTimeout(cb._t);cb._t=null;undoCheckinComp(g,idx,sh);return;}
+          cb._t=setTimeout(()=>{cb._t=null;alert('⚠ Begleitung bereits eingecheckt '+hhmm(bb.checkinAt)+'.\nRücknahme per Doppelklick.');},260);
+        };
+        comp.appendChild(cb);
+      });
+      listc.appendChild(comp);
+    }
+  });
+}
+function checkinMain(g,sh){
+  if(g.checkinAt){
+    // Nur Warnung — keine versehentliche Rücknahme. Rücknahme separat per Doppelklick.
+    alert('⚠ '+guestName(g)+' bereits eingecheckt '+hhmm(g.checkinAt)+'.\nRücknahme per Doppelklick.');
+    return;
+  }
+  const gid=g.id,shid=sh.id;
+  withUndo('Check-in: '+guestName(g),
+    ()=>{const gg=state.gaeste.find(x=>x.id===gid);if(gg)gg.checkinAt=Date.now();},
+    ()=>{const s=showById(shid);if(s)buildEinlassList(s);});
+}
+function undoCheckinMain(g,sh){
+  if(!g.checkinAt)return;
+  const gid=g.id,shid=sh.id,name=guestName(g);
+  withUndo('Check-in zurückgenommen: '+name,
+    ()=>{const gg=state.gaeste.find(x=>x.id===gid);if(gg)gg.checkinAt=null;},
+    ()=>{const s=showById(shid);if(s)buildEinlassList(s);});
+}
+function checkinComp(g,idx,sh){
+  const b=g.begleitungen[idx];if(!b)return;
+  if(b.checkinAt){
+    alert('⚠ Begleitung bereits eingecheckt '+hhmm(b.checkinAt)+'.\nRücknahme per Doppelklick.');
+    return;
+  }
+  const gid=g.id,shid=sh.id;
+  withUndo('Check-in: Begleitung',
+    ()=>{const gg=state.gaeste.find(x=>x.id===gid);if(gg&&gg.begleitungen[idx])gg.begleitungen[idx].checkinAt=Date.now();},
+    ()=>{const s=showById(shid);if(s)buildEinlassList(s);});
+}
+function undoCheckinComp(g,idx,sh){
+  const b=g.begleitungen[idx];if(!b||!b.checkinAt)return;
+  const gid=g.id,shid=sh.id;
+  withUndo('Check-in Begleitung zurückgenommen',
+    ()=>{const gg=state.gaeste.find(x=>x.id===gid);if(gg&&gg.begleitungen[idx])gg.begleitungen[idx].checkinAt=null;},
+    ()=>{const s=showById(shid);if(s)buildEinlassList(s);});
+}
+
+/* ================= Dialog-Helfer ================= */
+let modalReturnFocus=null;
+function modal(buildFn){
+  const dlg=document.createElement('dialog');
+  dlg.setAttribute('aria-modal','true');
+  $('dlgs').appendChild(dlg);
+  modalReturnFocus=document.activeElement;
+  dlg.addEventListener('close',()=>{
+    dlg.remove();
+    if(modalReturnFocus&&typeof modalReturnFocus.focus==='function')try{modalReturnFocus.focus();}catch(e){}
+    modalReturnFocus=null;
+  });
+  buildFn(dlg,()=>dlg.close());
+  const h2=dlg.querySelector('h2');
+  if(h2){if(!h2.id)h2.id='dlgtitle-'+uid('t');dlg.setAttribute('aria-labelledby',h2.id);}
+  // Fallback fuer sehr alte iOS-Safari (<15.4) ohne <dialog>.showModal()
+  if(typeof dlg.showModal==='function')dlg.showModal();else dlg.setAttribute('open','');
+  return dlg;
+}
+function selectFrom(items,valFn,labFn,cur){
+  const s=document.createElement('select');
+  items.forEach(it=>{const o=document.createElement('option');o.value=valFn(it);o.textContent=labFn(it);
+    if(valFn(it)===cur)o.selected=true;s.appendChild(o);});
+  return s;
+}
+
+/* ================= Gast-Dialog ================= */
+function openGuestDlg(id,opts){
+  opts=opts||{};
+  const einladen=!!opts.einladen;
+  const existing=id?state.gaeste.find(g=>g.id===id):null;
+
+  // Kontext: Einladender + Gruppe
+  let einlId=existing?existing.einladenderId:(einladen?state.ui.werBinIch:(state.einladende[0]?state.einladende[0].id:null));
+  let gruppeId=existing?existing.gruppeId:(pById(einlId)?pById(einlId).gruppeId:(state.gruppen[0]?state.gruppen[0].id:null));
+
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,existing?'Gast bearbeiten':'Gast anlegen'));
+    const warnBox=ael('div');dlg.appendChild(warnBox);
+
+    // Name
+    const f2=ael('div','f2');
+    const fv=ael('div','f');fv.appendChild(ael('label',null,'Vorname'));
+    const iv=document.createElement('input');iv.value=existing?existing.vorname||'':'';fv.appendChild(iv);
+    const fn=ael('div','f');fn.appendChild(ael('label',null,'Nachname'));
+    const inp=document.createElement('input');inp.value=existing?existing.nachname||'':'';fn.appendChild(inp);
+    f2.appendChild(fv);f2.appendChild(fn);dlg.appendChild(f2);
+
+    // +N Segmente
+    const fseg=ael('div','f');fseg.appendChild(ael('label',null,'Begleitungen (+N)'));
+    const seg=ael('div','seg');
+    let count=existing?existing.begleitungen.length:0;
+    let compNames=existing?existing.begleitungen.map(b=>b.name||''):[];
+    const compBox=ael('div');
+    function renderComp(){
+      compBox.innerHTML='';
+      for(let i=0;i<count;i++){
+        const cf=ael('div','f');cf.appendChild(ael('label',null,'Name Begleitung '+(i+1)+' (optional)'));
+        const ci=document.createElement('input');ci.value=compNames[i]||'';ci.placeholder='leer = ohne Namen';
+        ci.oninput=()=>{compNames[i]=ci.value;};
+        cf.appendChild(ci);compBox.appendChild(cf);
+      }
+    }
+    for(let n=0;n<=4;n++){
+      const b=ael('button',n===count?'on':null,'+'+n);
+      b.type='button';
+      b.onclick=()=>{count=n;compNames.length=n;seg.querySelectorAll('button').forEach((x,ix)=>x.classList.toggle('on',ix===n));renderComp();};
+      seg.appendChild(b);
+    }
+    fseg.appendChild(seg);dlg.appendChild(fseg);
+    dlg.appendChild(compBox);renderComp();
+
+    // Kategorie-Select vorab erzeugen (wird erst weiter unten in den DOM gehängt),
+    // damit fillEinl()/updateKat() es sicher referenzieren können (kein TDZ).
+    const sk=document.createElement('select');
+    // Gruppe / Einladender
+    if(!einladen){
+      const fg=ael('div','f');fg.appendChild(ael('label',null,'Gruppe'));
+      const sg=selectFrom(state.gruppen,g=>g.id,g=>g.name,gruppeId);
+      const fe=ael('div','f');fe.appendChild(ael('label',null,'Einladender'));
+      const se=document.createElement('select');
+      function fillEinl(){se.innerHTML='';state.einladende.filter(p=>p.gruppeId===gruppeId).forEach(p=>{
+        const o=document.createElement('option');o.value=p.id;o.textContent=p.name;if(p.id===einlId)o.selected=true;se.appendChild(o);});
+        if(!se.value){const first=state.einladende.find(p=>p.gruppeId===gruppeId);einlId=first?first.id:null;}else einlId=se.value;
+        updateKat();}
+      sg.onchange=()=>{gruppeId=sg.value;fillEinl();};
+      se.onchange=()=>{einlId=se.value;};
+      fg.appendChild(sg);fe.appendChild(se);dlg.appendChild(fg);dlg.appendChild(fe);
+      fillEinl();
+    }else{
+      const info=ael('div','small muted');const grp=grpById(gruppeId);
+      info.textContent='Als '+(pById(einlId)?pById(einlId).name:'—')+(grp?' · '+grp.name:'');
+      info.style.marginBottom='8px';dlg.appendChild(info);
+    }
+
+    // Kategorie (in Einladen nur erlaubte)
+    const fk=ael('div','f');fk.appendChild(ael('label',null,'Kategorie'));
+    fk.appendChild(sk);dlg.appendChild(fk);
+    function allowedKats(){
+      const grp=grpById(gruppeId);
+      if(einladen&&grp&&grp.erlaubteKategorien&&grp.erlaubteKategorien.length)
+        return state.kategorien.filter(k=>grp.erlaubteKategorien.includes(k.id));
+      return state.kategorien;
+    }
+    function updateKat(){
+      const prev=sk.value||(existing?existing.kategorieId:'');
+      sk.innerHTML='';allowedKats().forEach(k=>{const o=document.createElement('option');o.value=k.id;o.textContent=k.name;sk.appendChild(o);});
+      if(prev&&[...sk.options].some(o=>o.value===prev))sk.value=prev;
+    }
+    updateKat();
+
+    // Show
+    const fsh=ael('div','f');fsh.appendChild(ael('label',null,'Show'));
+    const avail=state.shows.filter(s=>!s.geloescht&&(einladen?(!s.final&&!deadlinePassed(s)):true));
+    const ssh=selectFrom(avail.length?avail:state.shows,s=>s.id,s=>fmtDateShort(s.datum)+' · '+(s.stadt||''),
+      existing?existing.showId:(aktiveShow()?aktiveShow().id:(avail[0]?avail[0].id:null)));
+    fsh.appendChild(ssh);dlg.appendChild(fsh);
+
+    // Aftershow
+    const grp0=grpById(gruppeId);
+    const fas=ael('div','f');const asWrap=ael('label',null,null);asWrap.style.display='flex';asWrap.style.alignItems='center';asWrap.style.gap='8px';asWrap.style.textTransform='none';asWrap.style.letterSpacing='0';asWrap.style.fontSize='14px';
+    const asCb=document.createElement('input');asCb.type='checkbox';asCb.style.width='auto';asCb.checked=existing?existing.aftershow:false;
+    asWrap.appendChild(asCb);asWrap.appendChild(document.createTextNode('Aftershow-Zugang'));
+    fas.appendChild(asWrap);
+    function updAfter(){const g=grpById(gruppeId);const ok=!einladen||(g&&g.aftershowErlaubt);fas.style.display=ok?'':'none';if(!ok)asCb.checked=false;}
+    updAfter();dlg.appendChild(fas);
+
+    // Notiz (nur Verwaltung)
+    let inNote=null;
+    if(!einladen){
+      const fnt=ael('div','f');fnt.appendChild(ael('label',null,'Notiz (optional)'));
+      inNote=document.createElement('textarea');inNote.value=existing?existing.notiz||'':'';fnt.appendChild(inNote);dlg.appendChild(fnt);
+    }
+
+    // Duplikat-Live-Warnung
+    function checkDup(){
+      warnBox.innerHTML='';
+      const key=normName(iv.value,inp.value);if(!key)return;
+      const showId=ssh.value;
+      const dup=state.gaeste.find(o=>o.id!==id&&o.showId===showId&&normName(o.vorname,o.nachname)===key);
+      if(dup){const w=ael('div','dlgwarn');const pn=pById(dup.einladenderId);
+        w.textContent='⚠ Name steht schon auf dieser Liste — Einladender: '+(pn?pn.name:'—')+'. Anlegen trotzdem möglich.';
+        warnBox.appendChild(w);}
+    }
+    iv.oninput=checkDup;inp.oninput=checkDup;ssh.onchange=checkDup;checkDup();
+
+    // Buttons
+    const btns=ael('div','dlgbtns');
+    if(existing&&!einladen){const del=ael('button','del','Löschen');
+      del.onclick=()=>{const gid=id,nm=guestName(existing);close();withUndo('Gast „'+nm+'“ gelöscht.',()=>{state.gaeste=state.gaeste.filter(g=>g.id!==gid);state.tokens=(state.tokens||[]).filter(t=>t.gastRef!==gid);});};
+      btns.appendChild(del);}
+    const cancel=ael('button',null,'Abbrechen');cancel.onclick=close;btns.appendChild(cancel);
+    const savb=ael('button','save','Speichern');
+    savb.onclick=()=>{
+      const vn=iv.value.trim(),nn=inp.value.trim();
+      if(!vn&&!nn){alert('Bitte mindestens einen Namen angeben.');return;}
+      const showId=ssh.value;const sh=showById(showId);
+      if(!showId||!sh){Toast.show('Bitte zuerst eine Show anlegen/auswählen.',{type:'warn'});return;}
+      const begl=[];
+      for(let i=0;i<count;i++){
+        const old=existing&&existing.begleitungen[i];
+        begl.push({name:(compNames[i]||'').trim(),checkinAt:old?old.checkinAt:null});
+      }
+      if(existing){
+        // D: Bei bereits genehmigten/finalen Gästen Kontingent+Deckel erneut prüfen
+        // (z. B. +N erhöht oder Show gewechselt) — keine stille Überbuchung.
+        if(existing.status==='genehmigt'||existing.status==='final'){
+          const tp=1+begl.length;
+          const sumApp=pred=>{let s=0;state.gaeste.forEach(o=>{if(o.id===existing.id)return;if(!APPROVED(o))return;if(pred(o))s+=personsPlanned(o);});return s;};
+          const gAfter=sumApp(o=>o.showId===showId&&o.gruppeId===gruppeId)+tp;
+          const pAfter=sumApp(o=>o.showId===showId&&o.einladenderId===einlId)+tp;
+          const dAfter=sumApp(o=>o.showId===showId)+tp;
+          const gq=grpQuota(gruppeId,showId),pq=personQuota(einlId,showId),dk=sh?sh.deckel:null;
+          const probs=[];
+          if(gq!=null&&gAfter>gq)probs.push('Gruppen-Kontingent ('+gAfter+'/'+gq+')');
+          if(pq!=null&&pAfter>pq)probs.push('Einladenden-Kontingent ('+pAfter+'/'+pq+')');
+          if(dk!=null&&dAfter>dk)probs.push('Gesamtdeckel ('+dAfter+'/'+dk+')');
+          if(probs.length&&!confirm('Änderung überschreitet: '+probs.join(', ')+'.\nTrotzdem übernehmen?'))return;
+        }
+        if(existing.status==='final'&&sh&&sh.final)sh.changedSinceFinal=true;
+        Object.assign(existing,{vorname:vn,nachname:nn,begleitungen:begl,
+          kategorieId:sk.value,showId,einladenderId:einlId,gruppeId,
+          aftershow:asCb.checked,notiz:inNote?inNote.value:existing.notiz});
+        if(existing._demo)delete existing._demo; // Befund #9: vom Nutzer bearbeitet = Echtdatensatz
+        save();close();render();return;
+      }
+      // Neuanlage
+      const g={id:uid('g'),vorname:vn,nachname:nn,begleitungen:begl,
+        kategorieId:sk.value,einladenderId:einlId,gruppeId,showId,
+        status:'angefragt',checkinAt:null,notiz:inNote?inNote.value:'',
+        aftershow:asCb.checked,nachtrag:false,autoGenehmigt:false,createdAt:Date.now()};
+      // Deadline / Final-Nachtrag (nur Verwaltung erreichbar)
+      if(sh&&sh.final){
+        if(!confirm('Show ist finalisiert — Nachtrag nach Finalisierung wirklich anlegen? (Liste neu exportieren!)')){return;}
+        g.nachtrag=true;g.status='final';sh.changedSinceFinal=true;
+      }else if(sh&&deadlinePassed(sh)){
+        if(!confirm('Nachtrag nach Redaktionsschluss — wirklich anlegen?')){return;}
+        g.nachtrag=true;
+      }
+      state.gaeste.push(g);
+      if(g.status==='angefragt')tryAutoApprove(g);
+      save();close();render();
+    };
+    btns.appendChild(savb);dlg.appendChild(btns);
+  });
+}
+
+/* ================= Kontingent-Ausnahme-Dialog ================= */
+function openQuotaDlg(level,id,showId){
+  const sh=showById(showId);
+  const isGrp=level==='grp';
+  const obj=isGrp?state.gruppenKontingente[id]:pById(id);
+  if(!obj)return;
+  const name=isGrp?(grpById(id)||{}).name:(pById(id)||{}).name;
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Kontingent'));
+    const sub=ael('div','small muted');sub.style.marginBottom='10px';
+    sub.textContent=(isGrp?'Gruppe: ':'Einladender: ')+name+' · Show: '+(sh?(sh.stadt||'')+' '+fmtDateShort(sh.datum):'');
+    dlg.appendChild(sub);
+    const fs=ael('div','f');fs.appendChild(ael('label',null,'Standard-Kontingent (alle Shows)'));
+    const is=document.createElement('input');is.type='number';is.min='0';
+    is.value=isGrp?(obj.std==null?'':obj.std):(obj.stdKontingent==null?'':obj.stdKontingent);
+    fs.appendChild(is);dlg.appendChild(fs);
+    const fe=ael('div','f');const feLb=ael('label',null,'Show-Ausnahme für diese Show (leer = Standard)');
+    feLb.appendChild(mkTip('Überschreibt für diese eine Show das Standard-Kontingent — z. B. bei Heimspielen oder besonderen Anlässen. Andere Shows bleiben beim Standardwert.'));
+    fe.appendChild(feLb);
+    const ie=document.createElement('input');ie.type='number';ie.min='0';
+    ie.value=(obj.ausnahmen&&obj.ausnahmen[showId]!=null&&obj.ausnahmen[showId]!=='')?obj.ausnahmen[showId]:'';
+    ie.placeholder='z. B. Heimspiel höher';
+    fe.appendChild(ie);dlg.appendChild(fe);
+    const btns=ael('div','dlgbtns');
+    const c=ael('button',null,'Abbrechen');c.onclick=close;btns.appendChild(c);
+    const s=ael('button','save','Speichern');
+    s.onclick=()=>{
+      const stdV=is.value.trim()===''?null:+is.value;
+      if(isGrp)obj.std=stdV;else obj.stdKontingent=stdV;
+      if(!obj.ausnahmen)obj.ausnahmen={};
+      if(ie.value.trim()==='')delete obj.ausnahmen[showId];else obj.ausnahmen[showId]=+ie.value;
+      save();close();render();
+    };
+    btns.appendChild(s);dlg.appendChild(btns);
+  });
+}
+
+/* ================= Kategorien-Dialog ================= */
+function katUsed(kid){return state.gaeste.some(g=>g.kategorieId===kid);}
+function openKatDlg(){
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Kategorien'));
+    const box=ael('div');dlg.appendChild(box);
+    function draw(){
+      box.innerHTML='';
+      state.kategorien.forEach(k=>{
+        const r=ael('div','row');r.style.marginBottom='8px';
+        const col=document.createElement('input');col.type='color';col.value=k.farbe;col.style.width='42px';col.style.flex='0 0 auto';col.style.padding='2px';
+        col.onchange=()=>{k.farbe=col.value;save();};
+        const nm=document.createElement('input');nm.value=k.name;nm.style.flex='1';
+        nm.onchange=()=>{k.name=nm.value;save();};
+        r.appendChild(col);r.appendChild(nm);
+        const del=ael('button','smallbtn no','×');del.style.flex='0 0 auto';del.setAttribute('aria-label','Kategorie löschen: '+k.name);
+        del.onclick=()=>{if(katUsed(k.id)){alert('Kategorie wird verwendet — nicht löschbar.');return;}
+          if(confirm('Kategorie löschen?')){state.kategorien=state.kategorien.filter(x=>x.id!==k.id);save();draw();}};
+        r.appendChild(del);
+        box.appendChild(r);
+      });
+    }
+    draw();
+    const add=ael('button','linkbtn','+ Kategorie');add.style.marginTop='6px';
+    add.onclick=()=>{state.kategorien.push({id:uid('k'),name:'Neue Kategorie',farbe:'#8B93A1'});save();draw();};
+    dlg.appendChild(add);
+    const btns=ael('div','dlgbtns');const c=ael('button','save','Fertig');c.onclick=()=>{close();render();};btns.appendChild(c);dlg.appendChild(btns);
+  });
+}
+
+/* ================= Gruppen-Dialog ================= */
+function grpUsed(gid){return state.gaeste.some(g=>g.gruppeId===gid)||state.einladende.some(p=>p.gruppeId===gid)||state.shows.some(s=>s.statistikSnapshot&&s.statistikSnapshot.gruppen&&s.statistikSnapshot.gruppen[gid]);}
+function openGrpDlg(){
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Gruppen'));
+    const box=ael('div');dlg.appendChild(box);
+    function draw(){
+      box.innerHTML='';
+      state.gruppen.forEach(g=>{
+        const card=ael('div','card');
+        const nm=document.createElement('input');nm.value=g.name;nm.onchange=()=>{g.name=nm.value;save();};
+        card.appendChild(nm);
+        const q=state.gruppenKontingente[g.id]||(state.gruppenKontingente[g.id]={std:20,ausnahmen:{}});
+        const fq=ael('div','f');fq.style.marginTop='8px';fq.appendChild(ael('label',null,'Standard-Kontingent (Personen/Show)'));
+        const iq=document.createElement('input');iq.type='number';iq.min='0';iq.value=q.std==null?'':q.std;
+        iq.onchange=()=>{q.std=iq.value.trim()===''?null:+iq.value;save();};fq.appendChild(iq);card.appendChild(fq);
+        const opts=ael('div','row');opts.style.gap='14px';opts.style.marginTop='8px';opts.style.flexWrap='wrap';
+        opts.appendChild(chk('Auto-Genehmigen',g.autoGenehmigen,v=>{g.autoGenehmigen=v;save();}));
+        opts.appendChild(chk('Aftershow erlaubt',g.aftershowErlaubt,v=>{g.aftershowErlaubt=v;save();}));
+        card.appendChild(opts);
+        const kl=ael('div','small muted');kl.style.margin='8px 0 4px';kl.textContent='Erlaubte Kategorien:';card.appendChild(kl);
+        const kwrap=ael('div','row');kwrap.style.flexWrap='wrap';kwrap.style.gap='10px';
+        state.kategorien.forEach(k=>{
+          kwrap.appendChild(chk(k.name.split(' ')[0],g.erlaubteKategorien.includes(k.id),v=>{
+            if(v){if(!g.erlaubteKategorien.includes(k.id))g.erlaubteKategorien.push(k.id);}
+            else g.erlaubteKategorien=g.erlaubteKategorien.filter(x=>x!==k.id);save();}));
+        });
+        card.appendChild(kwrap);
+        const del=ael('button','smallbtn no','Gruppe löschen');del.style.marginTop='8px';
+        del.onclick=()=>{if(grpUsed(g.id)){alert('Gruppe wird verwendet — nicht löschbar.');return;}
+          if(confirm('Gruppe löschen?')){state.gruppen=state.gruppen.filter(x=>x.id!==g.id);delete state.gruppenKontingente[g.id];save();draw();}};
+        card.appendChild(del);
+        box.appendChild(card);
+      });
+    }
+    draw();
+    const add=ael('button','linkbtn','+ Gruppe');add.style.marginTop='6px';
+    add.onclick=()=>{const gid=uid('gr');state.gruppen.push({id:gid,name:'Neue Gruppe',autoGenehmigen:false,erlaubteKategorien:ALLKAT(),aftershowErlaubt:true});
+      state.gruppenKontingente[gid]={std:20,ausnahmen:{}};save();draw();};
+    dlg.appendChild(add);
+    const btns=ael('div','dlgbtns');const c=ael('button','save','Fertig');c.onclick=()=>{close();render();};btns.appendChild(c);dlg.appendChild(btns);
+  });
+}
+function chk(label,val,on){
+  const w=document.createElement('label');w.style.display='flex';w.style.alignItems='center';w.style.gap='6px';w.style.fontSize='13px';w.style.cursor='pointer';
+  const c=document.createElement('input');c.type='checkbox';c.checked=!!val;c.style.width='auto';c.onchange=()=>on(c.checked);
+  w.appendChild(c);w.appendChild(document.createTextNode(label));return w;
+}
+
+/* ================= Einladende-Dialog ================= */
+function einlUsed(pid){return state.gaeste.some(g=>g.einladenderId===pid)||state.shows.some(s=>s.statistikSnapshot&&s.statistikSnapshot.einladende&&s.statistikSnapshot.einladende[pid]);}
+function openEinlDlg(focusId){
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Einladende'));
+    const box=ael('div');dlg.appendChild(box);
+    function draw(){
+      box.innerHTML='';
+      state.einladende.forEach(p=>{
+        const card=ael('div','card');if(p.id===focusId)card.classList.add('hl');
+        const nm=document.createElement('input');nm.value=p.name;nm.placeholder='Name oder Kürzel';nm.onchange=()=>{p.name=nm.value;save();};
+        card.appendChild(nm);
+        const r=ael('div','f2');r.style.marginTop='8px';
+        const fg=ael('div','f');fg.appendChild(ael('label',null,'Gruppe'));
+        const sg=selectFrom(state.gruppen,g=>g.id,g=>g.name,p.gruppeId);sg.onchange=()=>{p.gruppeId=sg.value;save();};fg.appendChild(sg);
+        const fq=ael('div','f');fq.appendChild(ael('label',null,'Std-Kontingent'));
+        const iq=document.createElement('input');iq.type='number';iq.min='0';iq.value=p.stdKontingent==null?'':p.stdKontingent;
+        iq.onchange=()=>{p.stdKontingent=iq.value.trim()===''?null:+iq.value;save();};fq.appendChild(iq);
+        r.appendChild(fg);r.appendChild(fq);card.appendChild(r);
+        const del=ael('button','smallbtn no','Löschen');del.style.marginTop='6px';
+        del.onclick=()=>{if(einlUsed(p.id)){alert('Einladender hat Gäste — nicht löschbar.');return;}
+          if(confirm('Einladenden löschen?')){state.einladende=state.einladende.filter(x=>x.id!==p.id);save();draw();}};
+        card.appendChild(del);
+        box.appendChild(card);
+      });
+    }
+    draw();
+    const add=ael('button','linkbtn','+ Einladender');add.style.marginTop='6px';
+    add.onclick=()=>{state.einladende.push({id:uid('p'),name:'Neuer Einladender',gruppeId:state.gruppen[0]?state.gruppen[0].id:null,stdKontingent:10,ausnahmen:{}});save();draw();};
+    dlg.appendChild(add);
+    const btns=ael('div','dlgbtns');const c=ael('button','save','Fertig');c.onclick=()=>{close();render();};btns.appendChild(c);dlg.appendChild(btns);
+  });
+}
+
+/* ================= Show-Dialog (Tourplan des Arbeitsbereichs) ================= */
+function newShow(){
+  return {id:uid('sh'),datum:todayISO(),stadt:'',venue:'',
+    deckel:400,vertragskontingent:null,deadline:'16:00',deadlineDatum:'',
+    final:false,finalVersion:0,finalAt:null,changedSinceFinal:false,banner:'',geloescht:false,statistikSnapshot:null};
+}
+function showUsed(id){
+  return state.gaeste.some(g=>g.showId===id)||(state.tokens||[]).some(t=>t.showId===id);
+}
+function openShowDlg(addFirst){
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Shows'));
+    const sub=ael('div','small muted');sub.style.marginBottom='10px';
+    sub.textContent='Tourplan von „'+(state.kuenstler||'')+'“. Datum, Stadt und Spielstätte stehen auf Listen, Exporten und Drucklisten.';
+    dlg.appendChild(sub);
+    const box=ael('div');dlg.appendChild(box);
+    function draw(){
+      box.innerHTML='';
+      const sorted=state.shows.slice().sort((a,b)=>String(a.datum||'').localeCompare(String(b.datum||'')));
+      if(!sorted.length)box.appendChild(mkHint('Noch keine Show angelegt.'));
+      sorted.forEach(s=>{
+        const card=ael('div','card');
+        const g2=ael('div','f2');
+        const fd=ael('div','f');fd.appendChild(ael('label',null,'Datum'));
+        const id_=document.createElement('input');id_.type='date';id_.value=s.datum||'';
+        id_.onchange=()=>{s.datum=id_.value;save();draw();};
+        fd.appendChild(id_);
+        const fs=ael('div','f');fs.appendChild(ael('label',null,'Stadt'));
+        const is=document.createElement('input');is.value=s.stadt||'';is.placeholder='z. B. Köln';
+        is.onchange=()=>{s.stadt=is.value.trim();save();};
+        fs.appendChild(is);
+        g2.appendChild(fd);g2.appendChild(fs);card.appendChild(g2);
+        const fv=ael('div','f');fv.appendChild(ael('label',null,'Spielstätte'));
+        const iv=document.createElement('input');iv.value=s.venue||'';iv.placeholder='z. B. Palladium';
+        iv.onchange=()=>{s.venue=iv.value.trim();save();};
+        fv.appendChild(iv);card.appendChild(fv);
+        const meta=ael('div','small muted');
+        const gc=state.gaeste.filter(g=>g.showId===s.id).length;
+        meta.textContent=gc+' Gäste'+(s.final?' · FINAL v'+s.finalVersion:'')+(s.geloescht?' · Personendaten gelöscht':'');
+        card.appendChild(meta);
+        const del=ael('button','smallbtn no','Show löschen');del.style.marginTop='6px';
+        del.onclick=()=>{
+          if(showUsed(s.id)){alert('Diese Show hat Gäste oder Ticket-Zugänge — erst über „Datenschutz · Show-Daten löschen“ leeren.');return;}
+          if(!confirm('Show „'+(s.stadt||'ohne Stadt')+'“ löschen?'))return;
+          state.shows=state.shows.filter(x=>x.id!==s.id);
+          // Kontingent-Ausnahmen dieser Show mit entfernen
+          Object.keys(state.gruppenKontingente).forEach(k=>{const q=state.gruppenKontingente[k];if(q&&q.ausnahmen)delete q.ausnahmen[s.id];});
+          state.einladende.forEach(p=>{if(p.ausnahmen)delete p.ausnahmen[s.id];});
+          if(state.ui.aktiveShowId===s.id)state.ui.aktiveShowId=state.shows[0]?state.shows[0].id:null;
+          save();draw();
+        };
+        card.appendChild(del);
+        box.appendChild(card);
+      });
+    }
+    draw();
+    const add=ael('button','linkbtn','+ Show');add.style.marginTop='6px';
+    add.onclick=()=>{const s=newShow();state.shows.push(s);if(!state.ui.aktiveShowId)state.ui.aktiveShowId=s.id;save();draw();
+      setTimeout(()=>{const inp=box.querySelectorAll('.card input[type=text],.card input:not([type])');if(inp.length)inp[inp.length-1].focus();},0);};
+    dlg.appendChild(add);
+    const btns=ael('div','dlgbtns');
+    const c=ael('button','save','Fertig');c.onclick=()=>{close();render();};
+    btns.appendChild(c);dlg.appendChild(btns);
+    if(addFirst&&!state.shows.length)add.onclick();
+  });
+}
+
+/* ================= Exporte ================= */
+const BOM='﻿';
+function csvField(v){
+  v=String(v==null?'':v);
+  // CSV-Formel-Injection entschaerfen: Felder, die mit = + - @ (oder Tab/CR) beginnen,
+  // wuerden von Excel/Sheets als Formel ausgefuehrt -> mit ' neutralisieren.
+  if(/^[=+\-@\t\r]/.test(v))v="'"+v;
+  if(/[;"\n\r]/.test(v))return '"'+v.replace(/"/g,'""')+'"';
+  return v;
+}
+function csvRows(rows){return rows.map(r=>r.map(csvField).join(';')).join('\r\n');}
+function download(name,content,mime){
+  const blob=new Blob([content],{type:mime||'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},0);
+}
+function fname(sh,typ,ext){
+  return 'gaesteliste_'+slug(state.kuenstler)+'_'+slug(sh.stadt)+'_'+(sh.datum||'')+'_v'+sh.finalVersion+'_'+stampNow()+'_'+typ+'.'+ext;
+}
+function splitName(full){
+  const s=(full||'').trim();if(!s)return {v:'',n:''};
+  const i=s.lastIndexOf(' ');
+  if(i<0)return {v:'',n:s};
+  return {v:s.slice(0,i).trim(),n:s.slice(i+1).trim()};
+}
+function finalGuests(sh){
+  return state.gaeste.filter(g=>g.showId===sh.id&&g.status==='final')
+    .sort((a,b)=>((a.nachname||'')+' '+a.vorname).toLowerCase().localeCompare(((b.nachname||'')+' '+b.vorname).toLowerCase(),'de'));
+}
+function guardFinal(sh){
+  if(!sh){Toast.show('Keine Show gewählt.',{type:'warn'});return false;}
+  if(!sh.final){Toast.show('Erst finalisieren — Abendkasse bekommt nie eine veraltete Version.',{type:'warn'});return false;}
+  return true;
+}
+
+/* (b) CSV Abendkasse */
+function exportAbendkasse(sh){
+  if(!guardFinal(sh))return false;
+  const rows=[['Nachname','Vorname','Begleitungen','Kategorie','Einladender']];
+  finalGuests(sh).forEach(g=>{
+    rows.push([g.nachname||'',g.vorname||'',String(g.begleitungen.length),
+      katById(g.kategorieId).name,(pById(g.einladenderId)||{name:''}).name]);
+  });
+  download(fname(sh,'abendkasse','csv'),BOM+csvRows(rows),'text/csv;charset=utf-8');
+  return true;
+}
+
+/* (c) CSV krasserstoff — eine Zeile pro Person */
+function exportKrasserstoff(sh){
+  if(!guardFinal(sh))return false;
+  const guests=finalGuests(sh);
+  // Unbenannte Begleitungen erfassen
+  const betroffen=[];let unbenannt=0;
+  guests.forEach(g=>{
+    const missing=g.begleitungen.filter(b=>!b.name||!b.name.trim()).length;
+    if(missing){unbenannt+=missing;betroffen.push(guestName(g)+' ('+missing+')');}
+  });
+  if(unbenannt>0){
+    if(!confirm('⚠ '+unbenannt+' Begleitung(en) ohne Namen — bei harter Personalisierung muss jeder Name einzeln aufs Ticket.\nBetroffene Hauptgäste:\n'+betroffen.join(', ')+'\n\nDiese Begleitungen erscheinen NICHT im CSV. Trotzdem exportieren?'))return false;
+  }
+  const rows=[['Vorname','Nachname']];
+  guests.forEach(g=>{
+    rows.push([g.vorname||'',g.nachname||'']);
+    g.begleitungen.forEach(b=>{
+      if(b.name&&b.name.trim()){const p=splitName(b.name);rows.push([p.v,p.n]);}
+    });
+  });
+  download(fname(sh,'krasserstoff','csv'),BOM+csvRows(rows),'text/csv;charset=utf-8');
+  return true;
+}
+
+/* (d) Aftershow-Liste */
+function aftershowGuests(sh){
+  return finalGuests(sh).filter(g=>g.aftershow||g.kategorieId==='aftershow');
+}
+function exportAftershowCsv(sh){
+  if(!guardFinal(sh))return false;
+  const rows=[['Nachname','Vorname','Begleitungen','Kategorie','Einladender']];
+  aftershowGuests(sh).forEach(g=>rows.push([g.nachname||'',g.vorname||'',String(g.begleitungen.length),
+    katById(g.kategorieId).name,(pById(g.einladenderId)||{name:''}).name]));
+  download(fname(sh,'aftershow','csv'),BOM+csvRows(rows),'text/csv;charset=utf-8');
+  return true;
+}
+
+/* (a) Druckliste + (d) Aftershow-Druck */
+function renderPrintList(sh,aftershow){
+  const guests=aftershow?aftershowGuests(sh):finalGuests(sh);
+  const persons=guests.reduce((s,g)=>s+personsPlanned(g),0);
+  const v=$('view');v.innerHTML='';
+  const box=ael('div','printview');
+  box.appendChild(ael('h2',null,(aftershow?'AFTERSHOW · ':'')+'Gästeliste '+(sh.stadt||'')));
+  const ph=ael('div','phead small');
+  ph.textContent=(sh.venue||'')+' · '+fmtDate(sh.datum)+' · Version v'+sh.finalVersion+' · '+
+    new Date().toLocaleDateString('de-DE')+' '+hhmm(Date.now())+' · '+guests.length+' Gäste / '+persons+' Personen';
+  box.appendChild(ph);
+  const tab=ael('table','plist');
+  const thead=document.createElement('thead');const tr=document.createElement('tr');
+  ['','Nachname','Vorname','+N','Kategorie','Einladender','Abhaken / Unterschrift'].forEach(t=>{
+    const th=ael('th',null,t);tr.appendChild(th);});
+  thead.appendChild(tr);tab.appendChild(thead);
+  const tb=document.createElement('tbody');
+  guests.forEach(g=>{
+    const r=document.createElement('tr');
+    const bar=ael('td','bar');bar.style.background=katById(g.kategorieId).farbe;r.appendChild(bar);
+    r.appendChild(ael('td',null,g.nachname||''));
+    r.appendChild(ael('td',null,g.vorname||''));
+    r.appendChild(ael('td',null,g.begleitungen.length?('+'+g.begleitungen.length):''));
+    r.appendChild(ael('td',null,katById(g.kategorieId).name));
+    r.appendChild(ael('td',null,(pById(g.einladenderId)||{name:''}).name));
+    r.appendChild(ael('td','sign',''));
+    tb.appendChild(r);
+  });
+  tab.appendChild(tb);box.appendChild(tab);
+  const pf=ael('div','small muted pfoot');pf.textContent=tourLabel()+' · Gästeliste · Tourmanagement · '+(sh.stadt||'')+' '+fmtDate(sh.datum);
+  box.appendChild(pf);
+  v.appendChild(box);
+  const back=ael('button','smallbtn','← Zurück zur Verwaltung');back.style.margin='12px 16px';
+  back.onclick=()=>render();v.appendChild(back);
+  window.print();
+}
+function exportDruckliste(sh){if(!guardFinal(sh))return false;renderPrintList(sh,false);return true;}
+function exportAftershowDruck(sh){if(!guardFinal(sh))return false;renderPrintList(sh,true);return true;}
+
+/* Export-Dialog */
+function openExportDlg(sh){
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Exporte'));
+    if(!sh){dlg.appendChild(mkHint('Keine Show gewählt.'));const b=ael('div','dlgbtns');const c=ael('button','save','OK');c.onclick=close;b.appendChild(c);dlg.appendChild(b);return;}
+    const sub=ael('div','small muted');sub.style.marginBottom='10px';
+    sub.textContent=(sh.stadt||'')+' · '+fmtDate(sh.datum)+(sh.final?(' · FINAL v'+sh.finalVersion):' · NICHT finalisiert');
+    dlg.appendChild(sub);
+    if(!sh.final)dlg.appendChild(mkHint('Erst finalisieren — Abendkasse bekommt nie eine veraltete Version. Exporte sind bis dahin gesperrt.'));
+    dlg.appendChild(mkHint('krasserstoff-CSV: Deadline dieses Exports an die krasserstoff-Frist koppeln (siehe Info-Kasten Verwaltung).'));
+    // „Neu exportieren"-Markierung nur zurücksetzen, wenn der Export wirklich stattgefunden hat
+    const mk=(label,fn)=>{const b=ael('button','smallbtn',label);b.style.display='block';b.style.width='100%';b.style.marginTop='8px';b.disabled=!sh.final;
+      b.onclick=()=>{close();const done=fn(sh);if(done&&sh.changedSinceFinal){sh.changedSinceFinal=false;save();}};return b;};
+    dlg.appendChild(mk('(a) Druckliste (alphabetisch, Farbbalken, Abhak-Spalte)',exportDruckliste));
+    dlg.appendChild(mk('(b) CSV Abendkasse',exportAbendkasse));
+    dlg.appendChild(mk('(c) CSV krasserstoff-Personalisierung',exportKrasserstoff));
+    dlg.appendChild(mk('(d) Aftershow-Liste · CSV',exportAftershowCsv));
+    dlg.appendChild(mk('(d) Aftershow-Liste · Druck',exportAftershowDruck));
+    const btns=ael('div','dlgbtns');const c=ael('button','save','Schließen');c.onclick=close;btns.appendChild(c);dlg.appendChild(btns);
+  });
+}
+
+/* JSON-Export / -Import */
+function jsonExport(){
+  download('gaesteliste_'+slug(state.kuenstler)+'_gesamt_'+stampNow()+'.json',JSON.stringify(state,null,2),'application/json');
+  prefs.lastExportAt=Date.now();prefs.changedSinceExport=false;savePrefs();
+  Toast.show('JSON-Export erstellt.',{type:'ok'});
+}
+function backupReminder(){
+  const last=prefs.lastExportAt;
+  if(!last||prefs.changedSinceExport!==true)return;
+  if(Date.now()-last<=86400000)return;
+  Toast.show('Letzte JSON-Sicherung ist über einen Tag her — und es gab seitdem Änderungen.',
+    {type:'warn',ms:12000,action:{label:'Jetzt sichern',on:jsonExport}});
+}
+$('fileImport').onchange=e=>{
+  const f=e.target.files[0];if(!f){return;}
+  const r=new FileReader();
+  r.onload=()=>{
+    let parsed;
+    try{parsed=JSON.parse(r.result);}catch(err){alert('Datei konnte nicht gelesen werden.');$('fileImport').value='';return;}
+    const cand=migrate(parsed);
+    const nG=cand.gaeste.length,nS=cand.shows.length;
+    // Sicherung eines anderen Künstlers landet auch in dessen Arbeitsbereich, nicht im offenen
+    const fileArt=(parsed&&isArtist(parsed.kuenstler))?parsed.kuenstler:null;
+    const target=fileArt||state.kuenstler;
+    const msg=(target!==state.kuenstler)
+      ? 'Diese Sicherung gehört zu „'+target+'“.\nIn diesen Arbeitsbereich wechseln und ihn mit '+nG+' Gästen über '+nS+' Shows überschreiben?'
+      : 'Arbeitsbereich „'+state.kuenstler+'“ mit '+nG+' Gästen über '+nS+' Shows überschreiben?';
+    if(confirm(msg)){
+      if(target!==state.kuenstler){
+        if(worthSaving())save();
+        curArtist=target;prefs.artist=target;savePrefs();
+        LS_KEY=wsKey(target);
+      }
+      cand.kuenstler=target;
+      state=cand;save();
+      resetViewState();applyHeader();render();
+      Toast.show('Import übernommen: '+nG+' Gäste, '+nS+' Shows ('+target+').',{type:'ok'});
+    }
+    $('fileImport').value='';
+  };
+  r.readAsText(f);
+};
+
+/* ================= Ticket-Zugang (Demo) ================= */
+const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const eur=n=>(Number(n)||0).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+function tokensForShow(showId){return (state.tokens||[]).filter(t=>t.showId===showId);}
+function tkMap(sh){return sh?seatmapForShow(sh.stadt,sh.venue):null;}
+function tkKatName(sm,id){if(!sm)return id;const k=(sm.kategorien||[]).find(x=>x.id===id);return k?k.name:id;}
+function tkPlatzLabel(p,sm){
+  if(!p)return '';
+  if(p.menge!=null)return tkKatName(sm,p.kategorieId)+' ×'+p.menge;
+  return (p.block||'')+' · Reihe '+p.reihe+' · Sitz '+p.sitz;
+}
+function tkPlaetzeText(t,sm){
+  if(!t.ausgewaehltePlaetze||!t.ausgewaehltePlaetze.length)return '–';
+  return t.ausgewaehltePlaetze.map(p=>tkPlatzLabel(p,sm)).join(', ');
+}
+function tkLink(t){
+  // gleicher Ordner wie gaesteliste.html
+  const base=location.href.replace(/[?#].*$/,'').replace(/[^/]*$/,'');
+  // ws = Arbeitsbereich des Künstlers, damit die Gast-Ansicht den richtigen Stand liest
+  const ws=(state.kuenstler&&state.kuenstler!==ARTIST_DEFAULT)?('&ws='+encodeURIComponent(slug(state.kuenstler))):'';
+  return base+'gast.html?token='+encodeURIComponent(t.id)+ws;
+}
+
+function renderTicket(){
+  syncTokensFromStorage();
+  const v=$('view');
+  const sh=aktiveShow();
+  // Show-Auswahl (wie Verwaltung)
+  const selWrap=ael('div','sec');
+  const fbox=ael('div','f');fbox.appendChild(ael('label',null,'Show (Ticket-Zugänge dieser Show)'));
+  const sel=document.createElement('select');
+  state.shows.forEach(s=>{const o=document.createElement('option');o.value=s.id;
+    o.textContent=fmtDateShort(s.datum)+' · '+(s.stadt||'—')+(s.geloescht?' · gelöscht':'');
+    if(sh&&s.id===sh.id)o.selected=true;sel.appendChild(o);});
+  sel.onchange=()=>setAktiveShow(sel.value);
+  fbox.appendChild(sel);selWrap.appendChild(fbox);
+  v.appendChild(selWrap);
+  if(!sh){v.appendChild(ael('div','hint','Keine Show vorhanden.'));return;}
+
+  // Gast-Auswahl + Token erstellen
+  const gsec=ael('div','sec');
+  const gcard=ael('div','card');
+  gcard.appendChild(ael('div','kicker','Ticket-Zugang erstellen (Demo)'));
+  const gf=ael('div','f');gf.appendChild(ael('label',null,'Gast'));
+  const gsel=document.createElement('select');
+  const gl=gaesteForShow(sh.id).slice().sort((a,b)=>guestName(a).toLowerCase().localeCompare(guestName(b).toLowerCase(),'de'));
+  if(!gl.length){const o=document.createElement('option');o.value='';o.textContent='— keine Gäste auf dieser Show —';gsel.appendChild(o);}
+  gl.forEach(g=>{const o=document.createElement('option');o.value=g.id;o.textContent=guestName(g);gsel.appendChild(o);});
+  gf.appendChild(gsel);gcard.appendChild(gf);
+  const mkBtn=ael('button','smallbtn ok','+ Ticket-Zugang (Demo)');
+  mkBtn.onclick=()=>{if(!gsel.value){Toast.show('Bitte zuerst einen Gast anlegen (Verwaltung/Einladen).',{type:'info'});return;}openTokenDlg(gsel.value);};
+  gcard.appendChild(mkBtn);
+  gsec.appendChild(gcard);
+  v.appendChild(gsec);
+
+  // Datenschutz-Kasten
+  const ds=ael('div','hint');
+  ds.textContent='E-Mail-Adressen sind personenbezogene Daten — nur mit Einwilligung erfassen, nach der Show löschen. Die Show-Daten-Löschung (Verwaltung) entfernt auch alle Token samt E-Mails dieser Show. E-Mails stehen auch im JSON-Export.';
+  v.appendChild(ds);
+  // krasserstoff-Grenz-Kasten
+  const kr=ael('div','hint tape');
+  kr.textContent='Demo: Token werden nur lokal (localStorage / JSON-Datei) eingelöst — kein echter Versand. Echter Versand an externe Gäste braucht Server + krasserstoff-API (siehe Fragenkatalog). Versandweg hier: mailto (E-Mail-Programm).';
+  v.appendChild(kr);
+
+  // Token-Liste
+  v.appendChild(tkListe(sh.id));
+
+  setTools([
+    {label:'Token-Export (Datei)',on:()=>tkExportJson(sh.id),hideEinfach:true},
+    {label:'Token-Import (Antworten)',on:tkImportJson,hideEinfach:true}
+  ]);
+}
+
+function openTokenDlg(gastId){
+  const gast=state.gaeste.find(g=>g.id===gastId);if(!gast)return;
+  const sh=showById(gast.showId)||aktiveShow();
+  const sm=tkMap(sh);
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Ticket-Zugang (Demo)'));
+    const info=ael('div','small muted');info.style.marginBottom='8px';
+    info.textContent=guestName(gast)+' · '+(sh?((sh.stadt||'')+' '+fmtDateShort(sh.datum)):'—')+(sm?(' · '+sm.venue):'');
+    dlg.appendChild(info);
+    // E-Mail
+    const fe=ael('div','f');fe.appendChild(ael('label',null,'E-Mail (Pflicht)'));
+    const ie=document.createElement('input');ie.type='email';ie.placeholder='name@beispiel.de';fe.appendChild(ie);dlg.appendChild(fe);
+    const eWarn=ael('div');dlg.appendChild(eWarn);
+    // Modus
+    let modus='kontingent';
+    const fm=ael('div','f');fm.appendChild(ael('label',null,'Modus'));
+    const mseg=ael('div','seg');
+    [['kontingent','Kontingent (0 €)'],['kauf','Kauf (Demo)']].forEach(([val,lab])=>{
+      const b=ael('button',val===modus?'on':null,lab);b.type='button';
+      b.onclick=()=>{modus=val;mseg.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));updKauf();};
+      mseg.appendChild(b);});
+    fm.appendChild(mseg);dlg.appendChild(fm);
+    // maxPlaetze
+    let maxP=1;
+    const fp=ael('div','f');fp.appendChild(ael('label',null,'Max. Plätze'));
+    const pseg=ael('div','seg');
+    for(let n=1;n<=4;n++){const b=ael('button',n===maxP?'on':null,String(n));b.type='button';
+      b.onclick=()=>{maxP=n;pseg.querySelectorAll('button').forEach((x,ix)=>x.classList.toggle('on',ix===n-1));};
+      pseg.appendChild(b);}
+    fp.appendChild(pseg);dlg.appendChild(fp);
+    // Kategorie-Rahmen (nur Kauf)
+    const fk=ael('div','f');fk.appendChild(ael('label',null,'Kategorie-Rahmen (leer = alle)'));
+    const kbox=ael('div');kbox.style.display='flex';kbox.style.flexDirection='column';kbox.style.gap='4px';
+    const kchecks=[];
+    (sm&&sm.kategorien?sm.kategorien:[]).forEach(k=>{
+      const w=ael('label',null,null);w.style.display='flex';w.style.alignItems='center';w.style.gap='8px';w.style.textTransform='none';w.style.letterSpacing='0';w.style.fontSize='14px';
+      const cb=document.createElement('input');cb.type='checkbox';cb.value=k.id;cb.style.width='auto';
+      w.appendChild(cb);w.appendChild(document.createTextNode(k.name+' · '+eur(k.preis)));
+      kbox.appendChild(w);kchecks.push(cb);
+    });
+    fk.appendChild(kbox);dlg.appendChild(fk);
+    function updKauf(){fk.style.display=modus==='kauf'?'':'none';}
+    updKauf();
+    // Buttons
+    const btns=ael('div','dlgbtns');
+    const cancel=ael('button',null,'Abbrechen');cancel.onclick=close;btns.appendChild(cancel);
+    const savb=ael('button','save','Erstellen');
+    savb.onclick=()=>{
+      const email=ie.value.trim();
+      eWarn.innerHTML='';
+      if(!EMAIL_RE.test(email)){const w=ael('div','dlgwarn','Bitte eine gültige E-Mail-Adresse eingeben.');eWarn.appendChild(w);return;}
+      const rahmen=modus==='kauf'?kchecks.filter(c=>c.checked).map(c=>c.value):[];
+      tkCreateToken(gast,{email:email,modus:modus,maxPlaetze:maxP,kategorieRahmen:rahmen.length?rahmen:null});
+      close();
+    };
+    btns.appendChild(savb);dlg.appendChild(btns);
+    setTimeout(()=>ie.focus(),0);
+  });
+}
+
+function tkCreateToken(gast,opts){
+  const now=Date.now();
+  const t={
+    id:'tk'+now+Math.floor(Math.random()*1e5),
+    gastRef:gast.id,email:opts.email||'',showId:gast.showId,
+    modus:opts.modus||'kontingent',
+    maxPlaetze:Math.min(4,Math.max(1,opts.maxPlaetze||1)),
+    kategorieRahmen:opts.kategorieRahmen||null,
+    status:'offen',
+    ausgewaehltePlaetze:[],
+    createdAt:now,redeemedAt:null,updatedAt:now
+  };
+  if(!Array.isArray(state.tokens))state.tokens=[];
+  state.tokens.push(t);save();render();
+}
+
+function tkStatusBadge(t){
+  const map={offen:['b-plan','offen'],eingeloest:['b-ok','eingelöst'],widerrufen:['b-warn','widerrufen']};
+  const m=map[t.status]||map.offen;
+  return ael('span','badge '+m[0],m[1]);
+}
+function tkListe(showId){
+  const sh=showById(showId);const sm=tkMap(sh);
+  const sec=ael('div','sec');
+  sec.appendChild(ael('div','kicker','Ausgegebene Ticket-Zugänge'));
+  const tks=tokensForShow(showId).slice().sort((a,b)=>b.createdAt-a.createdAt);
+  if(!tks.length){sec.appendChild(ael('div','hint','Noch keine Ticket-Zugänge für diese Show.'));return sec;}
+  const wrap=ael('div','tlwrap');
+  const tbl=document.createElement('table');tbl.className='mx';
+  const COLS=['Gast','E-Mail','Modus','Rahmen','Status','Erstellt','Eingelöst','Plätze',''];
+  const thead=document.createElement('tr');
+  COLS.forEach(h=>{const th=document.createElement('th');th.textContent=h;thead.appendChild(th);});
+  tbl.appendChild(thead);
+  tks.forEach(t=>{
+    const g=state.gaeste.find(x=>x.id===t.gastRef);
+    const tr=document.createElement('tr');
+    const cell=(txtv,label)=>{const td=document.createElement('td');td.textContent=txtv;if(label)td.dataset.label=label;return td;};
+    tr.appendChild(cell(g?guestName(g):'(gelöscht)',COLS[0]));
+    tr.appendChild(cell(t.email||'–',COLS[1]));
+    tr.appendChild(cell(t.modus==='kauf'?'Kauf':'Kontingent',COLS[2]));
+    tr.appendChild(cell(t.kategorieRahmen&&t.kategorieRahmen.length?t.kategorieRahmen.map(id=>tkKatName(sm,id)).join(', '):'alle',COLS[3]));
+    const tdS=document.createElement('td');tdS.dataset.label=COLS[4];tdS.appendChild(tkStatusBadge(t));tr.appendChild(tdS);
+    tr.appendChild(cell(new Date(t.createdAt).toLocaleString('de-DE'),COLS[5]));
+    tr.appendChild(cell(t.redeemedAt?new Date(t.redeemedAt).toLocaleString('de-DE'):'–',COLS[6]));
+    tr.appendChild(cell(tkPlaetzeText(t,sm),COLS[7]));
+    const tdB=document.createElement('td');tdB.style.whiteSpace='nowrap';tdB.dataset.label='Aktionen';
+    const bCopy=ael('button','linkbtn','Link');bCopy.onclick=()=>tkCopyLink(t);
+    const bMail=ael('button','linkbtn','Mail');bMail.onclick=()=>tkMail(t,g,sh);
+    const bDet=ael('button','linkbtn','Details');bDet.onclick=()=>tkDetails(t,g,sh,sm);
+    const bQr=ael('button','linkbtn','QR');bQr.onclick=()=>openQrDlg('Ticket-QR'+(g?' · '+guestName(g):''),tkLink(t),'Gast scannt den Code und öffnet seinen persönlichen Ticket-Link.');
+    tdB.appendChild(bCopy);tdB.appendChild(document.createTextNode(' '));tdB.appendChild(bMail);tdB.appendChild(document.createTextNode(' '));tdB.appendChild(bQr);tdB.appendChild(document.createTextNode(' '));tdB.appendChild(bDet);
+    if(t.status!=='widerrufen'){const bRev=ael('button','linkbtn','Widerrufen');bRev.style.color='var(--now)';bRev.style.borderColor='var(--now)';
+      bRev.onclick=()=>{if(confirm('Ticket-Zugang für '+(g?guestName(g):'diesen Gast')+' widerrufen?')){t.status='widerrufen';t.updatedAt=Date.now();save();render();}};
+      tdB.appendChild(document.createTextNode(' '));tdB.appendChild(bRev);}
+    tr.appendChild(tdB);
+    tbl.appendChild(tr);
+  });
+  wrap.appendChild(tbl);sec.appendChild(wrap);return sec;
+}
+function tkCopyLink(t){
+  const link=tkLink(t);
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(link).then(()=>Toast.show('Link kopiert.',{type:'ok'}),()=>prompt('Link kopieren:',link));
+  }else{prompt('Link kopieren:',link);}
+}
+function tkMail(t,g,sh){
+  const link=tkLink(t);
+  const subj=tourLabel()+' – Dein Ticket-Zugang (Demo)';
+  const body='Hallo'+(g?' '+g.vorname:'')+',\n\ndein persönlicher Ticket-Zugang (Demo) für '+tourLabel()+', '+(sh?((sh.stadt||'')+' am '+fmtDate(sh.datum)):'die Show')+':\n'+link+'\n\nHinweis: Dies ist ein Demo-Prototyp, kein gültiges Ticket.';
+  location.href='mailto:'+encodeURIComponent(t.email||'')+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+}
+function tkDetails(t,g,sh,sm){
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Ticket-Zugang · Details'));
+    const add=(l,v)=>{const f=ael('div','f');f.appendChild(ael('label',null,l));const d=ael('div','small');d.textContent=v;f.appendChild(d);dlg.appendChild(f);};
+    add('Gast',g?guestName(g):'(gelöscht)');
+    add('E-Mail',t.email||'–');
+    add('Modus',t.modus==='kauf'?'Kauf (Demo)':'Kontingent (0 €)');
+    add('Max. Plätze',String(t.maxPlaetze));
+    add('Status',t.status);
+    add('Gewählte Plätze',tkPlaetzeText(t,sm));
+    add('Ticketcode (Demo)',t.id);
+    const btns=ael('div','dlgbtns');const c=ael('button','save','Schließen');c.onclick=close;btns.appendChild(c);dlg.appendChild(btns);
+  });
+}
+
+/* Token-Austausch-Datei */
+function tkExportJson(showId){
+  const sh=showById(showId);
+  const tks=tokensForShow(showId);
+  if(!tks.length){Toast.show('Keine Ticket-Zugänge zum Exportieren.',{type:'info'});return;}
+  // shows-Block additiv, damit gast.html am Zweitgerät (ohne localStorage) Show/Venue kennt.
+  // TM-Import liest ausschließlich tokens; shows wird dort ignoriert.
+  const payload={schema:1,kuenstler:state.kuenstler,tokens:deepCopy(tks),
+    shows:sh?[{id:sh.id,stadt:sh.stadt,venue:sh.venue,datum:sh.datum}]:[]};
+  download('ticketzugang_'+slug(state.kuenstler)+'_'+slug(sh?sh.stadt:'show')+'_'+stampNow()+'.json',JSON.stringify(payload,null,2),'application/json');
+}
+$('tokenImport').onchange=e=>{
+  const f=e.target.files[0];if(!f){return;}
+  const r=new FileReader();
+  r.onload=()=>{
+    let parsed;
+    try{parsed=JSON.parse(r.result);}catch(err){alert('Datei konnte nicht gelesen werden.');$('tokenImport').value='';return;}
+    const inc=parsed&&Array.isArray(parsed.tokens)?parsed.tokens:(Array.isArray(parsed)?parsed:null);
+    if(!inc){alert('Keine Token in der Datei gefunden.');$('tokenImport').value='';return;}
+    if(!Array.isArray(state.tokens))state.tokens=[];
+    let upd=0,unbk=0;
+    inc.forEach(it=>{
+      if(!it||!it.id)return;
+      const cur=state.tokens.find(x=>x.id===it.id);
+      if(!cur){unbk++;return;} // unbekannte Token nicht einschleusen (TM kennt sie nicht)
+      // Aus Antwort-Datei NUR gast-veränderliche Felder übernehmen, TM-eigene nie überschreiben
+      const gf={};['status','ausgewaehltePlaetze','redeemedAt','updatedAt'].forEach(k=>{if(it[k]!==undefined)gf[k]=it[k];});
+      const beforeStatus=cur.status,beforeUpd=cur.updatedAt;
+      mergeToken(cur,gf);
+      if(cur.status!==beforeStatus||cur.updatedAt!==beforeUpd)upd++;
+    });
+    save();render();
+    Toast.show('Token-Import: '+upd+' aktualisiert'+(unbk?', '+unbk+' unbekannte übersprungen':'')+'.',{type:'ok'});
+    $('tokenImport').value='';
+  };
+  r.readAsText(f);
+};
+function tkImportJson(){$('tokenImport').click();}
+
+/* ================= Service Worker (nur https/localhost) ================= */
+if('serviceWorker' in navigator && (location.protocol==='https:' || ['localhost','127.0.0.1'].includes(location.hostname))){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
+}
+
+/* ================= Cross-Tab-Token-Sync (Befund #1) ================= */
+function syncTokensAndRefresh(){syncTokensFromStorage();if(state.ui&&state.ui.modus==='ticket')render();}
+window.addEventListener('storage',e=>{if(e.key===LS_KEY)syncTokensAndRefresh();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncTokensAndRefresh();});
+window.addEventListener('focus',syncTokensAndRefresh);
+
+/* ================= Einstellungs-Dialog (F4.1 · Muster 1.7) ================= */
+function openSettingsDlg(){
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Einstellungen'));
+    // Darstellung — F4.2 Theme + F4.3 Schriftgröße
+    const s1=ael('div');s1.appendChild(ael('div','kicker','Darstellung'));
+    const d1=ael('div');d1.id='setDisplay';d1.style.margin='6px 0 4px';
+    // F4.2 Theme
+    const themeLbl=ael('div','small muted','Theme');themeLbl.style.marginBottom='3px';d1.appendChild(themeLbl);
+    const themeRow=ael('div','seg');themeRow.style.marginBottom='10px';
+    const setThemeBtn=(val,lab)=>{const b=ael('button',(prefs.theme||'dark')===val?'on':null,lab);b.type='button';
+      b.onclick=()=>{prefs.theme=val;savePrefs();applyTheme();themeRow.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));};
+      themeRow.appendChild(b);};
+    setThemeBtn('dark','Dunkel');setThemeBtn('light','Hell');
+    d1.appendChild(themeRow);
+    // F4.3 Schriftgroesse
+    const fsLbl=ael('div','small muted','Schriftgröße');fsLbl.style.marginBottom='3px';d1.appendChild(fsLbl);
+    const fsRow=ael('div','seg');
+    const setFsBtn=(val,lab)=>{const b=ael('button',(prefs.fontSize||'m')===val?'on':null,lab);b.type='button';
+      b.onclick=()=>{prefs.fontSize=val;savePrefs();applyFontSize();fsRow.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));};
+      fsRow.appendChild(b);};
+    setFsBtn('s','S');setFsBtn('m','M');setFsBtn('l','L');
+    d1.appendChild(fsRow);
+    s1.appendChild(d1);dlg.appendChild(s1);
+    // Bedienung — Platzhalter
+    const s2=ael('div');s2.style.marginTop='12px';s2.appendChild(ael('div','kicker','Bedienung'));
+    const d2=ael('div');d2.id='setBedienung';d2.style.margin='6px 0 4px';
+    // F4.5 Einfach/Profi-Umschalter
+    const modeRow=ael('div','seg');modeRow.style.marginBottom='8px';
+    const setModeBtn=(val,lab)=>{const b=ael('button',(prefs.mode||'profi')===val?'on':null,lab);b.type='button';
+      b.onclick=()=>{prefs.mode=val;savePrefs();applyEinfachMode();modeRow.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));render();};
+      modeRow.appendChild(b);};
+    setModeBtn('einfach','Einfach');setModeBtn('profi','Profi');
+    d2.appendChild(modeRow);
+    d2.appendChild(ael('div','small muted','Einfach blendet Fortgeschrittenes aus (Kontingent-Matrix, JSON-/Token-Import). Anlegen, Freigabe, Finalisierung, Exporte und Einlass bleiben immer sichtbar.'));
+    // F5.1 „Am Handy öffnen"-QR
+    const qrBtn=ael('button','smallbtn');qrBtn.style.marginTop='8px';
+    (function(){const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','icon tlbicon');svg.setAttribute('aria-hidden','true');const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href','#icon-qr');svg.appendChild(use);qrBtn.appendChild(svg);})();
+    qrBtn.appendChild(document.createTextNode('Am Handy öffnen (QR)'));
+    qrBtn.onclick=()=>{close();openQrDlg('Am Handy öffnen',currentToolUrl(),'Diese Ansicht am Smartphone öffnen — QR scannen.');};
+    d2.appendChild(qrBtn);
+    const tourBtn=ael('button','smallbtn','Kurz-Tour erneut starten');tourBtn.style.marginTop='8px';
+    tourBtn.onclick=()=>{close();openTourDlg();};
+    d2.appendChild(tourBtn);s2.appendChild(d2);dlg.appendChild(s2);
+    // Daten
+    const s3=ael('div');s3.style.marginTop='12px';s3.appendChild(ael('div','kicker','Daten'));
+    const d3=ael('div');d3.id='setDaten';d3.style.cssText='margin:6px 0 4px;display:flex;flex-wrap:wrap;gap:8px';
+    const demoBtn=ael('button','smallbtn no','Demo-Daten entfernen');
+    demoBtn.disabled=!demoDataPresent();
+    if(demoBtn.disabled)demoBtn.title='Keine Demo-Daten vorhanden.';
+    demoBtn.onclick=()=>{removeDemoData();close();};
+    const expBtn=ael('button','smallbtn','JSON-Export');expBtn.onclick=()=>{close();jsonExport();};
+    const impBtn=ael('button','smallbtn einfach-hide','JSON-Import');impBtn.onclick=()=>{close();$('fileImport').click();};
+    d3.appendChild(demoBtn);d3.appendChild(expBtn);d3.appendChild(impBtn);
+    s3.appendChild(d3);
+    s3.appendChild(ael('div','small muted','Sicherung: Stände als JSON exportieren bzw. importieren.'));
+    dlg.appendChild(s3);
+    const btns=ael('div','dlgbtns');
+    const cl=ael('button',null,'Schließen');cl.onclick=close;btns.appendChild(cl);
+    dlg.appendChild(btns);
+  });
+}
+
+/* ================= F4.5 Einfach/Profi-Modus ================= */
+function applyEinfachMode(){document.body.classList.toggle('mode-einfach',prefs.mode==='einfach');}
+
+/* ================= F4.2 Theme (Dark/Light) ================= */
+function applyTheme(){
+  const t=prefs.theme==='light'?'light':'dark';
+  if(t==='light')document.documentElement.setAttribute('data-theme','light');
+  else document.documentElement.removeAttribute('data-theme');
+}
+
+/* ================= F4.3 Schriftgröße S/M/L ================= */
+function applyFontSize(){
+  const map={s:15/16,m:1,l:18/16};
+  const f=map[prefs.fontSize]||1;
+  document.documentElement.style.setProperty('--zoom',String(f));
+}
+
+/* ================= F5.1/F6.8 QR-Dialog ================= */
+function openQrDlg(title,text,subtitle){
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,title||'QR-Code'));
+    if(subtitle){const s=ael('div','small muted');s.style.marginBottom='8px';s.textContent=subtitle;dlg.appendChild(s);}
+    const box=ael('div','qrbox');
+    const frame=ael('div','qrframe');
+    let ok=false;
+    try{
+      if(window.QR&&typeof window.QR.svg==='function'){
+        const svg=window.QR.svg(text,{size:220,margin:4,dark:'#17181C',light:'#ffffff'});
+        if(svg){frame.innerHTML=svg;ok=true;}
+      }
+    }catch(e){ok=false;}
+    if(ok){box.appendChild(frame);}
+    else{box.appendChild(mkHint('QR-Code nicht verfügbar — bitte den Link verwenden.'));}
+    const lk=ael('div','qrlink');lk.textContent=text;box.appendChild(lk);
+    dlg.appendChild(box);
+    const btns=ael('div','dlgbtns');const c=ael('button','save','Schließen');c.onclick=close;btns.appendChild(c);dlg.appendChild(btns);
+  });
+}
+function currentToolUrl(){return location.href.replace(/[?#].*$/,'');}
+
+/* ================= F1.4 Kurz-Tour ================= */
+function tourSteps(){
+  return [
+    {t:'Künstler / Band',x:'Ganz oben im Tab „Verwaltung“ den Act wählen — alle von Landstreicher Booking vertretenen Künstler und Bands, alphabetisch, mit Sofortsuche. Jeder hat eigene Shows, Gäste und Kontingente.'},
+    {t:'Verwaltung',x:'Shows anlegen, Deckel/Deadline/Kontingente pflegen, Gästeliste finalisieren und exportieren.'},
+    {t:'Einladen',x:'Einladende stellen hier Gast-Anfragen — mit Kontingent-Anzeige und Status (angefragt/genehmigt/final).'},
+    {t:'Einlass',x:'An der Abendkasse: schnell nach Namen suchen und einchecken, auch für Begleitungen.'},
+    {t:'Ticket',x:'Ticket-Zugänge (Demo) für externe Gäste ausgeben — per Link, Mail oder QR-Code.'},
+    {t:'Export',x:'Ganz unten in der Werkzeugleiste: Exporte, JSON-Sicherung und Drucken — von jedem Tab aus erreichbar.'}
+  ];
+}
+function openTourDlg(){
+  const steps=tourSteps();let idx=0;
+  modal((dlg,close)=>{
+    const h2=ael('h2',null,'');dlg.appendChild(h2);
+    const body=ael('div');body.style.marginBottom='12px';dlg.appendChild(body);
+    const btns=ael('div','dlgbtns');dlg.appendChild(btns);
+    function draw(){
+      h2.textContent='Kurz-Tour ('+(idx+1)+'/'+steps.length+') · '+steps[idx].t;
+      body.textContent=steps[idx].x;
+      btns.innerHTML='';
+      if(idx>0){const b=ael('button',null,'Zurück');b.onclick=()=>{idx--;draw();};btns.appendChild(b);}
+      const skip=ael('button',null,'Überspringen');skip.onclick=close;btns.appendChild(skip);
+      const next=ael('button','save',idx<steps.length-1?'Weiter':'Fertig');
+      next.onclick=()=>{if(idx<steps.length-1){idx++;draw();}else close();};
+      btns.appendChild(next);
+    }
+    draw();
+  });
+}
+
+/* ================= F2.6 Tastatur-Shortcuts (Desktop) ================= */
+function focusSearch(){
+  const el=document.querySelector('.glsearch input,.searchbar input,#view input[type=search]');
+  if(el){el.focus();if(el.select)el.select();}
+}
+function openShortcutHelp(){
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Tastatur-Kürzel'));
+    const ul=ael('ul','schelp');
+    [['/','Suche fokussieren'],['n','Neuen Gast anlegen'],['1 – 4','Tab wechseln (Verwaltung/Einladen/Einlass/Ticket)'],['Esc','Offenen Dialog schließen'],['?','Diese Hilfe anzeigen']]
+      .forEach(([k,d])=>{const li=ael('li');li.appendChild(ael('kbd',null,k));li.appendChild(ael('span',null,d));ul.appendChild(li);});
+    dlg.appendChild(ul);
+    const btns=ael('div','dlgbtns');const c=ael('button','save','Schließen');c.onclick=close;btns.appendChild(c);dlg.appendChild(btns);
+  });
+}
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  const ae=document.activeElement;
+  if(ae&&/^(INPUT|SELECT|TEXTAREA)$/.test(ae.tagName))return;
+  const openDlg=document.querySelector('dialog[open]');
+  if(e.key==='Escape'){if(openDlg)openDlg.close();return;}
+  if(openDlg)return;
+  const k=e.key;
+  if(k==='/'){e.preventDefault();focusSearch();}
+  else if(k==='n'||k==='N'){e.preventDefault();openGuestDlg(null,{});}
+  else if(k>='1'&&k<='4'){e.preventDefault();setModus(['verwaltung','einladen','einlass','ticket'][+k-1]);}
+  else if(k==='?'){e.preventDefault();openShortcutHelp();}
+});
+
+/* ================= Start ================= */
+function init(){
+  loadPrefs();
+  if(!isArtist(prefs.artist))prefs.artist=ARTIST_DEFAULT;
+  curArtist=prefs.artist;
+  LS_KEY=wsKey(curArtist);
+  load();
+  applyHeader();
+  const gb=$('gearBtn');if(gb)gb.onclick=openSettingsDlg;
+  applyEinfachMode();
+  applyTheme();
+  applyFontSize();
+  // savedAt-Anzeige initialisieren
+  if(state.meta&&state.meta.savedAt){
+    const d=new Date(state.meta.savedAt);
+    $('savedAt').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+  }
+  render();
+  backupReminder();
+  if(!prefs.tourSeen){prefs.tourSeen=true;savePrefs();setTimeout(openTourDlg,300);}
+}
+init();
+</script>
+</body>
+</html>
