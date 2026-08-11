@@ -407,7 +407,7 @@ function defaultState(){
     meta:{savedAt:0,autoLoeschTage:14},
     shows,gruppen,kategorien:deepCopy(KAT_INIT),einladende,gaeste:[],tokens:[],
     gruppenKontingente,
-    ui:{modus:'verwaltung',aktiveShowId:shows[0]?shows[0].id:null,einlassShowId:null,werBinIch:null}
+    ui:{modus:'verwaltung',aktiveShowId:naechsteShowId(shows),einlassShowId:null,werBinIch:null}
   };
 }
 function ALLKAT_FROM(arr){return arr.map(k=>k.id);}
@@ -591,7 +591,9 @@ const DEMO_VN=['Anna','Lukas','Marie','Jonas','Laura','Felix','Sophie','Max','Em
 const DEMO_NN=['Bauer','Wagner','Hoffmann','Schulz','Richter','Klein','Wolf','Neumann','Schwarz','Braun','Krüger','Hofmann','Hartmann','Lange','Werner','Schmitt','Köhler','Maier','Frank','Berger','Winkler','Roth','Beck','Lorenz','Baumann','Franke','Albrecht','Ludwig','Winter','Kraus','Fuchs','Vogel','Böhm','Sommer','Seidel','Brandt','Haas','Peters','Kaiser','Arnold'];
 function demoDataPresent(){return state.gaeste.some(g=>g._demo)||(state.tokens||[]).some(t=>t._demo);}
 function loadDemoData(){
-  const shows=state.shows.filter(s=>!s.geloescht).slice(0,5);
+  // Beispiel-Gäste auf die nächsten Shows verteilen, nicht ins Archiv (sonst wirkt die Startansicht leer).
+  const alle=state.shows.filter(s=>!s.geloescht);
+  const shows=showsKommend(alle).slice(0,5).length?showsKommend(alle).slice(0,5):showsSortiert(alle).slice(-5);
   if(!shows.length){Toast.show('Keine Shows vorhanden.',{type:'warn'});return;}
   const einl=state.einladende;
   if(!einl.length){Toast.show('Keine Einladenden vorhanden.',{type:'warn'});return;}
@@ -651,8 +653,45 @@ const showById=id=>state.shows.find(s=>s.id===id);
 const grpById=id=>state.gruppen.find(g=>g.id===id);
 const katById=id=>state.kategorien.find(k=>k.id===id)||{name:'—',farbe:'#8B93A1'};
 const pById=id=>state.einladende.find(p=>p.id===id);
-const aktiveShow=()=>showById(state.ui.aktiveShowId)||state.shows[0]||null;
+const aktiveShow=()=>showById(state.ui.aktiveShowId)||showById(naechsteShowId(state.shows))||state.shows[0]||null;
 function gaesteForShow(showId){return state.gaeste.filter(g=>g.showId===showId);}
+
+/* ================= Kommende Shows vs. Archiv =================
+   „Archiv“ = alles vor dem heutigen Tag. Der Showtag selbst zählt noch als kommend,
+   damit am Veranstaltungstag nichts ins Archiv rutscht. */
+function showVergangen(s){return !!(s&&s.datum&&String(s.datum)<todayISO());}
+function showsSortiert(list){return (list||[]).slice().sort((a,b)=>String(a.datum||'').localeCompare(String(b.datum||'')));}
+function showsKommend(list){return showsSortiert((list||[]).filter(s=>!showVergangen(s)));}
+function showsArchiv(list){return showsSortiert((list||[]).filter(showVergangen)).reverse();}
+/* Nächste Veranstaltung (Start-Show). Ohne kommende Show die zuletzt gespielte. */
+function naechsteShowId(list){
+  const arr=showsSortiert(list);
+  const pick=showsKommend(arr.filter(s=>!s.geloescht))[0]||showsKommend(arr)[0]||arr[arr.length-1]||null;
+  return pick?pick.id:null;
+}
+/* Beim Start immer die nächste Veranstaltung zeigen — vergangene nur über das Archiv. */
+function starteMitNaechsterShow(){
+  if(!state.shows.length)return;
+  const cur=showById(state.ui.aktiveShowId);
+  if(cur&&!showVergangen(cur))return;
+  const id=naechsteShowId(state.shows);
+  if(id&&id!==state.ui.aktiveShowId){state.ui.aktiveShowId=id;save();}
+}
+/* Show-Dropdown mit Archiv-Gruppe: kommende aufsteigend, Archiv (neueste zuerst) darunter. */
+function fillShowSelect(sel,list,curId,labFn){
+  sel.innerHTML='';
+  const kommend=showsKommend(list),archiv=showsArchiv(list);
+  const addTo=(parent,s)=>{const o=document.createElement('option');o.value=s.id;o.textContent=labFn(s);
+    if(curId&&s.id===curId)o.selected=true;parent.appendChild(o);};
+  if(kommend.length){
+    if(archiv.length){const g=document.createElement('optgroup');g.label='Kommende Shows';kommend.forEach(s=>addTo(g,s));sel.appendChild(g);}
+    else kommend.forEach(s=>addTo(sel,s));
+  }
+  if(archiv.length){
+    const g=document.createElement('optgroup');g.label='Archiv · gespielte Shows';archiv.forEach(s=>addTo(g,s));sel.appendChild(g);
+  }
+  return sel;
+}
 
 /* Personen-Zählung (Hauptgast + Begleitungen) */
 function personsPlanned(g){return 1+(g.begleitungen?g.begleitungen.length:0);}
@@ -767,6 +806,7 @@ function switchArtist(name){
   curArtist=name;prefs.artist=name;savePrefs();
   LS_KEY=wsKey(name);
   load();
+  starteMitNaechsterShow();
   resetViewState();
   applyHeader();
   render();window.scrollTo(0,0);
@@ -974,12 +1014,8 @@ function renderVerwaltung(){
   const lab=ael('div','f');
   lab.appendChild(ael('label',null,'Aktive Show (für Freigabe, Deckel, Deadline, Finalisierung, Exporte)'));
   const sel=document.createElement('select');
-  state.shows.forEach(s=>{
-    const o=document.createElement('option');o.value=s.id;
-    o.textContent=fmtDateShort(s.datum)+' · '+(s.stadt||'—')+(s.final?' · FINAL v'+s.finalVersion:'')+(s.geloescht?' · gelöscht':'');
-    if(sh&&s.id===sh.id)o.selected=true;
-    sel.appendChild(o);
-  });
+  fillShowSelect(sel,state.shows,sh?sh.id:null,
+    s=>fmtDateShort(s.datum)+' · '+(s.stadt||'—')+(s.final?' · FINAL v'+s.finalVersion:'')+(s.geloescht?' · gelöscht':''));
   sel.onchange=()=>setAktiveShow(sel.value);
   const fbox=ael('div','f');fbox.appendChild(lab.firstChild);fbox.appendChild(sel);
   selWrap.appendChild(fbox);
@@ -1798,15 +1834,15 @@ function renderEinlass(){
   const today=todayISO();
   let cur=finals.find(s=>s.id===state.ui.einlassShowId&&s.final&&!s.geloescht);
   if(!cur)cur=finals.find(s=>s.id===state.ui.aktiveShowId&&s.final&&!s.geloescht);
-  if(!cur)cur=finals.find(s=>s.datum===today)||finals[0];
+  // Sonst: heute, dann die nächste kommende Show, erst zuletzt eine aus dem Archiv.
+  if(!cur)cur=finals.find(s=>s.datum===today)||showsKommend(finals)[0]||showsArchiv(finals)[0]||finals[0];
   state.ui.einlassShowId=cur.id;
 
   const selWrap=ael('div','sec');
   const f=ael('div','f');f.appendChild(ael('label',null,'Show (nur finalisierte)'));
   const sel=document.createElement('select');
-  finals.forEach(s=>{const o=document.createElement('option');o.value=s.id;
-    o.textContent=fmtDateShort(s.datum)+' · '+(s.stadt||'')+' · v'+s.finalVersion+(s.datum===today?' · HEUTE':'');
-    if(s.id===cur.id)o.selected=true;sel.appendChild(o);});
+  fillShowSelect(sel,finals,cur.id,
+    s=>fmtDateShort(s.datum)+' · '+(s.stadt||'')+' · v'+s.finalVersion+(s.datum===today?' · HEUTE':''));
   sel.onchange=()=>{state.ui.einlassShowId=sel.value;einlassSearch='';einlassFilter='';save();render();};
   f.appendChild(sel);selWrap.appendChild(f);
   v.appendChild(selWrap);
@@ -2048,8 +2084,10 @@ function openGuestDlg(id,opts){
     // Show
     const fsh=ael('div','f');fsh.appendChild(ael('label',null,'Show'));
     const avail=state.shows.filter(s=>!s.geloescht&&(einladen?(!s.final&&!deadlinePassed(s)):true));
-    const ssh=selectFrom(avail.length?avail:state.shows,s=>s.id,s=>fmtDateShort(s.datum)+' · '+(s.stadt||''),
-      existing?existing.showId:(aktiveShow()?aktiveShow().id:(avail[0]?avail[0].id:null)));
+    const shList=avail.length?avail:state.shows;
+    const ssh=fillShowSelect(document.createElement('select'),shList,
+      existing?existing.showId:(aktiveShow()?aktiveShow().id:(showsKommend(shList)[0]?showsKommend(shList)[0].id:null)),
+      s=>fmtDateShort(s.datum)+' · '+(s.stadt||''));
     fsh.appendChild(ssh);dlg.appendChild(fsh);
 
     // Aftershow
@@ -2309,9 +2347,16 @@ function openShowDlg(addFirst){
     const box=ael('div');dlg.appendChild(box);
     function draw(){
       box.innerHTML='';
-      const sorted=state.shows.slice().sort((a,b)=>String(a.datum||'').localeCompare(String(b.datum||'')));
+      const sorted=showsSortiert(state.shows);
       if(!sorted.length)box.appendChild(mkHint('Noch keine Show angelegt.'));
-      sorted.forEach(s=>{
+      const kommend=showsKommend(sorted),archiv=showsArchiv(sorted);
+      if(kommend.length&&archiv.length)box.appendChild(ael('div','kicker','Kommende Shows'));
+      kommend.forEach(zeichneShow);
+      if(archiv.length){
+        if(kommend.length){const k=ael('div','kicker','Archiv · gespielte Shows');k.style.marginTop='10px';box.appendChild(k);}
+        archiv.forEach(zeichneShow);
+      }
+      function zeichneShow(s){
         const card=ael('div','card');
         const g2=ael('div','f2');
         const fd=ael('div','f');fd.appendChild(ael('label',null,'Datum'));
@@ -2339,12 +2384,12 @@ function openShowDlg(addFirst){
           // Kontingent-Ausnahmen dieser Show mit entfernen
           Object.keys(state.gruppenKontingente).forEach(k=>{const q=state.gruppenKontingente[k];if(q&&q.ausnahmen)delete q.ausnahmen[s.id];});
           state.einladende.forEach(p=>{if(p.ausnahmen)delete p.ausnahmen[s.id];});
-          if(state.ui.aktiveShowId===s.id)state.ui.aktiveShowId=state.shows[0]?state.shows[0].id:null;
+          if(state.ui.aktiveShowId===s.id)state.ui.aktiveShowId=naechsteShowId(state.shows);
           save();draw();
         };
         card.appendChild(del);
         box.appendChild(card);
-      });
+      }
     }
     draw();
     const add=ael('button','linkbtn','+ Show');add.style.marginTop='6px';
@@ -2539,6 +2584,7 @@ $('fileImport').onchange=e=>{
       }
       cand.kuenstler=target;
       state=cand;save();
+      starteMitNaechsterShow();
       resetViewState();applyHeader();render();
       Toast.show('Import übernommen: '+nG+' Gäste, '+nS+' Shows ('+target+').',{type:'ok'});
     }
@@ -2578,9 +2624,8 @@ function renderTicket(){
   const selWrap=ael('div','sec');
   const fbox=ael('div','f');fbox.appendChild(ael('label',null,'Show (Ticket-Zugänge dieser Show)'));
   const sel=document.createElement('select');
-  state.shows.forEach(s=>{const o=document.createElement('option');o.value=s.id;
-    o.textContent=fmtDateShort(s.datum)+' · '+(s.stadt||'—')+(s.geloescht?' · gelöscht':'');
-    if(sh&&s.id===sh.id)o.selected=true;sel.appendChild(o);});
+  fillShowSelect(sel,state.shows,sh?sh.id:null,
+    s=>fmtDateShort(s.datum)+' · '+(s.stadt||'—')+(s.geloescht?' · gelöscht':''));
   sel.onchange=()=>setAktiveShow(sel.value);
   fbox.appendChild(sel);selWrap.appendChild(fbox);
   v.appendChild(selWrap);
@@ -2859,7 +2904,11 @@ function openSettingsDlg(){
     d2.appendChild(qrBtn);
     const tourBtn=ael('button','smallbtn','Kurz-Tour erneut starten');tourBtn.style.marginTop='8px';
     tourBtn.onclick=()=>{close();openTourDlg();};
-    d2.appendChild(tourBtn);s2.appendChild(d2);dlg.appendChild(s2);
+    d2.appendChild(tourBtn);
+    const anlBtn=ael('button','smallbtn','Bedienungsanleitung öffnen');anlBtn.style.marginTop='8px';
+    anlBtn.onclick=()=>{window.open('Bedienungsanleitung.html','_blank','noopener');};
+    d2.appendChild(anlBtn);
+    s2.appendChild(d2);dlg.appendChild(s2);
     // Daten
     const s3=ael('div');s3.style.marginTop='12px';s3.appendChild(ael('div','kicker','Daten'));
     const d3=ael('div');d3.id='setDaten';d3.style.cssText='margin:6px 0 4px;display:flex;flex-wrap:wrap;gap:8px';
@@ -2986,6 +3035,7 @@ function init(){
   curArtist=prefs.artist;
   LS_KEY=wsKey(curArtist);
   load();
+  starteMitNaechsterShow();
   applyHeader();
   const gb=$('gearBtn');if(gb)gb.onclick=openSettingsDlg;
   applyEinfachMode();
