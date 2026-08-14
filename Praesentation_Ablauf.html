@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMK Gästeliste PRO · Der Ablauf</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --case:#17181C; --panel:#1F2126; --panel2:#26282E; --line:#33363E;
+  --ink:#E9EAEE; --dim:#9BA0AB; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
+  --disp:'Archivo Black',sans-serif; --body:'Barlow Semi Condensed',sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.45}
+.deck{max-width:1180px;margin:0 auto;padding:0 20px 90px}
+
+/* ---------- Kopfleiste ---------- */
+.bar{position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:3px solid var(--tape);
+     display:flex;align-items:center;gap:14px;padding:10px 20px}
+.bar .marke{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape);text-transform:uppercase}
+.bar .titel{font-family:var(--disp);font-size:14px;text-transform:uppercase;letter-spacing:.03em}
+.bar .rest{margin-left:auto;display:flex;align-items:center;gap:8px}
+.bar button{background:var(--panel2);border:1px solid var(--line);border-radius:5px;color:var(--ink);
+     font-family:var(--mono);font-size:12px;padding:7px 12px;cursor:pointer}
+.bar button:hover{border-color:var(--tape)}
+.bar .zaehler{font-family:var(--mono);font-size:12px;color:var(--dim);min-width:52px;text-align:center}
+
+/* ---------- Folie ---------- */
+.folie{display:none;padding:34px 0 10px;animation:auf .25s ease}
+.folie.an{display:block}
+@keyframes auf{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.nr{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape);text-transform:uppercase;margin-bottom:6px}
+h1{font-family:var(--disp);font-size:clamp(26px,4.4vw,42px);text-transform:uppercase;letter-spacing:.01em;line-height:1.1;margin-bottom:10px}
+h2{font-family:var(--disp);font-size:clamp(20px,3vw,29px);text-transform:uppercase;letter-spacing:.02em;margin-bottom:12px}
+h3{font-family:var(--disp);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:18px 0 8px;color:var(--tape)}
+p{margin-bottom:10px;max-width:78ch}
+.lead{font-size:20px;color:var(--dim);max-width:70ch}
+ul{margin:0 0 12px 20px} li{margin-bottom:6px}
+.mono{font-family:var(--mono)}
+.dim{color:var(--dim)}
+
+.karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:14px 0}
+.karte{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--tape);border-radius:6px;padding:14px 15px}
+.karte .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.karte .t{font-weight:700;margin-bottom:4px}
+.karte .b{font-size:15px;color:var(--dim)}
+.karte.ok{border-left-color:var(--ok)} .karte.neu{border-left-color:var(--now)}
+
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:16px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+td.sp{font-family:var(--mono);font-weight:700;white-space:nowrap;color:var(--tape)}
+
+figure{margin:14px 0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px}
+figure img{width:100%;display:block;border-radius:4px;border:1px solid var(--line)}
+figcaption{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:7px}
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:820px){.zwei{grid-template-columns:1fr}}
+
+.schritte{counter-reset:s;margin:16px 0}
+.schritt{counter-increment:s;position:relative;background:var(--panel);border:1px solid var(--line);border-radius:6px;
+     padding:13px 15px 13px 60px;margin-bottom:8px}
+.schritt::before{content:counter(s);position:absolute;left:14px;top:12px;width:32px;height:32px;border-radius:50%;
+     background:var(--tape);color:#161616;font-family:var(--disp);font-size:15px;display:flex;align-items:center;justify-content:center}
+.schritt .t{font-weight:700;margin-bottom:3px}
+.schritt .b{font-size:15px;color:var(--dim)}
+.schritt .w{font-family:var(--mono);font-size:11px;color:var(--tape);margin-top:5px;text-transform:uppercase;letter-spacing:.08em}
+
+.kasten{border:1px solid var(--line);border-left:3px solid var(--tape);background:var(--panel);border-radius:5px;padding:12px 14px;margin:12px 0}
+.kasten.warn{border-left-color:var(--now)}
+.kasten.ok{border-left-color:var(--ok)}
+.kasten .h{font-weight:700;margin-bottom:4px}
+
+.marke-gross{font-family:var(--disp);font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+     background:var(--tape);color:#161616;border-radius:3px;padding:3px 8px;display:inline-block}
+
+/* ---------- Fussleiste ---------- */
+.fuss{position:fixed;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line);
+     display:flex;align-items:center;gap:10px;padding:9px 20px;z-index:30}
+.fuss .pk{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto}
+.fuss .pk button{width:26px;height:26px;border-radius:4px;border:1px solid var(--line);background:var(--panel2);
+     color:var(--dim);font-family:var(--mono);font-size:11px;cursor:pointer;padding:0}
+.fuss .pk button.an{background:var(--tape);color:#161616;border-color:var(--tape)}
+.fuss .nav{background:var(--panel2);border:1px solid var(--line);border-radius:5px;color:var(--ink);
+     font-family:var(--mono);font-size:13px;padding:7px 14px;cursor:pointer}
+.fuss .nav:hover{border-color:var(--tape)}
+.hinweis{font-family:var(--mono);font-size:11px;color:var(--dim)}
+
+/* ---------- Schmale Bildschirme ---------- */
+@media (max-width:700px){
+  body{font-size:16px}
+  .deck{padding:0 12px 96px}
+  .bar{flex-wrap:wrap;gap:8px;padding:9px 12px}
+  .bar .titel{font-size:12px}
+  .bar .rest{margin-left:auto}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:normal}
+  th,td{padding:7px 8px;font-size:15px}
+  td.sp{white-space:normal}
+  .schritt{padding:12px 13px 12px 52px}
+  .fuss{padding:8px 12px;flex-wrap:wrap}
+  .fuss .pk{width:100%;margin-left:0;justify-content:flex-start}
+  .hinweis{display:none}
+  p,.lead{max-width:none}
+}
+
+/* ---------- Druck: alle Folien untereinander ---------- */
+@media print{
+  body{background:#fff;color:#111}
+  .bar,.fuss{display:none}
+  .folie{display:block!important;page-break-after:always;padding:0 0 18px}
+  h1,h2{color:#111} h3{color:#7a5c00}
+  .karte,.schritt,.kasten,figure,th{background:#fff;border-color:#bbb}
+  .dim,.karte .b,.schritt .b,figcaption{color:#444}
+  td.sp,.nr{color:#7a5c00}
+  .schritt::before{background:#FFD23F;color:#111}
+  a{color:#111}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="marke">Consec · Tourmanagement-Werkzeuge</span>
+  <span class="titel">AMK Gästeliste PRO — der Ablauf</span>
+  <span class="rest">
+    <button id="btnDruck">Als PDF drucken</button>
+    <span class="zaehler" id="zaehler">1 / 12</span>
+  </span>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- 1 -->
+<section class="folie an">
+  <div class="nr">Vorstellung für Landstreicher Booking</div>
+  <h1>Die Gästeliste bleibt,<br>wie ihr sie kennt.</h1>
+  <p class="lead">Gleicher Kopfblock. Gleiche Spalten. Gleiche Begriffe. Nur ohne die Handarbeit dahinter —
+  und mit Ticket-Versand, Einlass am Handy und Exporten auf Knopfdruck.</p>
+  <div class="karten">
+    <div class="karte"><div class="k">Grundlage</div><div class="t">Eure Blanko-Vorlage</div><div class="b">Kopfblock, Spaltenreihenfolge und Formeln wurden 1:1 übernommen.</div></div>
+    <div class="karte ok"><div class="k">Für die Mitarbeitenden</div><div class="t">Kein Umlernen</div><div class="b">Wer die Tabelle bedienen kann, kann das Werkzeug bedienen.</div></div>
+    <div class="karte neu"><div class="k">Neu</div><div class="t">Tickets, Einlass, Exporte</div><div class="b">Ticket-Zugänge per Mail, Check-in am Handy, fertige Listen für Abendkasse und Ticketing.</div></div>
+  </div>
+  <p class="dim mono">AnnenMayKantereit · Live 2026 · Stand 14.08.2026</p>
+</section>
+
+<!-- 2 -->
+<section class="folie">
+  <div class="nr">Ausgangslage</div>
+  <h2>So arbeitet ihr heute</h2>
+  <p>Ein Tabellenblatt je Show. Oben der Kopfblock mit Kapazitäten, Gast&nbsp;Limit und den Pool-Kontingenten,
+  darunter ab Zeile 13 die Gästezeilen. Die Zahlen im Kopf rechnen sich aus den Zeilen zusammen.</p>
+  <table>
+    <tr><th>Bereich</th><th>Was dort steht</th></tr>
+    <tr><td class="sp">Kopf links</td><td>Datum · Ort&nbsp;-&nbsp;Venue · Kap&nbsp;Steh · Kap&nbsp;Sitz · Family&nbsp;&amp;&nbsp;Friends Bereich · Kontakte für Rücksprachen (AP&nbsp;LSB, AP&nbsp;Tour, AP&nbsp;ÜV&nbsp;GL)</td></tr>
+    <tr><td class="sp">Kopf Mitte</td><td>show · no&nbsp;show · Gast&nbsp;Limit · verbraucht · übrig</td></tr>
+    <tr><td class="sp">Kopf rechts</td><td>Kont · Pool · verbraucht · übrig für Band, Mgmt, LSB, Presse, Präsentator*in, Musiker*innen, Support, Crew — dazu der Vorjahresvergleich</td></tr>
+    <tr><td class="sp">Zeile 12</td><td>show · Name · Vorname · E-Mail · Steh · Sitz · Aftershow · Kat&nbsp;4 · AAA · F/F · Foto · Referenz/Medium · c/o · Pool · Notiz</td></tr>
+    <tr><td class="sp">Spalte P</td><td>die Merkzeile „Mailout bis hier versendet"</td></tr>
+  </table>
+  <div class="kasten">
+    <div class="h">Der entscheidende Punkt</div>
+    Eine Zeile ist kein einzelner Gast, sondern ein Eintrag mit <strong>Mengen je Spalte</strong>.
+    Steh + Sitz + Aftershow + Kat&nbsp;4 zählen auf das Gast&nbsp;Limit, AAA + F/F + Foto nicht.
+    Genau so rechnet das Werkzeug jetzt auch.
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="folie">
+  <div class="nr">Wiedererkennung</div>
+  <h2>Derselbe Kopfblock — nur klickbar</h2>
+  <figure>
+    <img src="screenshots/11_kopfblock.png" alt="Kopfblock der aktiven Show">
+    <figcaption>Links Show und Rücksprache-Kontakte · Mitte show/no&nbsp;show und Gast&nbsp;Limit · rechts die Pools und der Vorjahresvergleich</figcaption>
+  </figure>
+  <div class="karten">
+    <div class="karte"><div class="k">Statt Formel</div><div class="t">Zahlen rechnen sich mit</div><div class="b">verbraucht, übrig, show und no&nbsp;show stehen immer aktuell da — nichts kann kaputtgezogen werden.</div></div>
+    <div class="karte"><div class="k">Statt bedingter Formatierung</div><div class="t">Kapazität sofort sichtbar</div><div class="b">Neben Kap&nbsp;Steh und Kap&nbsp;Sitz steht die vergebene Menge — grün, solange sie passt, rot bei Überschreitung.</div></div>
+    <div class="karte"><div class="k">Statt SUMMEWENN</div><div class="t">Pools zählen selbst</div><div class="b">Ein Klick auf eine Pool-Zeile öffnet das Kontingent, auch als Ausnahme nur für diese eine Show.</div></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="folie">
+  <div class="nr">Wiedererkennung</div>
+  <h2>Dieselben Spalten — in derselben Reihenfolge</h2>
+  <figure>
+    <img src="screenshots/01_verwaltung.png" alt="Gästeliste als Tabelle">
+    <figcaption>Die Mengenfelder lassen sich direkt in der Zeile tippen, wie gewohnt. Oben die Summenzeile.</figcaption>
+  </figure>
+  <div class="zwei">
+    <div>
+      <h3>Unverändert</h3>
+      <ul>
+        <li>show · Name · Vorname · E-Mail</li>
+        <li>Steh · Sitz · Aftershow · Kat&nbsp;4</li>
+        <li>AAA · F/F · Foto</li>
+        <li>Referenz/Medium · c/o · Pool · Notiz</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Dazugekommen</h3>
+      <ul>
+        <li><strong>Mail</strong> — ist der Mailout für diese Zeile raus?</li>
+        <li><strong>Status</strong> — angefragt / genehmigt / abgelehnt / final</li>
+        <li>Doppelte Namen werden beim Tippen gemeldet</li>
+        <li>„Nur benutzte" blendet leere Spalten aus — wie eure ausgeblendeten Spalten Aftershow und Kat&nbsp;4</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="folie">
+  <div class="nr">Der Ablauf</div>
+  <h2>Eine Show von Anfang bis Ende</h2>
+  <div class="schritte">
+    <div class="schritt"><div class="t">Show öffnen und Kopf prüfen</div>
+      <div class="b">Das Werkzeug startet immer bei der nächsten anstehenden Show. Kapazitäten, Gast&nbsp;Limit, Pool-Kontingente und die Rücksprache-Kontakte einmal eintragen.</div>
+      <div class="w">Verwaltung · Kopfblock</div></div>
+    <div class="schritt"><div class="t">Zeilen erfassen</div>
+      <div class="b">Entweder wie bisher selbst eintippen — oder die Einladenden tragen sich im Bereich „Einladen" selbst ein und sehen dabei nur ihr eigenes Kontingent.</div>
+      <div class="w">Verwaltung · Einladen</div></div>
+    <div class="schritt"><div class="t">Freigeben</div>
+      <div class="b">Offene Anfragen stehen gesammelt oben: genehmigen oder ablehnen, einzeln oder in einem Rutsch. Pools mit Automatik genehmigen sich im Rahmen ihres Kontingents selbst.</div>
+      <div class="w">Verwaltung · Freigabe</div></div>
+    <div class="schritt"><div class="t">Mailout</div>
+      <div class="b">Ticket-Zugänge für alle offenen Zeilen anlegen, Mailout-Liste als Datei ziehen, Versandstand setzen. Die Merkzeile „Mailout bis hier versendet" entfällt — jede Zeile weiß es selbst.</div>
+      <div class="w">Ticket · Sammel-Mailout</div></div>
+    <div class="schritt"><div class="t">Redaktionsschluss und Finalisieren</div>
+      <div class="b">Nach der Deadline gelten Änderungen als Nachtrag und werden markiert. Das Finalisieren friert die Liste als offizielle Version ein — die Abendkasse bekommt nie einen alten Stand.</div>
+      <div class="w">Verwaltung · FINAL v1</div></div>
+    <div class="schritt"><div class="t">Exporte</div>
+      <div class="b">Druckliste zum Abhaken, Abendkasse, krasserstoff-Personalisierung, Aftershow-Liste — und die Tabelle im gewohnten Aufbau, falls doch jemand in der alten Datei weiterarbeiten will.</div>
+      <div class="w">Verwaltung · Exporte</div></div>
+    <div class="schritt"><div class="t">Einlass</div>
+      <div class="b">Am Showtag auf dem Handy: suchen, antippen, fertig. Jede Person einzeln abhakbar. Die Zahlen show und no&nbsp;show füllen sich von selbst.</div>
+      <div class="w">Einlass</div></div>
+    <div class="schritt"><div class="t">Nach der Show</div>
+      <div class="b">Statistik und Vorjahresvergleich stehen bereit, die Show wandert ins Archiv. Personenbezogene Daten lassen sich löschen — die Statistik bleibt anonym erhalten.</div>
+      <div class="w">Verwaltung · Statistik · Datenschutz</div></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="folie">
+  <div class="nr">Schritt 2 im Bild</div>
+  <h2>Einladende tragen sich selbst ein</h2>
+  <figure>
+    <img src="screenshots/03_einladen.png" alt="Bereich Einladen">
+    <figcaption>Eigene Person wählen, eigenes Kontingent sehen, Gast eintragen — mehr steht dort nicht.</figcaption>
+  </figure>
+  <div class="kasten ok">
+    <div class="h">Was das spart</div>
+    Keine Mails mit Namenslisten, kein Abtippen, keine Rückfragen zum Kontingent.
+    Jeder Eintrag landet direkt als Anfrage in eurer Freigabe — mit Pool, c/o und Platzart schon gesetzt.
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="folie">
+  <div class="nr">Schritt 4 im Bild</div>
+  <h2>Tickets und Mailout</h2>
+  <figure>
+    <img src="screenshots/05_ticket_tab.png" alt="Ticket-Bereich mit Sammel-Mailout">
+    <figcaption>Sammel-Mailout: Zugänge anlegen, Liste für den Serienversand ziehen, Versandstand setzen.</figcaption>
+  </figure>
+  <div class="karten">
+    <div class="karte"><div class="k">Je Zeile</div><div class="t">Persönlicher Zugang</div><div class="b">E-Mail und Platzzahl kommen aus der Gästeliste. Link, Mail oder QR-Code zum Weitergeben.</div></div>
+    <div class="karte"><div class="k">In einem Rutsch</div><div class="t">Sammel-Anlage</div><div class="b">Zugänge für alle genehmigten Zeilen mit E-Mail, ohne Dubletten.</div></div>
+    <div class="karte"><div class="k">Für den Versand</div><div class="t">Mailout-Liste</div><div class="b">Name, E-Mail, Plätze, Pool, c/o und Link als Datei — für Serienmail oder Newsletter-Dienst.</div></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="folie">
+  <div class="nr">Schritt 7 im Bild</div>
+  <h2>Einlass am Showtag</h2>
+  <div class="zwei">
+    <figure>
+      <img src="screenshots/04_einlass.png" alt="Einlass-Bereich">
+      <figcaption>Große Zeilen, Suche, Filter nach Platzart — bedienbar mit einer Hand.</figcaption>
+    </figure>
+    <div>
+      <h3>Gebaut für die Tür</h3>
+      <ul>
+        <li>Suche findet auch ohne Umlaute: „kruger" findet „Krüger".</li>
+        <li>Antippen checkt ein, ein zweiter Tipp warnt statt versehentlich zurückzunehmen.</li>
+        <li>Jede weitere Person der Zeile ist einzeln abhakbar — „2 von 3 da".</li>
+        <li>Nur finalisierte Listen erscheinen: kein alter Stand an der Tür.</li>
+        <li>Läuft auch ohne Netz weiter, wenn die Seite einmal geladen ist.</li>
+      </ul>
+      <div class="kasten">
+        <div class="h">Ergebnis</div>
+        show und no&nbsp;show stehen nach der Show ohne Nacharbeit im Kopfblock.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="folie">
+  <div class="nr">Schritt 6 im Bild</div>
+  <h2>Exporte auf Knopfdruck</h2>
+  <div class="zwei">
+    <figure>
+      <img src="screenshots/08_export_dialog.png" alt="Export-Dialog">
+      <figcaption>Erst nach dem Finalisieren — außer dem Export im gewohnten Tabellenaufbau.</figcaption>
+    </figure>
+    <div>
+      <table>
+        <tr><th>Export</th><th>Wofür</th></tr>
+        <tr><td class="sp">(e) Gewohnte Tabelle</td><td>Kopfblock, Summenzeile und Spalten an derselben Stelle wie heute</td></tr>
+        <tr><td class="sp">(a) Druckliste</td><td>Alphabetisch, mit Farbbalken und Abhak-Spalte</td></tr>
+        <tr><td class="sp">(b) Abendkasse</td><td>Name, Personen, Plätze, c/o</td></tr>
+        <tr><td class="sp">(c) krasserstoff</td><td>Eine Zeile pro Person für die harte Personalisierung</td></tr>
+        <tr><td class="sp">(d) Aftershow</td><td>Als Liste zum Drucken und als Datei</td></tr>
+      </table>
+      <div class="kasten warn">
+        <div class="h">Eingebaute Sicherung</div>
+        Solange nicht finalisiert ist, sind die Abendkassen-Exporte gesperrt.
+        Jede Datei trägt Show, Version und Zeitstempel im Namen.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="folie">
+  <div class="nr">Nutzen</div>
+  <h2>Was sich im Alltag ändert</h2>
+  <table>
+    <tr><th>Heute</th><th>Mit dem Werkzeug</th></tr>
+    <tr><td>Namen kommen per Mail und werden abgetippt</td><td>Einladende tragen selbst ein, mit eigenem Kontingent</td></tr>
+    <tr><td>Freigabe über Farben, Kommentare oder Zuruf</td><td>Klarer Weg: angefragt → genehmigt/abgelehnt → final</td></tr>
+    <tr><td>Kontingent im Kopf mitrechnen</td><td>Pool-Tabelle zeigt Kont, verbraucht und übrig laufend</td></tr>
+    <tr><td>Merkzeile „Mailout bis hier versendet"</td><td>Jede Zeile trägt ihren Versandstand selbst</td></tr>
+    <tr><td>Tickets manuell verschicken</td><td>Persönlicher Zugang je Zeile, Sammelanlage, Versandliste</td></tr>
+    <tr><td>Ausgedruckte Liste an der Tür, Striche mit Kuli</td><td>Check-in am Handy, jede Person einzeln, live gezählt</td></tr>
+    <tr><td>Welche Fassung liegt an der Abendkasse?</td><td>Finalisierung mit Versionsnummer, Nachträge markiert</td></tr>
+    <tr><td>Nach der Show: Zahlen zusammensuchen</td><td>show/no&nbsp;show, Auslastung und Vorjahresvergleich stehen da</td></tr>
+    <tr><td>Personendaten bleiben in alten Tabellen liegen</td><td>Löschung auf Knopfdruck, Statistik bleibt anonym erhalten</td></tr>
+  </table>
+</section>
+
+<!-- 11 -->
+<section class="folie">
+  <div class="nr">Ehrlich gesagt</div>
+  <h2>Was fertig ist — und was noch nicht</h2>
+  <div class="zwei">
+    <div>
+      <h3>Voll einsatzbereit</h3>
+      <ul>
+        <li>Gästeliste, Kopfblock und alle Spalten</li>
+        <li>Freigabe, Kontingente, Deadline, Finalisierung</li>
+        <li>Einlass am Handy inklusive Offline-Betrieb</li>
+        <li>Alle Exporte, auch die krasserstoff-Personalisierung</li>
+        <li>Getrennte Arbeitsbereiche je Künstler des Rosters</li>
+        <li>Läuft ohne Installation, ohne Server, ohne Konto</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Noch Vorführung</h3>
+      <ul>
+        <li>Der Bereich „Ticket-Zugang" samt Saalplänen und Platzwahl ist eine Simulation.</li>
+        <li>Es entstehen keine echten Tickets und keine Zahlungen.</li>
+        <li>Der Versand läuft über das eigene Mailprogramm, nicht über einen Server.</li>
+      </ul>
+      <div class="kasten warn">
+        <div class="h">Für die echte Anbindung an krasserstoff</div>
+        Nötig sind Zugangsdaten, die Kennung je Veranstaltung und die Freigabe für den automatischen Abruf.
+        Die offenen Punkte stehen gesammelt im beiliegenden Fragenkatalog.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="folie">
+  <div class="nr">Nächster Schritt</div>
+  <h1>Einmal selbst anfassen.</h1>
+  <p class="lead">Das Werkzeug läuft im Browser, ohne Installation. Einfach den Link öffnen —
+  die mitgelieferten Beispieldaten lassen sich gefahrlos anklicken und jederzeit wieder entfernen.</p>
+  <div class="karten">
+    <div class="karte"><div class="k">Ausprobieren</div><div class="t">Im Browser öffnen</div><div class="b mono">dergueni.github.io/amk-gaesteliste</div></div>
+    <div class="karte"><div class="k">Nachlesen</div><div class="t">Bedienungsanleitung</div><div class="b">Elf Kapitel mit Bildern, auch zum Ausdrucken. Kapitel 11 vergleicht Werkzeug und Tabelle Spalte für Spalte.</div></div>
+    <div class="karte"><div class="k">Rückmeldung</div><div class="t">Feature-Katalog</div><div class="b">Vierzig nummerierte Punkte zum Ankreuzen: was gewünscht ist, was wegfallen kann.</div></div>
+  </div>
+  <h3>Womit wir weitermachen, sobald ihr euch gemeldet habt</h3>
+  <ul>
+    <li>Eure echten Pool-Kontingente und Rücksprache-Kontakte eintragen</li>
+    <li>Die Vorjahreszahlen je Show hinterlegen</li>
+    <li>Klären, welche Felder für den Ticketversand an krasserstoff gebraucht werden</li>
+    <li>Wunschpunkte aus dem Feature-Katalog umsetzen</li>
+  </ul>
+  <p class="dim mono" style="margin-top:18px">Consec Nürnberg · Günther Siegert · auftragsplanung@consec-nuernberg.de</p>
+</section>
+
+</div>
+
+<div class="fuss">
+  <button class="nav" id="zurueck">← Zurück</button>
+  <button class="nav" id="weiter">Weiter →</button>
+  <span class="hinweis">Pfeiltasten oder Leertaste · Zahlentasten springen direkt</span>
+  <span class="pk" id="punkte"></span>
+</div>
+
+<script>
+'use strict';
+var folien = Array.prototype.slice.call(document.querySelectorAll('.folie'));
+var akt = 0;
+var punkte = document.getElementById('punkte');
+var zaehler = document.getElementById('zaehler');
+
+folien.forEach(function (f, i) {
+  var b = document.createElement('button');
+  b.textContent = String(i + 1);
+  b.setAttribute('aria-label', 'Folie ' + (i + 1));
+  b.onclick = function () { zeige(i); };
+  punkte.appendChild(b);
+});
+
+function zeige(i) {
+  akt = Math.max(0, Math.min(folien.length - 1, i));
+  folien.forEach(function (f, k) { f.classList.toggle('an', k === akt); });
+  Array.prototype.forEach.call(punkte.children, function (b, k) { b.classList.toggle('an', k === akt); });
+  zaehler.textContent = (akt + 1) + ' / ' + folien.length;
+  window.scrollTo(0, 0);
+  try { location.hash = 'f' + (akt + 1); } catch (e) {}
+}
+document.getElementById('weiter').onclick = function () { zeige(akt + 1); };
+document.getElementById('zurueck').onclick = function () { zeige(akt - 1); };
+document.getElementById('btnDruck').onclick = function () { window.print(); };
+
+document.addEventListener('keydown', function (e) {
+  if (e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); zeige(akt + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); zeige(akt - 1); }
+  else if (e.key === 'Home') { zeige(0); }
+  else if (e.key === 'End') { zeige(folien.length - 1); }
+  else if (/^[1-9]$/.test(e.key)) { zeige(parseInt(e.key, 10) - 1); }
+});
+
+// Wischen am Handy
+var x0 = null;
+document.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', function (e) {
+  if (x0 === null) return;
+  var dx = e.changedTouches[0].clientX - x0;
+  if (Math.abs(dx) > 60) zeige(akt + (dx < 0 ? 1 : -1));
+  x0 = null;
+}, { passive: true });
+
+// Direkter Einstieg über #f7
+(function () {
+  var m = /^#f(\d+)$/.exec(location.hash || '');
+  zeige(m ? (parseInt(m[1], 10) - 1) : 0);
+})();
+</script>
+</body>
+</html>

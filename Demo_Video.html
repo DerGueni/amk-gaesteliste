@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMK Gästeliste PRO · Demo-Video</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--case:#17181C;--panel:#1F2126;--panel2:#26282E;--line:#33363E;--ink:#E9EAEE;--dim:#9BA0AB;
+      --tape:#FFD23F;--ok:#64A85C;--disp:'Archivo Black',sans-serif;--body:'Barlow Semi Condensed',sans-serif;--mono:'IBM Plex Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.45}
+header{background:var(--panel);border-bottom:3px solid var(--tape);padding:14px 20px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape);text-transform:uppercase}
+h1{font-family:var(--disp);font-size:clamp(19px,3.4vw,27px);text-transform:uppercase;margin:3px 0}
+.sub{font-size:14px;color:var(--dim)}
+main{max-width:1180px;margin:0 auto;padding:20px 20px 60px;display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start}
+@media (max-width:900px){main{grid-template-columns:1fr}}
+.player{background:#000;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+video{width:100%;display:block;background:#000}
+.unter{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;background:var(--panel);border-top:1px solid var(--line)}
+.unter button{background:var(--panel2);border:1px solid var(--line);border-radius:5px;color:var(--ink);
+  font-family:var(--mono);font-size:12px;padding:8px 12px;cursor:pointer}
+.unter button:hover{border-color:var(--tape)}
+.unter .zeit{font-family:var(--mono);font-size:12px;color:var(--dim);margin-left:auto}
+aside{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 13px}
+aside h2{font-family:var(--disp);font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.kap{display:block;width:100%;text-align:left;background:none;border:none;border-left:3px solid transparent;
+  color:var(--ink);font-family:var(--body);font-size:15px;padding:7px 9px;cursor:pointer;border-radius:0 5px 5px 0}
+.kap:hover{background:var(--panel2)}
+.kap.an{border-left-color:var(--tape);background:var(--panel2)}
+.kap .t{font-family:var(--mono);font-size:11px;color:var(--tape);margin-right:8px}
+.info{margin-top:16px;border:1px solid var(--line);border-left:3px solid var(--tape);border-radius:5px;
+  background:var(--panel);padding:12px 14px;font-size:15px}
+.info .h{font-weight:700;margin-bottom:4px}
+.info.warn{border-left-color:#FF4B3E}
+.links{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.links a{background:var(--panel2);border:1px solid var(--line);border-radius:5px;color:var(--tape);
+  font-family:var(--mono);font-size:12px;padding:9px 13px;text-decoration:none}
+.links a:hover{border-color:var(--tape)}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 40px;font-family:var(--mono);font-size:11px;color:var(--dim)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">Consec · Tourmanagement-Werkzeuge</div>
+  <h1>AMK Gästeliste PRO — Demo</h1>
+  <div class="sub">Ein Durchlauf durch eine Show: vom Eintrag über Freigabe und Mailout bis zum Einlass. Rund 2:45 Minuten, ohne Ton.</div>
+</header>
+
+<main>
+  <div>
+    <div class="player">
+      <video id="v" src="_versand/Demo_Ablauf.webm" controls preload="metadata" playsinline></video>
+      <div id="fehlt" style="display:none;padding:26px 22px;color:#E9EAEE;background:#1F2126">
+        <div style="font-weight:700;margin-bottom:6px">Die Videodatei liegt nicht neben dieser Seite.</div>
+        <div style="color:#9BA0AB;font-size:15px">Sie gehört nicht zum Versand-Paket, weil sie rund 10&nbsp;MB groß ist.
+        Online läuft sie hier: <a style="color:#FFD23F" href="https://dergueni.github.io/amk-gaesteliste/Demo_Video.html">dergueni.github.io/amk-gaesteliste/Demo_Video.html</a></div>
+      </div>
+      <div class="unter">
+        <button id="ab">▶ Abspielen</button>
+        <button id="zurueck">− 10 s</button>
+        <button id="vor">+ 10 s</button>
+        <button id="tempo">Tempo 1,0×</button>
+        <span class="zeit" id="zeit">0:00 / 2:45</span>
+      </div>
+    </div>
+
+    <div class="info">
+      <div class="h">Was im Video zu sehen ist</div>
+      Die echte Oberfläche, keine Nachbildung. Die gezeigten Namen sind Beispieldaten, die jedem Paket
+      beiliegen und sich jederzeit wieder entfernen lassen.
+    </div>
+    <div class="info warn">
+      <div class="h">Demo-Grenze</div>
+      Der Bereich „Ticket-Zugang" ist eine Vorführung. Es entstehen keine echten Tickets und keine Zahlungen.
+      Echte Tickets laufen über krasserstoff — was für eine echte Anbindung geklärt werden muss, steht im Fragenkatalog.
+    </div>
+    <div class="links">
+      <a href="gaesteliste.html">Werkzeug öffnen</a>
+      <a href="Praesentation_Ablauf.html">Präsentation</a>
+      <a href="Bedienungsanleitung.html">Bedienungsanleitung</a>
+      <a href="Fragenkatalog_Landstreicher_krasserstoff.html">Fragenkatalog</a>
+    </div>
+  </div>
+
+  <aside>
+    <h2>Kapitel</h2>
+    <div id="kapitel"></div>
+  </aside>
+</main>
+
+<footer>AMK Gästeliste PRO · Aufnahme aus dem laufenden Werkzeug · Stand 14.08.2026</footer>
+
+<script>
+'use strict';
+var KAP = [
+  [0,   'Einstieg'],
+  [10,  'Kopfblock der Show'],
+  [30,  'Gästeliste — dieselben Spalten'],
+  [35,  'Neue Zeile anlegen'],
+  [65,  'Direkt in der Zeile ändern'],
+  [80,  'Freigabe'],
+  [90,  'Ticket-Zugänge und Mailout'],
+  [110, 'Finalisieren'],
+  [120, 'Exporte'],
+  [125, 'Einlass am Showtag'],
+  [145, 'Ergebnis und Statistik']
+];
+var v = document.getElementById('v');
+var box = document.getElementById('kapitel');
+var zeit = document.getElementById('zeit');
+var knoepfe = [];
+
+function mmss(s){
+  if(!isFinite(s)) return '0:00';
+  var m = Math.floor(s/60), r = Math.floor(s%60);
+  return m + ':' + (r<10?'0':'') + r;
+}
+KAP.forEach(function(k,i){
+  var b = document.createElement('button');
+  b.className = 'kap';
+  b.innerHTML = '<span class="t">' + mmss(k[0]) + '</span>';
+  b.appendChild(document.createTextNode(k[1]));
+  b.onclick = function(){ v.currentTime = k[0]; v.play(); };
+  box.appendChild(b);
+  knoepfe.push(b);
+});
+function markiere(){
+  var t = v.currentTime, akt = 0;
+  KAP.forEach(function(k,i){ if(t >= k[0]) akt = i; });
+  knoepfe.forEach(function(b,i){ b.classList.toggle('an', i === akt); });
+}
+v.addEventListener('timeupdate', function(){
+  zeit.textContent = mmss(v.currentTime) + ' / ' + mmss(v.duration);
+  markiere();
+});
+v.addEventListener('loadedmetadata', function(){
+  zeit.textContent = '0:00 / ' + mmss(v.duration);
+});
+document.getElementById('ab').onclick = function(){
+  if(v.paused){ v.play(); this.textContent = '❚❚ Pause'; }
+  else { v.pause(); this.textContent = '▶ Abspielen'; }
+};
+v.addEventListener('play',  function(){ document.getElementById('ab').textContent = '❚❚ Pause'; });
+v.addEventListener('pause', function(){ document.getElementById('ab').textContent = '▶ Abspielen'; });
+document.getElementById('zurueck').onclick = function(){ v.currentTime = Math.max(0, v.currentTime - 10); };
+document.getElementById('vor').onclick     = function(){ v.currentTime = Math.min(v.duration || 0, v.currentTime + 10); };
+var tempi = [1, 1.25, 1.5, 0.75], ti = 0;
+document.getElementById('tempo').onclick = function(){
+  ti = (ti + 1) % tempi.length;
+  v.playbackRate = tempi[ti];
+  this.textContent = 'Tempo ' + String(tempi[ti]).replace('.', ',') + '×';
+};
+document.addEventListener('keydown', function(e){
+  if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if(e.key === ' '){ e.preventDefault(); v.paused ? v.play() : v.pause(); }
+  else if(e.key === 'ArrowRight'){ v.currentTime = Math.min(v.duration || 0, v.currentTime + 10); }
+  else if(e.key === 'ArrowLeft'){ v.currentTime = Math.max(0, v.currentTime - 10); }
+});
+markiere();
+// Fehlt die Videodatei (z. B. im Versand-Paket), sagt die Seite das freundlich statt schwarz zu bleiben.
+v.addEventListener('error', function(){
+  v.style.display = 'none';
+  document.querySelector('.unter').style.display = 'none';
+  document.getElementById('fehlt').style.display = 'block';
+});
+</script>
+</body>
+</html>
