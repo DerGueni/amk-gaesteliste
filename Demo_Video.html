@@ -46,16 +46,18 @@ footer{max-width:1180px;margin:0 auto;padding:0 20px 40px;font-family:var(--mono
 <header>
   <div class="kicker">Consec · Tourmanagement-Werkzeuge</div>
   <h1>AMK Gästeliste PRO — Demo</h1>
-  <div class="sub">Ein Durchlauf durch eine Show: vom Eintrag über Freigabe und Mailout bis zum Einlass. Rund 2:45 Minuten, ohne Ton.</div>
+  <div class="sub">Ein Durchlauf durch eine Show: vom Eintrag über Freigabe und Mailout bis zum Einlass. Rund 2:45 Minuten, mit gesprochener Erklärung.</div>
 </header>
 
 <main>
   <div>
     <div class="player">
-      <video id="v" src="_versand/Demo_Ablauf.webm" controls preload="metadata" playsinline></video>
+      <video id="v" controls preload="metadata" playsinline>
+        <source src="_versand/Demo_Ablauf.mp4" type="video/mp4">
+      </video>
       <div id="fehlt" style="display:none;padding:26px 22px;color:#E9EAEE;background:#1F2126">
         <div style="font-weight:700;margin-bottom:6px">Die Videodatei liegt nicht neben dieser Seite.</div>
-        <div style="color:#9BA0AB;font-size:15px">Sie gehört nicht zum Versand-Paket, weil sie rund 10&nbsp;MB groß ist.
+        <div style="color:#9BA0AB;font-size:15px">Sie gehört nicht zum Versand-Paket.
         Online läuft sie hier: <a style="color:#FFD23F" href="https://dergueni.github.io/amk-gaesteliste/Demo_Video.html">dergueni.github.io/amk-gaesteliste/Demo_Video.html</a></div>
       </div>
       <div class="unter">
@@ -63,6 +65,7 @@ footer{max-width:1180px;margin:0 auto;padding:0 20px 40px;font-family:var(--mono
         <button id="zurueck">− 10 s</button>
         <button id="vor">+ 10 s</button>
         <button id="tempo">Tempo 1,0×</button>
+        <button id="ton">🔊 Ton an</button>
         <span class="zeit" id="zeit">0:00 / 2:45</span>
       </div>
     </div>
@@ -153,6 +156,9 @@ document.getElementById('tempo').onclick = function(){
   v.playbackRate = tempi[ti];
   this.textContent = 'Tempo ' + String(tempi[ti]).replace('.', ',') + '×';
 };
+var tonKn = document.getElementById('ton');
+tonKn.onclick = function(){ v.muted = !v.muted; this.textContent = v.muted ? '🔇 Ton aus' : '🔊 Ton an'; };
+v.addEventListener('volumechange', function(){ tonKn.textContent = v.muted ? '🔇 Ton aus' : '🔊 Ton an'; });
 document.addEventListener('keydown', function(e){
   if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
   if(e.key === ' '){ e.preventDefault(); v.paused ? v.play() : v.pause(); }
@@ -161,10 +167,15 @@ document.addEventListener('keydown', function(e){
 });
 markiere();
 // Fehlt die Videodatei (z. B. im Versand-Paket), sagt die Seite das freundlich statt schwarz zu bleiben.
-v.addEventListener('error', function(){
+function keinVideo(){
   v.style.display = 'none';
   document.querySelector('.unter').style.display = 'none';
   document.getElementById('fehlt').style.display = 'block';
+}
+v.addEventListener('error', keinVideo);
+// Bei <source> meldet das Quell-Element den Fehler, nicht das Video selbst.
+Array.prototype.forEach.call(v.getElementsByTagName('source'), function(s){
+  s.addEventListener('error', keinVideo);
 });
 </script>
 </body>
