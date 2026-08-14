@@ -141,6 +141,9 @@ table.gt tr.gtsum td{background:var(--panel);font-family:var(--mono);font-weight
 .kopfbox{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 11px}
 .kopftitel{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:2px 0 6px;border-bottom:1px solid var(--line);padding-bottom:3px}
 .kopfbox .f{margin-bottom:7px}
+/* Beide Kapazitaets-Beschriftungen halten zwei Zeilen frei, damit die Felder
+   nebeneinander auf gleicher Hoehe stehen, auch wenn nur eine umbricht. */
+.f label.kaplabel{min-height:2.5em}
 .kapzeile{display:flex;gap:6px;align-items:stretch}
 .kapzeile input{flex:1;min-width:0}
 .kapist{font-family:var(--mono);font-size:14px;font-weight:700;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:8px 9px;min-width:44px;text-align:center;color:var(--ok)}
@@ -1676,7 +1679,7 @@ function vDeckelDeadline(sh){
 
   // --- Redaktionsschluss + Finalisierung ---
   const grid=ael('div','f2');
-  const dl=ael('div','f');const dlLb=ael('label',null,'Deadline (HH:MM)');
+  const dl=ael('div','f');const dlLb=ael('label',null,'Deadline (Uhrzeit, z. B. 16:00)');
   dlLb.appendChild(mkTip('Redaktionsschluss: Anfragen/Änderungen nach dieser Uhrzeit gelten als Nachtrag und werden markiert.'));
   dl.appendChild(dlLb);
   const dli=document.createElement('input');dli.value=sh.deadline||'16:00';
@@ -1712,7 +1715,7 @@ function vDeckelDeadline(sh){
   sec.appendChild(fin);
 
   const bn=ael('div','f');bn.style.marginTop='8px';
-  bn.appendChild(ael('label',null,'TM-Hinweisbanner für Einladen-Modus (z. B. „Köln: Liste voll, nur Warteliste“)'));
+  bn.appendChild(ael('label',null,'Hinweis für die einladenden Personen (z. B. „Köln: Liste voll, nur Warteliste“)'));
   const bni=document.createElement('input');bni.value=sh.banner||'';bni.placeholder='leer = kein Banner';
   bni.onchange=()=>{sh.banner=bni.value;save();};
   bn.appendChild(bni);sec.appendChild(bn);
@@ -1722,7 +1725,7 @@ function vDeckelDeadline(sh){
    (in der Tabelle die bedingte Formatierung auf der Summenzeile). */
 function kapFeld(label,kap,ist,on){
   const f=ael('div','f');
-  const lb=ael('label',null,label);f.appendChild(lb);
+  const lb=ael('label','kaplabel',label);f.appendChild(lb);
   const r=ael('div','kapzeile');
   const i=document.createElement('input');i.type='number';i.min='0';i.value=kap==null?'':kap;i.placeholder='—';
   i.setAttribute('aria-label',label);
@@ -2518,10 +2521,10 @@ function renderEinladen(){
 
   const anyOpen=state.shows.some(s=>!s.final&&!s.geloescht&&!deadlinePassed(s));
   if(!anyOpen){
-    const h=ael('div','hint warn');h.textContent='Redaktionsschluss erreicht — bitte ans TM wenden.';v.appendChild(h);
+    const h=ael('div','hint warn');h.textContent='Redaktionsschluss erreicht — bitte ans Tourmanagement wenden.';v.appendChild(h);
   }
   setTools([{label:'+ Gast',cls:'primary',disabled:!anyOpen,
-    on:()=>anyOpen?openGuestDlg(null,{einladen:true}):Toast.show('Redaktionsschluss — bitte ans TM wenden.',{type:'warn'})}]);
+    on:()=>anyOpen?openGuestDlg(null,{einladen:true}):Toast.show('Redaktionsschluss — bitte ans Tourmanagement wenden.',{type:'warn'})}]);
 }
 
 /* ================= Modus Einlass ================= */
