@@ -46,7 +46,7 @@ footer{max-width:1180px;margin:0 auto;padding:0 20px 40px;font-family:var(--mono
 <header>
   <div class="kicker">Consec · Tourmanagement-Werkzeuge</div>
   <h1>AMK Gästeliste PRO — Demo</h1>
-  <div class="sub">Ein Durchlauf durch eine Show: vom Eintrag über Freigabe und Mailout bis zum Einlass. Rund 2:45 Minuten, mit gesprochener Erklärung.</div>
+  <div class="sub">Ein Durchlauf durch eine Show: vom Eintrag über Freigabe und Mailout bis zum Einlass. Rund 2:30 Minuten, mit gesprochener Erklärung.</div>
 </header>
 
 <main>
@@ -66,7 +66,7 @@ footer{max-width:1180px;margin:0 auto;padding:0 20px 40px;font-family:var(--mono
         <button id="vor">+ 10 s</button>
         <button id="tempo">Tempo 1,0×</button>
         <button id="ton">🔊 Ton an</button>
-        <span class="zeit" id="zeit">0:00 / 2:45</span>
+        <span class="zeit" id="zeit">0:00 / 2:30</span>
       </div>
     </div>
 
@@ -80,7 +80,7 @@ footer{max-width:1180px;margin:0 auto;padding:0 20px 40px;font-family:var(--mono
       Im Werkzeug links unter „Schnellzugriff“ auf <strong>Liste einlesen</strong>: dort die
       <a href="Importvorlage_Gaesteliste.csv" download>Importvorlage</a> herunterladen, die vorhandene
       Gästeliste hineinkopieren, als CSV speichern und wieder einlesen. Der Aufbau ist derselbe wie in
-      der gewohnten Tabelle. Im Film ist dieser Schritt noch nicht zu sehen.
+      der gewohnten Tabelle. Im Film ist dieser Schritt ab Minute 1:19 zu sehen.
     </div>
     <div class="info warn">
       <div class="h">Demo-Grenze</div>
@@ -101,22 +101,23 @@ footer{max-width:1180px;margin:0 auto;padding:0 20px 40px;font-family:var(--mono
   </aside>
 </main>
 
-<footer>AMK Gästeliste PRO · Aufnahme aus dem laufenden Werkzeug · Stand 14.08.2026</footer>
+<footer>AMK Gästeliste PRO · Aufnahme aus dem laufenden Werkzeug · Stand 14.08.2026 · Fassung mit Einlesen</footer>
 
 <script>
 'use strict';
 var KAP = [
-  [0,   'Einstieg'],
-  [10,  'Kopfblock der Show'],
-  [30,  'Gästeliste — dieselben Spalten'],
-  [35,  'Neue Zeile anlegen'],
-  [65,  'Direkt in der Zeile ändern'],
-  [80,  'Freigabe'],
-  [90,  'Ticket-Zugänge und Mailout'],
+  [3, 'Einstieg'],
+  [16, 'Kopfblock der Show'],
+  [32, 'Gästeliste — dieselben Spalten'],
+  [48, 'Neue Zeile anlegen'],
+  [62, 'Direkt in der Zeile ändern'],
+  [68, 'Freigabe'],
+  [79, 'Bestehende Liste einlesen'],
+  [97, 'Ticket-Zugänge und Mailout'],
   [110, 'Finalisieren'],
   [120, 'Exporte'],
-  [125, 'Einlass am Showtag'],
-  [145, 'Ergebnis und Statistik']
+  [129, 'Einlass am Showtag'],
+  [139, 'Ergebnis und Statistik'],
 ];
 var v = document.getElementById('v');
 var box = document.getElementById('kapitel');
