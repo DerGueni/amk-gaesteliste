@@ -2,7 +2,7 @@
 // AMK Gästeliste PRO — Service Worker (App-Shell-Cache)
 // Registrierung nur unter https/localhost (siehe gaesteliste.html) — hier keine weitere Prüfung nötig.
 
-const CACHE_NAME = 'amk-gl-v11';
+const CACHE_NAME = 'amk-gl-v12';
 const SHELL_URLS = [
   './',
   './index.html',
@@ -50,6 +50,33 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('fetch', function (event) {
   if (event.request.method !== 'GET') return;
+
+  // Seiten (HTML) IMMER zuerst aus dem Netz holen — sonst zeigt ein alter Cache
+  // nach einer Veroeffentlichung weiter den alten Stand. Ohne Netz greift der Cache.
+  const url = new URL(event.request.url);
+  const istSeite = event.request.mode === 'navigate' ||
+                   event.request.destination === 'document' ||
+                   /\.html$/.test(url.pathname) || url.pathname.endsWith('/');
+  if (istSeite) {
+    event.respondWith(
+      fetch(event.request).then(function (response) {
+        if (response && response.status === 200 && response.type === 'basic') {
+          const klon = response.clone();
+          caches.open(CACHE_NAME).then(function (cache) {
+            cache.put(event.request, klon).catch(function () {});
+          });
+        }
+        return response;
+      }).catch(function () {
+        return caches.match(event.request).then(function (fallback) {
+          return fallback || caches.match('./gaesteliste.html').then(function (f2) {
+            return f2 || new Response('Offline', { status: 504, statusText: 'Offline', headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+          });
+        });
+      })
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request).then(function (cached) {
