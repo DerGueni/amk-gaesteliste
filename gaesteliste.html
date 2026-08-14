@@ -472,6 +472,10 @@ const PASS=[
   {id:'ff',  sp:'F/F',  name:'F/F · Family & Friends',         farbe:'#C25CA8'},
   {id:'foto',sp:'Foto', name:'Foto · erste 3 Songs, ohne Blitz',farbe:'#8E7CC3'}
 ];
+/* Obergrenze je Mengenfeld — eine Gästelistenzeile hat realistisch nie mehr Plätze.
+   Ohne Deckel würde ein Vertipper (z. B. 99999) tausende Namensplätze anlegen. */
+const MAX_MENGE=999;
+const menge=v=>Math.min(MAX_MENGE,Math.max(0,Math.round(+v||0)));
 const PLATZ_IDS=PLATZ.map(p=>p.id);
 const PASS_IDS=PASS.map(p=>p.id);
 const platzById=id=>PLATZ.find(p=>p.id===id)||PLATZ[0];
@@ -591,8 +595,9 @@ function migrate(s){
     if(typeof g.aftershowErlaubt!=='boolean')g.aftershowErlaubt=true;
     if(!s.gruppenKontingente[g.id])s.gruppenKontingente[g.id]={std:null,ausnahmen:{}};
   });
-  // Fehlende Pools der Vorlage ergänzen — bestehende bleiben unangetastet
-  if(altSchema<3&&s.gruppen.length){
+  // Fehlende Pools der Vorlage ergänzen — bestehende bleiben unangetastet.
+  // Auch bei einer Datei ganz ohne Pools entsteht so wieder eine brauchbare Auswahl.
+  if(altSchema<3||!s.gruppen.length){
     POOL_INIT.forEach(p=>{
       if(s.gruppen.some(g=>g.name===p.name))return;
       const ng={id:uid('gr'),name:p.name,autoGenehmigen:false,erlaubtePlatzarten:ALLPLATZ(),aftershowErlaubt:true};
@@ -635,8 +640,8 @@ function migrate(s){
       }
     }
     if(!g.pass||typeof g.pass!=='object')g.pass=leerePaesse();
-    PLATZ_IDS.forEach(k=>{g.plaetze[k]=Math.max(0,Math.round(+g.plaetze[k]||0));});
-    PASS_IDS.forEach(k=>{g.pass[k]=Math.max(0,Math.round(+g.pass[k]||0));});
+    PLATZ_IDS.forEach(k=>{g.plaetze[k]=menge(g.plaetze[k]);});
+    PASS_IDS.forEach(k=>{g.pass[k]=menge(g.pass[k]);});
     if(plaetzeSum(g)<1)g.plaetze.steh=1;
     if(g.kategorieId!==undefined)delete g.kategorieId;
     syncBegleitungen(g);
@@ -648,7 +653,7 @@ function migrate(s){
 function plaetzeSum(g){let n=0;PLATZ_IDS.forEach(k=>{n+=(g&&g.plaetze&&+g.plaetze[k])||0;});return n;}
 function syncBegleitungen(g){
   if(!Array.isArray(g.begleitungen))g.begleitungen=[];
-  const soll=Math.max(0,plaetzeSum(g)-1);
+  const soll=Math.min(MAX_MENGE*PLATZ_IDS.length,Math.max(0,plaetzeSum(g)-1));
   while(g.begleitungen.length<soll)g.begleitungen.push({name:'',checkinAt:null});
   while(g.begleitungen.length>soll){
     // zuerst die namenlosen und noch nicht eingecheckten Plätze abbauen — nie eine Anwesenheit verlieren
@@ -1981,7 +1986,9 @@ function vGaesteListe(sh){
      Danach wird die ganze Ansicht neu berechnet (Kopfblock, Pools, Summenzeile);
      der Eingabefokus wandert dabei genau dorthin, wo er ohnehin hin wollte. */
   function zellWert(g,istPlatz,key,inputEl){
-    const neu=Math.max(0,Math.round(+inputEl.value||0));
+    const roh=Math.max(0,Math.round(+inputEl.value||0));
+    const neu=Math.min(MAX_MENGE,roh);
+    if(roh>MAX_MENGE){Toast.show('Höchstens '+MAX_MENGE+' je Spalte — Eingabe wurde begrenzt.',{type:'warn'});inputEl.value=neu;}
     const ziel=state.gaeste.find(x=>x.id===g.id);
     if(!ziel){paint();return;}
     if(istPlatz){
@@ -2638,7 +2645,8 @@ function openGuestDlg(id,opts){
         c.appendChild(ael('span','ml',k.sp));
         const i=document.createElement('input');i.type='number';i.min='0';i.step='1';
         i.value=ziel[k.id]||0;i.setAttribute('aria-label',k.sp);
-        i.oninput=()=>{ziel[k.id]=Math.max(0,Math.round(+i.value||0));updSum();};
+        i.max=String(MAX_MENGE);
+        i.oninput=()=>{ziel[k.id]=menge(i.value);updSum();};
         i.onblur=()=>{i.value=ziel[k.id]||0;};
         c.appendChild(i);box.appendChild(c);
       });
