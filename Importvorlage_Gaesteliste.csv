@@ -1,5 +1,5 @@
 ﻿Importvorlage Gästeliste — bitte diese Datei mit der bestehenden Liste füllen und im Werkzeug einlesen.;;;;;;;;;;;;;;;
-Eine Zeile je Gast. Die Überschriftenzeile bitte stehen lassen, die beiden Beispielzeilen überschreiben oder löschen.;;;;;;;;;;;;;;;
+Eine Zeile je Gast. Die Überschriftenzeile bitte stehen lassen. Die beiden Beispielzeilen werden beim Einlesen übergangen.;;;;;;;;;;;;;;;
 In den Spalten Steh, Sitz, Aftershow, Kat 4, AAA, F/F und Foto steht die Anzahl der Personen (leer = 0).;;;;;;;;;;;;;;;
 Die Spalten show und Mailout werden beim Einlesen übergangen.;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;

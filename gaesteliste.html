@@ -22,6 +22,8 @@
   --tape-ink:#FFD23F;   /* Gelb als Textfarbe — nur auf dunklem Grund, siehe unten */
   --tape-sig:#FFD23F;   /* Signalfarbe fuer Zahlen/Hinweise, die sich abheben muessen */
   --amp-offen:#8B93A1;  /* Statuspunkt "angefragt" — eine Flaeche, keine Schrift */
+  --ok-ink:#BFE6B8;     /* Gruen und Rot als Schrift — im Hell-Theme dunkler, siehe unten */
+  --now-ink:#FFB4AD;
 }
 /* F4.2 Light-Theme — zweiter Variablensatz, Default bleibt Dark/unveraendert */
 :root[data-theme="light"]{
@@ -32,6 +34,8 @@
      Signalwerte in kraeftigem Braunorange statt Olivgelb. */
   --tape-ink:#141518;
   --tape-sig:#A24B00;
+  --ok-ink:#1F6B2E;
+  --now-ink:#A32017;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 /* F4.3 Schriftgroesse S/M/L (root 15/16/18px) — als Seiten-Zoom, da Groessen im Formular ueberwiegend in px stehen */
@@ -59,6 +63,8 @@ h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:.01em
 .tabs{display:flex;margin:14px 16px 0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;background:var(--panel);border:none;color:var(--dim);font-family:var(--disp);font-size:13px;text-transform:uppercase;letter-spacing:.04em;padding:11px 2px;cursor:pointer}
 .tabs button.active{background:var(--tape);color:#161616}
+.tabs button+button{border-left:1px solid var(--line)}
+@media (max-width:560px){.tabs button{font-size:11px;letter-spacing:0;padding:11px 1px;gap:3px}}
 
 /* ---------- Karten / Blöcke ---------- */
 .sec{margin:14px 16px}
@@ -192,7 +198,7 @@ input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid v
 .seg button.on{background:var(--tape);color:#161616;border-color:var(--tape)}
 .linkbtn{background:none;border:1px solid var(--line);border-radius:4px;color:var(--tape-ink);font-size:13px;padding:5px 9px;cursor:pointer}
 .smallbtn{background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-size:13px;padding:5px 9px;cursor:pointer}
-.smallbtn.ok{border-color:var(--ok);color:#bfe6b8} .smallbtn.no{border-color:var(--now);color:#ffb4ad}
+.smallbtn.ok{border-color:var(--ok);color:var(--ok-ink)} .smallbtn.no{border-color:var(--now);color:var(--now-ink)}
 .smallbtn:disabled,.toolbar button:disabled{opacity:.4;cursor:not-allowed}
 /* Am Handy/Tablet größere Tippflächen für die kleinen Knöpfe — am Rechner bleibt die Optik unverändert. */
 @media (pointer:coarse){
@@ -321,8 +327,8 @@ table.plist td.sign{width:30mm}
 
 /* F4.2 Light-Theme — Korrekturen fuer fest verdrahtete Dunkel-Farben (kein heller Text auf hell) */
 :root[data-theme="light"] .hint.warn{color:#B23A2E}
-:root[data-theme="light"] .smallbtn.ok{color:#2E7D32}
-:root[data-theme="light"] .smallbtn.no{color:#B23A2E}
+:root[data-theme="light"] .smallbtn.ok{color:#1F6B2E}
+:root[data-theme="light"] .smallbtn.no{color:#A32017}
 :root[data-theme="light"] .elrow.in,:root[data-theme="light"] .compbtn.in{background:#DFEEDC}
 :root[data-theme="light"] .dlgwarn{background:#FBE4E1;color:#8A241B}
 
@@ -3305,7 +3311,7 @@ function importVorlageText(){
   const g=[];
   const setz=(z,sp,w)=>{while(g.length<=z)g.push(new Array(IMPORT_KOPF.length).fill(''));g[z][sp]=(w==null?'':String(w));};
   setz(0,0,'Importvorlage Gästeliste — bitte diese Datei mit der bestehenden Liste füllen und im Werkzeug einlesen.');
-  setz(1,0,'Eine Zeile je Gast. Die Überschriftenzeile bitte stehen lassen, die beiden Beispielzeilen überschreiben oder löschen.');
+  setz(1,0,'Eine Zeile je Gast. Die Überschriftenzeile bitte stehen lassen. Die beiden Beispielzeilen werden beim Einlesen übergangen.');
   setz(2,0,'In den Spalten Steh, Sitz, Aftershow, Kat 4, AAA, F/F und Foto steht die Anzahl der Personen (leer = 0).');
   setz(3,0,'Die Spalten show und Mailout werden beim Einlesen übergangen.');
   IMPORT_KOPF.forEach((t,i)=>setz(5,i,t));
@@ -3392,6 +3398,8 @@ function importGaesteAusText(text,sh){
     if(!nach&&!vor){leer++;continue;}
     // Summen- und Zwischenzeilen der gewohnten Tabelle nicht als Gast anlegen
     if(/^(total|gesamt|summe)/i.test(nach)){leer++;continue;}
+    // Die beiden Beispielzeilen der Vorlage werden uebergangen, falls sie stehen geblieben sind
+    if(mail==='anna.mustermann@example.com'||mail==='ben.beispiel@example.com'){leer++;continue;}
     const schl=(nach+'|'+vor).toLowerCase();
     if(vorhanden[schl]){doppelt++;continue;}
     const plaetze=leerePlaetze(),paesse=leerePaesse();
@@ -3850,7 +3858,7 @@ function tkListe(showId){
     const bDet=ael('button','linkbtn','Details');bDet.onclick=()=>tkDetails(t,g,sh,sm);
     const bQr=ael('button','linkbtn','QR');bQr.onclick=()=>openQrDlg('Ticket-QR'+(g?' · '+guestName(g):''),tkLink(t),'Gast scannt den Code und öffnet seinen persönlichen Ticket-Link.');
     tdB.appendChild(bCopy);tdB.appendChild(document.createTextNode(' '));tdB.appendChild(bMail);tdB.appendChild(document.createTextNode(' '));tdB.appendChild(bQr);tdB.appendChild(document.createTextNode(' '));tdB.appendChild(bDet);
-    if(t.status!=='widerrufen'){const bRev=ael('button','linkbtn','Widerrufen');bRev.style.color='var(--now)';bRev.style.borderColor='var(--now)';
+    if(t.status!=='widerrufen'){const bRev=ael('button','linkbtn','Widerrufen');bRev.style.color='var(--now-ink)';bRev.style.borderColor='var(--now)';
       bRev.onclick=()=>{if(confirm('Ticket-Zugang für '+(g?guestName(g):'diesen Gast')+' widerrufen?')){t.status='widerrufen';t.updatedAt=Date.now();save();render();}};
       tdB.appendChild(document.createTextNode(' '));tdB.appendChild(bRev);}
     tr.appendChild(tdB);
