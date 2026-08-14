@@ -166,6 +166,7 @@ footer{
     <li><a href="#k9">Datenschutz</a></li>
     <li><a href="#k10">Künstler/Band wählen &amp; Shows anlegen</a></li>
     <li><a href="#k11">Aufbau wie die gewohnte Gästelisten-Tabelle</a></li>
+    <li><a href="#k12">Bestehende Gästeliste übernehmen</a></li>
   </ol>
 </div>
 
@@ -214,7 +215,7 @@ footer{
 
   <h3>Verwaltung</h3>
   <p>Der Hauptarbeitsbereich für das Tourmanagement: aktive Show wählen, Kopfblock pflegen (Kapazitäten, Gast&nbsp;Limit, Pool-Kontingente, Kontakte für Rücksprachen, Vorjahresvergleich), Anträge freigeben oder ablehnen, die Gästeliste als Tabelle durchsehen und direkt bearbeiten, Liste finalisieren und Exporte anstoßen.</p>
-  <p>Der <strong>Kopfblock</strong> steht — wie in der gewohnten Tabelle — über der Liste: links Datum, Ort&nbsp;-&nbsp;Venue, Kap&nbsp;Steh, Kap&nbsp;Sitz, Family-&amp;-Friends-Bereich und die Kontakte für Rücksprachen (AP&nbsp;LSB, AP&nbsp;Tour, AP&nbsp;ÜV&nbsp;GL); in der Mitte show, no&nbsp;show, Gast&nbsp;Limit, verbraucht, übrig; rechts die Pool-Tabelle mit Kont, Pool, verbraucht, übrig und darunter der Vorjahresvergleich.</p>
+  <p>Der <strong>Kopfblock</strong> steht — wie in der gewohnten Tabelle — über der Liste: links Datum, Ort&nbsp;-&nbsp;Venue, Kapazität Stehplätze, Kapazität Sitzplätze, Family-&amp;-Friends-Bereich und die Kontakte für Rücksprachen (AP&nbsp;LSB, AP&nbsp;Tour, AP&nbsp;ÜV&nbsp;GL); in der Mitte show, no&nbsp;show, Gast&nbsp;Limit, verbraucht, übrig; rechts die Pool-Tabelle mit Kont, Pool, verbraucht, übrig und darunter der Vorjahresvergleich.</p>
   <p>Die <strong>Gästeliste</strong> steht darunter als Tabelle mit genau den gewohnten Spalten. Die Mengenfelder (Steh, Sitz, Aftershow, Kat&nbsp;4, AAA, F/F, Foto) lassen sich direkt in der Zeile ändern — wie in der Tabelle. Über „Ansicht" kann zwischen <em>Tabelle</em> und <em>Karten</em> gewechselt werden, über „Spalten" zwischen <em>Alle</em> und <em>Nur benutzte</em> (blendet leere Mengenspalten aus, so wie in der Vorlage bei einer reinen Stehplatz-Show die Spalten Aftershow und Kat&nbsp;4 ausgeblendet sind).</p>
   <div class="hint">Ganz oben steht die Auswahl <strong>„Künstler / Band"</strong> mit allen von Landstreicher Booking vertretenen Acts. Jeder Künstler hat einen eigenen Arbeitsbereich mit eigenen Shows und Gästen — Einzelheiten in <a href="#k10">Kapitel 10</a>.</div>
   <figure>
@@ -296,7 +297,7 @@ footer{
 
   <table>
     <tr><th>Export</th><th>Inhalt</th></tr>
-    <tr><td><strong>(e) Tabelle im gewohnten Aufbau</strong></td><td><strong>Neu.</strong> CSV im Aufbau der bisherigen Gästelisten-Tabelle: Kopfblock (Band, Datum, Ort&nbsp;-&nbsp;Venue, Kap&nbsp;Steh, Kap&nbsp;Sitz, Family-&amp;-Friends-Bereich, Kontakte für Rücksprachen, show/no&nbsp;show, Gast&nbsp;Limit, verbraucht, übrig, Pool-Tabelle, Vorjahresvergleich), Summenzeile, danach die Spaltenüberschriften und die Zeilen — Spalte für Spalte an derselben Stelle wie gewohnt. In Spalte P steht der Mailout-Stand samt der bekannten Merkzeile „Mailout bis hier versendet". Auch ohne Finalisierung möglich.</td></tr>
+    <tr><td><strong>(e) Tabelle im gewohnten Aufbau</strong></td><td><strong>Neu.</strong> CSV im Aufbau der bisherigen Gästelisten-Tabelle: Kopfblock (Band, Datum, Ort&nbsp;-&nbsp;Venue, Kapazität Stehplätze, Kapazität Sitzplätze, Family-&amp;-Friends-Bereich, Kontakte für Rücksprachen, show/no&nbsp;show, Gast&nbsp;Limit, verbraucht, übrig, Pool-Tabelle, Vorjahresvergleich), Summenzeile, danach die Spaltenüberschriften und die Zeilen — Spalte für Spalte an derselben Stelle wie gewohnt. In Spalte P steht der Mailout-Stand samt der bekannten Merkzeile „Mailout bis hier versendet". Auch ohne Finalisierung möglich.</td></tr>
     <tr><td><strong>(a) Druckliste</strong></td><td>Alphabetisch nach Name; Farbbalken je Platzart, Name, Vorname, Personen, Plätze/Ausweise, Pool, c/o sowie eine leere Abhak-/Unterschriften-Spalte. Direkt druckbar.</td></tr>
     <tr><td><strong>(b) CSV Abendkasse</strong></td><td>Eine Zeile je Eintrag (Name; Vorname; Personen; Plätze/Ausweise; c/o), UTF-8 mit BOM für saubere Umlaute in Excel.</td></tr>
     <tr><td><strong>(c) CSV krasserstoff-Personalisierung</strong></td><td>Eine Zeile pro Person (Hauptname + jede benannte weitere Person einzeln). Unbenannte Personen erscheinen mit einer Warnung vorab, da bei harter Personalisierung jeder Name auf ein eigenes Ticket muss.</td></tr>
@@ -379,7 +380,7 @@ footer{
     <tr><td><strong>AAA · F/F · Foto</strong></td><td><strong>Zusatzausweise.</strong> Sie zählen — wie in der Tabelle — <em>nicht</em> auf das Gast&nbsp;Limit.</td></tr>
     <tr><td><strong>Referenz/Medium</strong></td><td>Medium, Partner oder Anlass der Einladung. Freitext wie gewohnt.</td></tr>
     <tr><td><strong>c/o</strong></td><td>Auf wen der Gast läuft. Im Tool eine gepflegte Auswahl statt Freitext — dadurch gibt es je c/o-Person ein eigenes Kontingent und eine eigene Auswertung.</td></tr>
-    <tr><td><strong>Pool</strong></td><td>Pflichtfeld wie in der Vorlage („Pool (IMMER AUSWÄHLEN)"). Voreingestellt sind Band, Mgmt, LSB, Presse, Präsentator*in, Musiker*innen, Support und Crew; Kontingente und weitere Pools lassen sich unter <em>Stammdaten &amp; Einstellungen → „Pools bearbeiten"</em> pflegen.</td></tr>
+    <tr><td><strong>Pool</strong></td><td>Pflichtfeld wie in der Vorlage („Pool (IMMER AUSWÄHLEN)"). Voreingestellt sind Band, Management, Landstreicher Booking, Presse, Präsentator*in, Musiker*innen, Support und Crew; Kontingente und weitere Pools lassen sich unter <em>Stammdaten &amp; Einstellungen → „Pools bearbeiten"</em> pflegen.</td></tr>
     <tr><td><strong>Notiz</strong></td><td>Wie gewohnt.</td></tr>
     <tr><td><strong>Mail</strong></td><td>Neu: zeigt, ob der Mailout für diese Zeile schon raus ist. Ersetzt die handgesetzte Merkzeile „Mailout bis hier versendet" — im Export steht sie trotzdem weiterhin drin.</td></tr>
     <tr><td><strong>Status</strong></td><td>Neu: angefragt / genehmigt / abgelehnt / final. Damit lässt sich die Freigabe sauber trennen, statt Zeilen zu färben oder zu löschen.</td></tr>
@@ -388,9 +389,9 @@ footer{
   <h3>Der Kopfblock</h3>
   <p>Über der Liste stehen dieselben Angaben wie im Kopf der Tabelle, nur klickbar statt als Formel:</p>
   <ul>
-    <li><strong>Show</strong> — Datum, Ort&nbsp;-&nbsp;Venue, Kap&nbsp;Steh, Kap&nbsp;Sitz (jeweils mit der aktuell vergebenen Zahl daneben, rot bei Überschreitung), Family-&amp;-Friends-Bereich, Kontakte für Rücksprachen (AP&nbsp;LSB, AP&nbsp;Tour, AP&nbsp;ÜV&nbsp;GL mit Name und Mobilnummer).</li>
+    <li><strong>Show</strong> — Datum, Ort&nbsp;-&nbsp;Venue, Kapazität Stehplätze, Kapazität Sitzplätze (jeweils mit der aktuell vergebenen Zahl daneben, rot bei Überschreitung), Family-&amp;-Friends-Bereich, Kontakte für Rücksprachen (AP&nbsp;LSB, AP&nbsp;Tour, AP&nbsp;ÜV&nbsp;GL mit Name und Mobilnummer).</li>
     <li><strong>Zählung</strong> — show, no&nbsp;show, Gast&nbsp;Limit, verbraucht, übrig; dazu das Vertragskontingent zur Kontrolle.</li>
-    <li><strong>Pools</strong> — die Tabelle Kont · Pool · verbraucht · übrig. Ein Klick auf eine Zeile öffnet das Kontingent, auch als Ausnahme nur für diese Show.</li>
+    <li><strong>Pools</strong> — die Tabelle Kontingent · Pool · verbraucht · übrig. Ein Klick auf eine Zeile öffnet das Kontingent, auch als Ausnahme nur für diese Show.</li>
     <li><strong>Vorjahresvergleich</strong> — die Zeilen Tag&nbsp;1 / Tag&nbsp;2 (Überschrift und Bezeichnungen frei änderbar); darunter der Vergleich zum aktuellen Stand.</li>
   </ul>
 
@@ -411,5 +412,39 @@ footer{
 </footer>
 
 </main>
+<section id="k12">
+  <h2><span class="nr">12</span> Bestehende Gästeliste übernehmen</h2>
+  <p>Eine Liste, die heute schon in einer Tabelle steht, muss nicht abgetippt werden. Dafür gibt es eine
+  <strong>Importvorlage</strong> im gewohnten Aufbau.</p>
+
+  <h3>So geht es</h3>
+  <ol>
+    <li>Im Werkzeug links unter <strong>Schnellzugriff</strong> auf <strong>Liste einlesen</strong>.
+        (Ist für eine Show noch kein Gast angelegt, steht der Knopf zusätzlich direkt bei der leeren Liste.)</li>
+    <li><strong>Importvorlage herunterladen · CSV</strong> — die Datei heißt <span class="mono">Importvorlage_Gaesteliste.csv</span>
+        und liegt auch dem Paket bei.</li>
+    <li>Die Vorlage in Excel oder Numbers öffnen, die bestehende Liste hineinkopieren, die zwei Beispielzeilen
+        überschreiben oder löschen und die Datei wieder als CSV speichern.</li>
+    <li>Im Werkzeug auf <strong>Ausgefüllte Datei einlesen</strong> und die Datei auswählen.</li>
+  </ol>
+
+  <h3>Was beim Einlesen passiert</h3>
+  <ul>
+    <li>Die Gäste landen in der <strong>aktiven Show</strong> und stehen dort als <strong>genehmigt</strong>.</li>
+    <li><strong>Pool</strong> und <strong>c/o</strong> werden am Namen erkannt; was es noch nicht gibt, wird angelegt.</li>
+    <li>Namen, die in dieser Show schon stehen, werden <strong>übersprungen</strong> — es entstehen keine Dubletten.</li>
+    <li>Vorhandene Gäste bleiben unverändert; es kommen nur neue Zeilen dazu.</li>
+    <li>Die Spalten <span class="mono">show</span> und <span class="mono">Mailout</span> werden übergangen,
+        Summen- und Zwischenzeilen ebenso.</li>
+  </ul>
+
+  <h3>Gut zu wissen</h3>
+  <ul>
+    <li>Der Trenner darf Semikolon, Komma oder Tabulator sein — das erkennt das Werkzeug selbst.</li>
+    <li>In den Spalten Steh, Sitz, Aftershow, Kat&nbsp;4, AAA, F/F und Foto steht jeweils eine Anzahl; leer bedeutet 0.</li>
+    <li>Der umgekehrte Weg ist der Export <strong>„(e) Tabelle im gewohnten Aufbau · CSV"</strong> — beide passen zusammen.</li>
+  </ul>
+</section>
+
 </body>
 </html>

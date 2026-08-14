@@ -12,21 +12,26 @@
 <style>
 :root{
   --case:#17181C; --panel:#1F2126; --panel2:#26282E; --line:#33363E;
-  --ink:#E9EAEE; --dim:#9BA0AB; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
+  --ink:#F2F3F6; --dim:#D6DAE3; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
   --kat-guest:#64A85C; --kat-aaa:#FFD23F; --kat-working:#4098D7; --kat-photo:#C25CA8; --kat-aftershow:#8B93A1;
   --rowhover:#2A2D34;
   --disp:'Archivo Black',sans-serif;
   --body:'Barlow Semi Condensed',sans-serif;
   --mono:'IBM Plex Mono',monospace;
   --zoom:1;
-  --tape-ink:#FFD23F;   /* Gelb als Textfarbe — im Hell-Theme dunkler, siehe unten */
+  --tape-ink:#FFD23F;   /* Gelb als Textfarbe — nur auf dunklem Grund, siehe unten */
+  --tape-sig:#FFD23F;   /* Signalfarbe fuer Zahlen/Hinweise, die sich abheben muessen */
+  --amp-offen:#8B93A1;  /* Statuspunkt "angefragt" — eine Flaeche, keine Schrift */
 }
 /* F4.2 Light-Theme — zweiter Variablensatz, Default bleibt Dark/unveraendert */
 :root[data-theme="light"]{
   --case:#F4F3EF; --panel:#FFFFFF; --panel2:#ECEAE3; --line:#D8D5CC;
-  --ink:#1B1C1F; --dim:#63666F;
+  --ink:#141518; --dim:#141518;   /* P2: kein Grau — auf hellem Grund schwarzer Text */
   --rowhover:#E3EDF7;
-  --tape-ink:#8A6A00;   /* Gelb waere auf hellem Grund nicht lesbar */
+  /* P4: Gelb/Oliv ist auf hellem Grund nie Textfarbe. Ueberschriften schwarz,
+     Signalwerte in kraeftigem Braunorange statt Olivgelb. */
+  --tape-ink:#141518;
+  --tape-sig:#A24B00;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 /* F4.3 Schriftgroesse S/M/L (root 15/16/18px) — als Seiten-Zoom, da Groessen im Formular ueberwiegend in px stehen */
@@ -42,79 +47,81 @@ header{background:var(--panel);border-bottom:3px solid var(--tape);padding:12px 
 .tabicon{width:15px;height:15px;flex:0 0 auto}
 .tlbicon{width:15px;height:15px;flex:0 0 auto;vertical-align:-3px;margin-right:5px}
 /* F1.7 Erklär-Tooltip */
-.tipbtn{width:16px;height:16px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:10px;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:help;margin-left:5px;padding:0;flex:0 0 auto;vertical-align:1px}
-.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape-ink);text-transform:uppercase}
+.tipbtn{width:16px;height:16px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:12px;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:help;margin-left:5px;padding:0;flex:0 0 auto;vertical-align:1px}
+.kicker{font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.18em;color:var(--tape-ink);text-transform:uppercase}
 h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:.01em;margin:2px 0 2px;text-transform:uppercase}
 /* Am schmalen Handy sonst läuft der Titel unter den Einstellungen-Knopf. */
 @media (max-width:560px){header{padding-right:58px}}
-.sub{font-size:13px;color:var(--dim)}
-.backbtn{background:none;border:1px solid var(--line);border-radius:4px;color:var(--tape-ink);font-family:var(--mono);font-size:12px;padding:5px 10px;cursor:pointer;margin-bottom:8px}
+.sub{font-size:14px;color:var(--dim)}
+.backbtn{background:none;border:1px solid var(--line);border-radius:4px;color:var(--tape-ink);font-family:var(--mono);font-size:13px;padding:5px 10px;cursor:pointer;margin-bottom:8px}
 
 /* ---------- Tabs ---------- */
 .tabs{display:flex;margin:14px 16px 0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;background:var(--panel);border:none;color:var(--dim);font-family:var(--disp);font-size:12px;text-transform:uppercase;letter-spacing:.04em;padding:11px 2px;cursor:pointer}
+.tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;background:var(--panel);border:none;color:var(--dim);font-family:var(--disp);font-size:13px;text-transform:uppercase;letter-spacing:.04em;padding:11px 2px;cursor:pointer}
 .tabs button.active{background:var(--tape);color:#161616}
 
 /* ---------- Karten / Blöcke ---------- */
 .sec{margin:14px 16px}
 .sechead{display:flex;justify-content:space-between;align-items:baseline;margin:16px 16px 6px}
 .sechead h2{font-family:var(--disp);font-size:14px;text-transform:uppercase;letter-spacing:.05em}
-.sechead span{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.sechead span{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--dim)}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:11px 12px;margin-bottom:8px}
 .card.hl{border-color:var(--tape);box-shadow:0 0 0 1px var(--tape)}
 .row{display:flex;align-items:center;gap:10px}
 .grow{flex:1;min-width:0}
-.chip{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;padding:2px 6px;display:inline-block}
-.badge{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;border-radius:2px;padding:2px 5px;font-weight:700;display:inline-block}
+.chip{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;padding:2px 6px;display:inline-block}
+.badge{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;border-radius:2px;padding:2px 5px;font-weight:700;display:inline-block}
 .b-plan{background:var(--panel2);color:var(--dim)} .b-ok{background:var(--ok);color:#161616}
 .b-warn{background:var(--now);color:#fff} .b-tape{background:var(--tape);color:#161616}
 .b-final{background:var(--tape);color:#161616} .b-abg{background:#5a2b28;color:#ffb4ad}
 
 /* Statusampel (Einladen) */
 .amp{width:11px;height:11px;border-radius:50%;display:inline-block;flex:0 0 auto}
-.amp-angefragt{background:var(--dim)} .amp-genehmigt{background:var(--ok)}
+.amp-angefragt{background:var(--amp-offen)} .amp-genehmigt{background:var(--ok)}
 .amp-abgelehnt{background:var(--now)} .amp-final{background:var(--tape)}
 
-.hint{margin:10px 16px;font-size:12px;color:var(--dim);border-left:3px solid var(--line);padding-left:8px}
+.hint{margin:10px 16px;font-size:13px;color:var(--dim);border-left:3px solid var(--line);padding-left:8px}
 .hint.warn{border-left-color:var(--now);color:#ffb9b2}
 .hint.tape{border-left-color:var(--tape);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--tape);border-radius:5px;padding:10px 12px}
 .hint.close{position:relative;padding-right:26px}
 .hint .x{position:absolute;top:6px;right:8px;background:none;border:none;color:var(--dim);font-size:16px;cursor:pointer}
 .muted{color:var(--dim)}
 .mono{font-family:var(--mono)}
-.small{font-size:12px}
+.small{font-size:13px}
 
 /* ---------- Fortschrittsbalken ---------- */
 .pg{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:7px 8px}
-.pg .n{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.pg .n{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 .pg .b{height:6px;background:var(--panel2);border-radius:3px;margin-top:5px;overflow:hidden}
 .pg .b i{display:block;height:100%;background:var(--ok)}
 .pg .b i.over{background:var(--now)}
-.pg .v{font-family:var(--mono);font-size:11px;color:var(--ink);margin-top:3px}
+.pg .v{font-family:var(--mono);font-size:13px;color:var(--ink);margin-top:3px}
 .pggrid{margin:10px 16px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
 .minib{height:5px;background:var(--panel2);border-radius:3px;overflow:hidden;margin-top:3px}
 .minib i{display:block;height:100%;background:var(--ok)} .minib i.over{background:var(--now)}
 
 /* ---------- Matrix-Tabelle ---------- */
 .tlwrap{margin:10px 16px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:6px}
-table.mx{border-collapse:collapse;min-width:100%;font-size:13px}
+table.mx{border-collapse:collapse;min-width:100%;font-size:14px}
 table.mx th,table.mx td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
-table.mx th{background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap;position:sticky;top:0}
+table.mx th{background:var(--panel2);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap;position:sticky;top:0}
 table.mx td.grp{font-weight:700;cursor:pointer;white-space:nowrap;background:var(--panel)}
 table.mx td.sub{padding-left:18px;color:var(--dim);cursor:pointer;background:var(--panel)}
 table.mx td.cell{font-family:var(--mono);cursor:pointer;min-width:96px}
-table.mx td.cell .qv{font-size:11px;line-height:1.35}
+table.mx td.cell .qv{font-size:13px;line-height:1.35;font-weight:700;white-space:nowrap}
+table.mx td.cell .qv2{font-weight:400}
+table.mx td.cell{min-width:210px}
 table.mx tr.grprow{background:var(--panel)}
 
 /* ---------- Gästetabelle (Aufbau und Optik wie das bisherige Tabellenblatt) ---------- */
 .gtwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
-table.gt{border-collapse:separate;border-spacing:0;min-width:100%;font-size:13px;line-height:1.25}
+table.gt{border-collapse:separate;border-spacing:0;min-width:100%;font-size:14px;line-height:1.25}
 table.gt th,table.gt td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:3px 6px;text-align:left;white-space:nowrap;vertical-align:middle}
 table.gt th:last-child,table.gt td:last-child{border-right:none}
-table.gt thead th{background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);font-weight:700;position:sticky;top:0;z-index:2;border-bottom:2px solid var(--line)}
+table.gt thead th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);font-weight:700;position:sticky;top:0;z-index:2;border-bottom:2px solid var(--line)}
 table.gt th.num,table.gt td.num{text-align:center}
 table.gt td.zahlspalte{padding:1px 2px;min-width:46px}
-table.gt td.zahlspalte input{width:100%;min-width:40px;background:transparent;border:1px solid transparent;border-radius:3px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:13px;padding:3px 2px;text-align:center;-moz-appearance:textfield}
+table.gt td.zahlspalte input{width:100%;min-width:40px;background:transparent;border:1px solid transparent;border-radius:3px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:14px;padding:3px 2px;text-align:center;-moz-appearance:textfield}
 table.gt td.zahlspalte input::-webkit-outer-spin-button,table.gt td.zahlspalte input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 table.gt td.zahlspalte input:hover{border-color:var(--line)}
 table.gt td.zahlspalte input:focus{border-color:var(--tape);background:var(--panel2);outline:none}
@@ -125,32 +132,34 @@ table.gt tbody tr:hover{background:var(--rowhover)}
 table.gt tbody tr.abgelehnt td{opacity:.5;text-decoration:line-through}
 table.gt tbody tr.dublette td.name{color:var(--now)}
 table.gt td.num.da{color:var(--ok);font-weight:700}
-table.gt td.num.teil{color:var(--tape-ink);font-weight:700}
-table.gt tr.gtsum td{background:var(--panel);font-family:var(--mono);font-weight:700;font-size:12px;color:var(--ink);position:sticky;top:24px;z-index:1;border-bottom:2px solid var(--line)}
-.sorttrenn{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);align-self:center;margin-left:8px}
+table.gt td.num.teil{color:var(--tape-sig);font-weight:700}
+table.gt tr.gtsum td{background:var(--panel);font-family:var(--mono);font-weight:700;font-size:13px;color:var(--ink);position:sticky;top:24px;z-index:1;border-bottom:2px solid var(--line)}
+.sorttrenn{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);align-self:center;margin-left:8px}
 
 /* ---------- Kopfblock der Show (Aufbau wie der Kopf der bisherigen Tabelle) ---------- */
 .kopfgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px;align-items:start}
 .kopfbox{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 11px}
-.kopftitel{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:2px 0 6px;border-bottom:1px solid var(--line);padding-bottom:3px}
+.kopftitel{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:2px 0 6px;border-bottom:1px solid var(--line);padding-bottom:3px}
 .kopfbox .f{margin-bottom:7px}
 .kapzeile{display:flex;gap:6px;align-items:stretch}
 .kapzeile input{flex:1;min-width:0}
-.kapist{font-family:var(--mono);font-size:13px;font-weight:700;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:8px 9px;min-width:44px;text-align:center;color:var(--ok)}
+.kapist{font-family:var(--mono);font-size:14px;font-weight:700;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:8px 9px;min-width:44px;text-align:center;color:var(--ok)}
 .kapist.ueber{color:#fff;background:var(--now);border-color:var(--now)}
-.kontaktzeile{display:grid;grid-template-columns:74px 1fr 96px;gap:4px;margin-bottom:4px}
-.kontaktzeile input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--body);font-size:13px;padding:6px 7px}
-.kontaktzeile .krolle{font-family:var(--mono);font-size:11px;color:var(--dim)}
-.kontaktzeile .kmobil{font-family:var(--mono);font-size:12px}
-table.zahltab{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:6px}
+.kontaktzeile{display:grid;grid-template-columns:1fr 118px;gap:4px;margin-bottom:7px}
+/* P9: die ausgeschriebene Rolle steht als eigene Zeile ueber Name und Mobilnummer. */
+.kontaktzeile .krolle{grid-column:1/-1}
+.kontaktzeile input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--body);font-size:14px;padding:6px 7px}
+.kontaktzeile .krolle{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--dim)}
+.kontaktzeile .kmobil{font-family:var(--mono);font-size:13px}
+table.zahltab{border-collapse:collapse;width:100%;font-size:14px;margin-bottom:6px}
 table.zahltab td{padding:3px 4px;border-bottom:1px solid var(--line)}
 table.zahltab td.zahl{text-align:right;font-family:var(--mono);font-weight:700;white-space:nowrap}
 table.zahltab td.zahl.ueber{color:var(--now)}
-table.zahltab input.vjlabel{width:100%;background:none;border:none;color:var(--ink);font-family:var(--body);font-size:13px;padding:1px 2px}
-table.zahltab input.vjwert{width:72px;background:var(--panel2);border:1px solid var(--line);border-radius:3px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:13px;padding:3px 5px;text-align:right}
-input.vjtitel{background:none;border:none;color:var(--dim);font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;width:100%;padding:0}
-table.pooltab{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:8px}
-table.pooltab th{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-align:right;padding:2px 4px;border-bottom:1px solid var(--line)}
+table.zahltab input.vjlabel{width:100%;background:none;border:none;color:var(--ink);font-family:var(--body);font-size:14px;padding:1px 2px}
+table.zahltab input.vjwert{width:72px;background:var(--panel2);border:1px solid var(--line);border-radius:3px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:14px;padding:3px 5px;text-align:right}
+input.vjtitel{background:none;border:none;color:var(--dim);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;width:100%;padding:0}
+table.pooltab{border-collapse:collapse;width:100%;font-size:14px;margin-bottom:8px}
+table.pooltab th{font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-align:right;padding:2px 4px;border-bottom:1px solid var(--line)}
 table.pooltab th:nth-child(2){text-align:left}
 table.pooltab td{padding:3px 4px;border-bottom:1px solid var(--line)}
 table.pooltab td.zahl{text-align:right;font-family:var(--mono);white-space:nowrap}
@@ -162,14 +171,14 @@ table.pooltab tr.summe td{font-weight:700;border-top:2px solid var(--line);borde
 /* Mengenfelder im Gast-Dialog (Spalten Steh/Sitz/… der Tabelle) */
 .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(74px,1fr));gap:6px}
 .mcell{background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:5px 6px;text-align:center}
-.mcell .ml{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.mcell .ml{display:block;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
 .mcell input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:16px;padding:5px 4px;text-align:center}
-.sumline{font-family:var(--mono);font-size:12px;color:var(--tape-ink);background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:6px 8px;margin-bottom:10px}
+.sumline{font-family:var(--mono);font-size:13px;color:var(--tape-sig);background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:6px 8px;margin-bottom:10px}
 .sumline.warn{color:#fff;background:var(--now);border-color:var(--now)}
 
 /* ---------- Formularfelder / Dialog ---------- */
 .f{margin-bottom:10px}
-.f label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:3px}
+.f label{display:block;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:3px}
 .f input,.f select,.f textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--body);font-size:15px;padding:8px 9px}
 .f textarea{resize:vertical;min-height:52px}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -178,8 +187,8 @@ input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid v
 .seg{display:flex;gap:5px;flex-wrap:wrap}
 .seg button{flex:1;min-width:44px;background:var(--panel2);border:1px solid var(--line);border-radius:5px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:15px;padding:9px 2px;cursor:pointer}
 .seg button.on{background:var(--tape);color:#161616;border-color:var(--tape)}
-.linkbtn{background:none;border:1px solid var(--line);border-radius:4px;color:var(--tape-ink);font-size:12px;padding:5px 9px;cursor:pointer}
-.smallbtn{background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-size:12px;padding:5px 9px;cursor:pointer}
+.linkbtn{background:none;border:1px solid var(--line);border-radius:4px;color:var(--tape-ink);font-size:13px;padding:5px 9px;cursor:pointer}
+.smallbtn{background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-size:13px;padding:5px 9px;cursor:pointer}
 .smallbtn.ok{border-color:var(--ok);color:#bfe6b8} .smallbtn.no{border-color:var(--now);color:#ffb4ad}
 .smallbtn:disabled,.toolbar button:disabled{opacity:.4;cursor:not-allowed}
 /* Am Handy/Tablet größere Tippflächen für die kleinen Knöpfe — am Rechner bleibt die Optik unverändert. */
@@ -206,20 +215,20 @@ input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid v
 body.mode-einfach .einfach-hide{display:none!important}
 /* F2.4 Bulk-Auswahl */
 .glbulk{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-bottom:8px}
-.glbulk .bkinfo{font-size:12px;color:var(--dim);margin-right:auto}
+.glbulk .bkinfo{font-size:13px;color:var(--dim);margin-right:auto}
 .glcb{flex:0 0 auto;width:20px;height:20px;margin-right:2px}
 /* F2.6 Shortcut-Hilfe */
 .schelp{list-style:none;margin:4px 0 0}
 .schelp li{display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--line)}
-.schelp kbd{font-family:var(--mono);font-size:12px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;min-width:34px;text-align:center;color:var(--tape-ink)}
+.schelp kbd{font-family:var(--mono);font-size:13px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;min-width:34px;text-align:center;color:var(--tape-ink)}
 /* F2.5 Begleitungs-Treffer */
 .compbtn.qhit{border-color:var(--tape);box-shadow:0 0 0 2px var(--tape) inset}
-.elhitcount{font-size:12px;color:var(--tape-ink);font-family:var(--mono);margin:0 16px 6px}
+.elhitcount{font-size:13px;color:var(--tape-sig);font-family:var(--mono);margin:0 16px 6px}
 /* F5.1/F6.8 QR */
 .qrbox{display:flex;flex-direction:column;align-items:center;gap:10px}
 .qrbox .qrframe{background:#fff;padding:12px;border-radius:8px;line-height:0}
 .qrbox .qrframe svg{display:block;width:220px;height:220px}
-.qrbox .qrlink{font-family:var(--mono);font-size:11px;color:var(--dim);word-break:break-all;text-align:center}
+.qrbox .qrlink{font-family:var(--mono);font-size:13px;color:var(--dim);word-break:break-all;text-align:center}
 
 dialog{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--tape);border-radius:8px;padding:16px;width:min(460px,93vw);font-family:var(--body);max-height:92vh;overflow:auto}
 dialog::backdrop{background:rgba(0,0,0,.65)}
@@ -228,40 +237,40 @@ dialog h2{font-family:var(--disp);font-size:16px;text-transform:uppercase;margin
 .dlgbtns button{flex:1;min-width:90px;padding:10px;border-radius:5px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);font-weight:700;cursor:pointer}
 .dlgbtns .save{background:var(--tape);color:#161616;border-color:var(--tape)}
 .dlgbtns .del{color:var(--now);border-color:var(--now)}
-.dlgwarn{border-left:3px solid var(--now);background:#2a1e1d;color:#ffc4bd;font-size:12px;padding:7px 9px;border-radius:4px;margin-bottom:10px}
+.dlgwarn{border-left:3px solid var(--now);background:#2a1e1d;color:#ffc4bd;font-size:13px;padding:7px 9px;border-radius:4px;margin-bottom:10px}
 
 /* ---------- Sticky Toolbar ---------- */
 .toolbar{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));z-index:20}
-.toolbar button{flex:1;border-radius:5px;font-family:var(--body);font-weight:700;font-size:13px;padding:11px 2px;cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink)}
+.toolbar button{flex:1;border-radius:5px;font-family:var(--body);font-weight:700;font-size:14px;padding:11px 2px;cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink)}
 .toolbar .primary{background:var(--tape);color:#161616;border-color:var(--tape)}
 
 /* ---------- Einlass (große Zeilen) ---------- */
 .searchbar{margin:12px 16px 0}
 .searchbar input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--ink);font-family:var(--body);font-size:20px;padding:14px 14px}
-.eltop{margin:10px 16px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:15;background:var(--case);padding:6px 0}
-.eltop .cnt{font-family:var(--mono);font-size:15px;color:var(--tape-ink);font-weight:700}
+.eltop{margin:10px 16px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:var(--hdrh);z-index:15;background:var(--case);padding:6px 0}
+.eltop .cnt{font-family:var(--mono);font-size:15px;color:var(--tape-sig);font-weight:700}
 .filterchips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 16px 0}
-.filterchips button{background:var(--panel2);border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:12px;padding:5px 11px;cursor:pointer}
+.filterchips button{background:var(--panel2);border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:13px;padding:5px 11px;cursor:pointer}
 .filterchips button.on{background:var(--tape);color:#161616;border-color:var(--tape)}
 .elrow{display:flex;align-items:center;gap:12px;min-height:64px;background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--dim);border-radius:6px;padding:10px 12px;margin:8px 16px 0;cursor:pointer}
 .elrow.in{background:#1c2a1c;border-color:var(--ok)}
 .elname{font-size:20px;font-weight:700;flex:1;min-width:0}
-.elmeta{font-family:var(--mono);font-size:12px;color:var(--dim)}
-.elcheck{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ok);white-space:nowrap}
-.elcheck.part{color:var(--tape-ink)}
+.elmeta{font-family:var(--mono);font-size:13px;color:var(--dim)}
+.elcheck{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ok);white-space:nowrap}
+.elcheck.part{color:var(--tape-sig)}
 .elcomp{display:flex;flex-direction:column;gap:6px;margin:6px 16px 0}
 .compbtn{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:52px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--ink);font-size:17px;padding:8px 14px;cursor:pointer;text-align:left}
 .compbtn.in{background:#1c2a1c;border-color:var(--ok)}
-.compbtn .t{font-family:var(--mono);font-size:13px;color:var(--dim)}
+.compbtn .t{font-family:var(--mono);font-size:14px;color:var(--dim)}
 .compbtn.in .t{color:var(--ok)}
 .dupwarn{color:var(--now);font-weight:700}
 
 /* ---------- Druckliste-Ansicht ---------- */
 .printview{margin:12px 16px}
 .printview h2{font-family:var(--disp);font-size:18px;text-transform:uppercase}
-table.plist{border-collapse:collapse;width:100%;margin-top:10px;font-size:13px}
+table.plist{border-collapse:collapse;width:100%;margin-top:10px;font-size:14px}
 table.plist th,table.plist td{border:1px solid var(--line);padding:6px 8px;text-align:left}
-table.plist th{background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+table.plist th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
 table.plist td.bar{width:10px;padding:0}
 table.plist td.sign{width:30mm}
 .printview .pfoot{margin-top:10px}
@@ -271,7 +280,7 @@ table.plist td.sign{width:30mm}
 .toast{pointer-events:auto;max-width:520px;width:100%;display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--tape);border-radius:6px;padding:10px 12px;font-family:var(--body);font-size:14px;color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.45)}
 .toast.ok{border-left-color:var(--ok)} .toast.warn{border-left-color:var(--now)}
 .toast-msg{flex:1;min-width:0}
-.toast-act{background:var(--tape);color:#161616;border:none;border-radius:4px;font-family:var(--body);font-weight:700;font-size:13px;padding:6px 10px;cursor:pointer;white-space:nowrap}
+.toast-act{background:var(--tape);color:#161616;border:none;border-radius:4px;font-family:var(--body);font-weight:700;font-size:14px;padding:6px 10px;cursor:pointer;white-space:nowrap}
 .toast-x{background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;line-height:1;padding:0 2px}
 
 /* ---------- Gästeliste Suche / Chips / Sortierung ---------- */
@@ -279,12 +288,12 @@ table.plist td.sign{width:30mm}
 .glbar .glsearch{position:relative}
 .glbar .glsearch input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--ink);font-family:var(--body);font-size:15px;padding:9px 32px 9px 10px}
 .glbar .glsearch .glx{position:absolute;top:50%;right:6px;transform:translateY(-50%);background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;line-height:1}
-.glcount{font-family:var(--mono);font-size:11px;color:var(--dim);margin:5px 0 0}
+.glcount{font-family:var(--mono);font-size:13px;color:var(--dim);margin:5px 0 0}
 .glchips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0}
-.glchips button{background:var(--panel2);border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:12px;padding:5px 11px;cursor:pointer}
+.glchips button{background:var(--panel2);border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:13px;padding:5px 11px;cursor:pointer}
 .glchips button.on{background:var(--tape);color:#161616;border-color:var(--tape)}
 .glsort{display:flex;gap:0;flex-wrap:wrap;margin:8px 0 0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.glsort button{flex:1;min-width:70px;background:var(--panel);border:none;border-right:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:8px 4px;cursor:pointer}
+.glsort button{flex:1;min-width:70px;background:var(--panel);border:none;border-right:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;padding:8px 4px;cursor:pointer}
 .glsort button:last-child{border-right:none}
 .glsort button.on{background:var(--tape);color:#161616}
 .emptybox{margin:12px 16px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--tape);border-radius:6px;padding:14px 14px}
@@ -295,7 +304,7 @@ table.plist td.sign{width:30mm}
 .artsel{position:relative}
 .artsel .artbtn{width:100%;display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--body);font-size:15px;padding:8px 9px;cursor:pointer;text-align:left}
 .artsel .artbtn .artname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
-.artsel .artbtn .artcar{flex:0 0 auto;color:var(--tape-ink);font-size:10px}
+.artsel .artbtn .artcar{flex:0 0 auto;color:var(--tape-ink);font-size:12px}
 .artsel .artpop{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:25;background:var(--panel);border:1px solid var(--tape);border-radius:6px;box-shadow:0 10px 26px rgba(0,0,0,.5);padding:6px}
 .artsel .artq{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--body);font-size:14px;padding:7px 8px;margin-bottom:6px}
 .artsel .artlist{list-style:none;margin:0;padding:0;max-height:calc(15 * 34px);overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -303,9 +312,9 @@ table.plist td.sign{width:30mm}
 .artsel .artlist li span.n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .artsel .artlist li.on{background:var(--panel2)}
 .artsel .artlist li.cur{color:var(--tape-ink);font-weight:700}
-.artsel .artlist li .artcheck{flex:0 0 auto;color:var(--tape-ink);font-family:var(--mono);font-size:12px}
-.artsel .artempty{padding:9px 8px;font-size:13px;color:var(--dim)}
-.artsel .artfoot{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);padding:6px 4px 1px}
+.artsel .artlist li .artcheck{flex:0 0 auto;color:var(--tape-ink);font-family:var(--mono);font-size:13px}
+.artsel .artempty{padding:9px 8px;font-size:14px;color:var(--dim)}
+.artsel .artfoot{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);padding:6px 4px 1px}
 
 /* F4.2 Light-Theme — Korrekturen fuer fest verdrahtete Dunkel-Farben (kein heller Text auf hell) */
 :root[data-theme="light"] .hint.warn{color:#B23A2E}
@@ -319,7 +328,8 @@ table.plist td.sign{width:30mm}
   body{background:#fff;color:#000;padding:0}
   header{background:#fff;border-bottom:3px solid #000}
   .kicker{color:#000}
-  .tabs,.toolbar,.hint,.searchbar,.filterchips,.sechead span,.linkbtn,.smallbtn,.seg,.toasts,.hdrgear,.glbar,.glchips,.glsort,.glsearch,.emptybox,.artsel{display:none!important}
+  .tabs,.sidenav,.toolbar,.hint,.searchbar,.filterchips,.sechead span,.linkbtn,.smallbtn,.seg,.toasts,.hdrgear,.glbar,.glchips,.glsort,.glsearch,.emptybox,.artsel{display:none!important}
+  header{position:static!important}
   .card,.elrow,.pg{background:#fff;color:#000;border-color:#999;break-inside:avoid}
   .printview table.plist th{background:#eee;color:#000}
   .printview table.plist td,.printview table.plist th{border-color:#000}
@@ -332,17 +342,18 @@ table.plist td.sign{width:30mm}
 
 /* ---------- F3.6 Mobil-Pass (<480px): Karten-/Stapel-Tabellen, priorisierte Toolbar ---------- */
 @media (max-width:479px){
-  html,body{overflow-x:hidden}
+  /* clip statt hidden: hidden macht die Seite zum Scroll-Behälter und der feste Kopf würde mitscrollen. */
+  html,body{overflow-x:clip}
   .tabicon{display:none}
   .toolbar{flex-wrap:wrap}
-  .toolbar button{flex:1 1 44%;font-size:12px;padding:10px 4px}
+  .toolbar button{flex:1 1 44%;font-size:13px;padding:10px 4px}
   table.mx thead{display:none}
   table.mx,table.mx tbody{display:block;width:100%}
   table.mx tr{display:block;border:1px solid var(--line);border-radius:6px;margin-bottom:8px;overflow:hidden}
   table.mx tr.grprow{background:var(--panel)}
   table.mx td{display:flex;flex-direction:column;gap:2px;border:none;border-bottom:1px solid var(--line);white-space:normal!important;min-width:0}
   table.mx td:last-child{border-bottom:none}
-  table.mx td[data-label]::before{content:attr(data-label);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+  table.mx td[data-label]::before{content:attr(data-label);font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
   table.mx td.cell{min-width:0}
 }
 
@@ -356,6 +367,37 @@ dialog::backdrop{animation:backdropFade .14s ease}
 @keyframes backdropFade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+
+/* ---------- P7 Kopf bleibt beim Scrollen oben ---------- */
+header{position:sticky;top:0;z-index:30;transition:padding .18s ease}
+header h1{transition:font-size .18s ease}
+header.compact{padding-top:7px;padding-bottom:6px}
+header.compact h1{font-size:clamp(15px,3.2vw,19px)}
+header.compact .sub{display:none}
+html{scroll-behavior:smooth}
+:root{--hdrh:96px;--navw:240px}
+.sechead,.sec{scroll-margin-top:calc(var(--hdrh) + 10px)}
+
+/* ---------- P5 Linke Menüleiste ---------- */
+.shell{display:block}
+.sidenav{display:none}
+.sidenav h3{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:14px 12px 6px;font-weight:500}
+.sidenav .navbtn{display:flex;align-items:center;gap:8px;width:calc(100% - 16px);margin:2px 8px;background:none;border:1px solid transparent;border-radius:5px;color:var(--dim);font-family:var(--disp);font-size:13px;text-transform:uppercase;letter-spacing:.04em;padding:10px 10px;cursor:pointer;text-align:left;transition:background-color .15s ease,color .15s ease,border-color .15s ease}
+.sidenav .navbtn:hover{background:var(--panel2);color:var(--ink)}
+.sidenav .navbtn.active{background:var(--tape);color:#161616;border-color:var(--tape)}
+.sidenav .navjump{display:block;width:calc(100% - 16px);margin:1px 8px;background:none;border:none;border-left:2px solid var(--line);border-radius:0;color:var(--ink);font-family:var(--body);font-size:14px;padding:7px 10px;cursor:pointer;text-align:left;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.sidenav .navjump:hover{background:var(--panel2);border-left-color:var(--tape)}
+.sidenav .navjump.active{border-left-color:var(--tape);color:var(--tape-ink);font-weight:600}
+.sidenav .navsep{height:1px;background:var(--line);margin:12px 12px 2px}
+.sidenav .navbtn.quick{font-family:var(--body);font-size:14px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--ink)}
+@media (min-width:1000px){
+  .shell{display:flex;align-items:flex-start;gap:0}
+  .sidenav{display:block;flex:0 0 var(--navw);width:var(--navw);position:sticky;top:var(--hdrh);align-self:flex-start;max-height:calc(100vh - var(--hdrh));overflow-y:auto;background:var(--panel);border-right:1px solid var(--line);padding:4px 0 18px}
+  .shellmain{flex:1 1 auto;min-width:0}
+  .tabs{display:none}
+  .toolbar{left:var(--navw)}
+  .sec,.sechead{margin-left:18px;margin-right:18px}
 }
 </style>
 </head>
@@ -381,6 +423,10 @@ dialog::backdrop{animation:backdropFade .14s ease}
   <div class="sub">Gästelisten-System · krasserstoff-Ticketing · Gespeichert <span id="savedAt">–</span></div>
 </header>
 
+<div class="shell">
+<nav class="sidenav" id="sidenav" aria-label="Hauptmenü"></nav>
+<div class="shellmain">
+
 <div class="tabs" id="tabs" role="tablist">
   <button data-m="verwaltung" role="tab" id="tab-verwaltung" aria-selected="false" aria-controls="view"><svg class="icon tabicon" aria-hidden="true"><use href="#icon-verwaltung"></use></svg>Verwaltung</button>
   <button data-m="einladen" role="tab" id="tab-einladen" aria-selected="false" aria-controls="view"><svg class="icon tabicon" aria-hidden="true"><use href="#icon-einladen"></use></svg>Einladen</button>
@@ -391,11 +437,15 @@ dialog::backdrop{animation:backdropFade .14s ease}
 <div id="hintzone"></div>
 <main id="view" role="tabpanel" tabindex="-1" aria-labelledby="tab-verwaltung"></main>
 
+</div>
+</div>
+
 <div class="toasts" id="toasts" aria-live="polite"></div>
 <div class="toolbar" id="tools"></div>
 
 <input type="file" id="fileImport" accept=".json" style="display:none">
 <input type="file" id="tokenImport" accept=".json" style="display:none">
+<input type="file" id="csvImport" accept=".csv,.txt" style="display:none">
 <div id="dlgs"></div>
 
 <script src="seatmaps.js"></script>
@@ -492,8 +542,8 @@ function passWert(g,id){return (g&&g.pass&&+g.pass[id])||0;}
 /* Pools wie in der Vorlage — Spalte „Pool (IMMER AUSWÄHLEN)“, Kontingente aus dem Kopfblock. */
 const POOL_INIT=[
   {name:'Band',           kont:60},
-  {name:'Mgmt',           kont:null},
-  {name:'LSB',            kont:null},
+  {name:'Management',     kont:null},
+  {name:'Landstreicher Booking', kont:null},
   {name:'Presse',         kont:20},
   {name:'Präsentator*in', kont:null},
   {name:'Musiker*innen',  kont:null},
@@ -501,7 +551,9 @@ const POOL_INIT=[
   {name:'Crew',           kont:null}
 ];
 /* Alte Gruppennamen → Pool-Namen der Vorlage (nur für bestehende Stände, ohne Datenverlust). */
-const POOL_UMBENENNEN={'Management':'Mgmt','Booking-Agentur':'LSB','Presse/Promo':'Presse','Örtlicher Veranstalter':'ÖV'};
+const POOL_UMBENENNEN={'Booking-Agentur':'Landstreicher Booking','Presse/Promo':'Presse'};
+/* P9: frueher gesetzte Kuerzel werden ausgeschrieben — sonst steht in bestehenden Staenden weiter „Mgmt“. */
+const POOL_KUERZEL_AUSSCHREIBEN={'Mgmt':'Management','LSB':'Landstreicher Booking','ÖV':'Örtlicher Veranstalter'};
 const GRP_INIT=POOL_INIT.map(p=>p.name);
 const ALLPLATZ=()=>PLATZ_IDS.slice();
 
@@ -514,7 +566,7 @@ function defaultState(){
     deckel:400,vertragskontingent:null,deadline:'16:00',deadlineDatum:'',
     final:false,finalVersion:0,finalAt:null,changedSinceFinal:false,banner:'',geloescht:false,statistikSnapshot:null,
     kapSteh:null,kapSitz:null,ffBereich:'',
-    kontakte:deepCopy(KONTAKTE_INIT),vorjahrTitel:'GL Vorjahr',vorjahr:deepCopy(VORJAHR_INIT)
+    kontakte:deepCopy(KONTAKTE_INIT),vorjahrTitel:'Gästeliste Vorjahr',vorjahr:deepCopy(VORJAHR_INIT)
   }));
   const gruppen=POOL_INIT.map(p=>({
     id:uid('gr'),name:p.name,autoGenehmigen:false,
@@ -534,7 +586,9 @@ function defaultState(){
     ui:{modus:'verwaltung',aktiveShowId:naechsteShowId(shows),einlassShowId:null,werBinIch:null}
   };
 }
-const KONTAKTE_INIT=[{rolle:'AP LSB',name:'',mobil:''},{rolle:'AP Tour',name:'',mobil:''},{rolle:'AP ÜV GL',name:'',mobil:''}];
+const KONTAKTE_INIT=[{rolle:'Ansprechpartner Booking',name:'',mobil:''},{rolle:'Ansprechpartner Tour',name:'',mobil:''},{rolle:'Ansprechpartner Veranstalter',name:'',mobil:''}];
+/* P9: Rollen aus aelteren Staenden ausschreiben. */
+const KONTAKT_ROLLE_AUSSCHREIBEN={'AP LSB':'Ansprechpartner Booking','AP Tour':'Ansprechpartner Tour','AP ÜV GL':'Ansprechpartner Veranstalter'};
 const VORJAHR_INIT=[{label:'Tag 1',wert:null},{label:'Tag 2',wert:null}];
 function leerePlaetze(){const o={};PLATZ_IDS.forEach(k=>o[k]=0);return o;}
 function leerePaesse(){const o={};PASS_IDS.forEach(k=>o[k]=0);return o;}
@@ -578,8 +632,9 @@ function migrate(s){
     if(sh.kapSitz===undefined)sh.kapSitz=null;
     if(sh.ffBereich===undefined)sh.ffBereich='';
     if(!Array.isArray(sh.kontakte)||!sh.kontakte.length)sh.kontakte=deepCopy(KONTAKTE_INIT);
-    sh.kontakte.forEach(k=>{if(k.rolle===undefined)k.rolle='';if(k.name===undefined)k.name='';if(k.mobil===undefined)k.mobil='';});
-    if(typeof sh.vorjahrTitel!=='string')sh.vorjahrTitel='GL Vorjahr';
+    sh.kontakte.forEach(k=>{if(k.rolle===undefined)k.rolle='';if(k.name===undefined)k.name='';if(k.mobil===undefined)k.mobil='';
+      if(KONTAKT_ROLLE_AUSSCHREIBEN[k.rolle])k.rolle=KONTAKT_ROLLE_AUSSCHREIBEN[k.rolle];});
+    if(typeof sh.vorjahrTitel!=='string'||sh.vorjahrTitel==='GL Vorjahr')sh.vorjahrTitel='Gästeliste Vorjahr';
     if(!Array.isArray(sh.vorjahr)||!sh.vorjahr.length)sh.vorjahr=deepCopy(VORJAHR_INIT);
     sh.vorjahr.forEach(v=>{if(v.label===undefined)v.label='';if(v.wert===undefined)v.wert=null;});
   });
@@ -588,6 +643,7 @@ function migrate(s){
     if(typeof g.autoGenehmigen!=='boolean')g.autoGenehmigen=false;
     // Alte Gruppennamen auf die Pool-Bezeichnungen der Vorlage bringen (nur die Standardnamen)
     if(altSchema<3&&POOL_UMBENENNEN[g.name])g.name=POOL_UMBENENNEN[g.name];
+    if(POOL_KUERZEL_AUSSCHREIBEN[g.name])g.name=POOL_KUERZEL_AUSSCHREIBEN[g.name];
     if(!Array.isArray(g.erlaubtePlatzarten)||!g.erlaubtePlatzarten.length)g.erlaubtePlatzarten=ALLPLATZ();
     g.erlaubtePlatzarten=g.erlaubtePlatzarten.filter(id=>PLATZ_IDS.indexOf(id)>=0);
     if(!g.erlaubtePlatzarten.length)g.erlaubtePlatzarten=ALLPLATZ();
@@ -756,7 +812,8 @@ function loadPrefs(){
   // Standard: Tabellenansicht wie in der bisherigen Gästelisten-Tabelle
   if(prefs.ansicht!=='karten')prefs.ansicht='tabelle';
   if(prefs.spalten!=='benutzt')prefs.spalten='alle';
-  if(prefs.theme!=='dark'&&prefs.theme!=='light')prefs.theme='light';
+  // P10: Dunkel ist wieder der Standard; Hell nur, wenn ausdrücklich umgestellt wurde.
+  if(prefs.theme!=='dark'&&prefs.theme!=='light')prefs.theme='dark';
 }
 function savePrefs(){try{localStorage.setItem(PREFS_KEY,JSON.stringify(prefs));}catch(e){}}
 
@@ -1015,6 +1072,7 @@ function render(){
   else if(m==='ticket')renderTicket();
   else renderEinlass();
   v.classList.remove('fade-in');void v.offsetWidth;v.classList.add('fade-in');
+  buildSideNav();
 }
 function setModus(m){state.ui.modus=m;save();render();window.scrollTo(0,0);}
 function setAktiveShow(id){state.ui.aktiveShowId=id;save();render();}
@@ -1022,6 +1080,100 @@ function setAktiveShow(id){state.ui.aktiveShowId=id;save();render();}
 document.querySelectorAll('#tabs button').forEach(b=>{
   b.onclick=()=>setModus(b.dataset.m);
 });
+
+/* ================= P5/P6/P7 Linke Menüleiste, fester Kopf ================= */
+const NAV_BEREICHE=[
+  {m:'verwaltung',label:'Verwaltung',icon:'icon-verwaltung'},
+  {m:'einladen',  label:'Einladen',  icon:'icon-einladen'},
+  {m:'einlass',   label:'Einlass',   icon:'icon-einlass'},
+  {m:'ticket',    label:'Ticket',    icon:'icon-ticket'}
+];
+let navSpy=null;
+/* Der Kopf klebt oben; seine tatsächliche Höhe steuert Menüleiste und Sprungmarken. */
+function measureHeader(){
+  const h=document.querySelector('header');if(!h)return;
+  document.documentElement.style.setProperty('--hdrh',Math.round(h.getBoundingClientRect().height)+'px');
+}
+function navIcon(name){
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('class','icon');svg.setAttribute('aria-hidden','true');
+  const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href','#'+name);
+  svg.appendChild(use);return svg;
+}
+function buildSideNav(){
+  const nav=$('sidenav');if(!nav)return;
+  if(navSpy){navSpy.disconnect();navSpy=null;}
+  nav.innerHTML='';
+  nav.appendChild(ael('h3',null,'Bereiche'));
+  NAV_BEREICHE.forEach(b=>{
+    const btn=ael('button','navbtn'+(state.ui.modus===b.m?' active':''));
+    btn.type='button';
+    btn.appendChild(navIcon(b.icon));
+    btn.appendChild(document.createTextNode(b.label));
+    if(state.ui.modus===b.m)btn.setAttribute('aria-current','page');
+    btn.onclick=()=>setModus(b.m);
+    nav.appendChild(btn);
+  });
+  /* Sprungmarken: jede Überschrift des gerade geöffneten Bereichs. */
+  const heads=Array.from(document.querySelectorAll('#view .sechead'));
+  const jumps=[];
+  if(heads.length){
+    nav.appendChild(ael('h3',null,'In diesem Bereich'));
+    heads.forEach((h,i)=>{
+      const t=h.querySelector('h2');if(!t)return;
+      if(!h.id)h.id='sprung-'+i;
+      const btn=ael('button','navjump',t.textContent.trim());
+      btn.type='button';
+      btn.dataset.ziel=h.id;
+      btn.onclick=()=>{const el=document.getElementById(h.id);if(el)el.scrollIntoView({block:'start'});};
+      nav.appendChild(btn);
+      jumps.push({btn:btn,head:h});
+    });
+  }
+  nav.appendChild(ael('div','navsep'));
+  nav.appendChild(ael('h3',null,'Schnellzugriff'));
+  const set=ael('button','navbtn quick');
+  set.type='button';set.appendChild(navIcon('icon-gear'));
+  set.appendChild(document.createTextNode('Einstellungen'));
+  set.onclick=openSettingsDlg;
+  nav.appendChild(set);
+  const imp=ael('button','navbtn quick');
+  imp.type='button';imp.appendChild(navIcon('icon-json'));
+  imp.appendChild(document.createTextNode('Liste einlesen'));
+  imp.onclick=openImportDlg;
+  nav.appendChild(imp);
+  const top=ael('button','navbtn quick','Nach oben');
+  top.type='button';
+  top.onclick=()=>window.scrollTo({top:0});
+  nav.appendChild(top);
+  /* Der Abschnitt, in dem man gerade liest, wird in der Leiste hervorgehoben. */
+  if(jumps.length&&'IntersectionObserver' in window){
+    const sichtbar=new Set();
+    navSpy=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting)sichtbar.add(e.target.id);else sichtbar.delete(e.target.id);});
+      let aktiv=null;
+      for(const j of jumps){if(sichtbar.has(j.head.id)){aktiv=j.head.id;break;}}
+      jumps.forEach(j=>j.btn.classList.toggle('active',aktiv===j.head.id));
+    },{rootMargin:'-'+(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdrh'))||96)+'px 0px -55% 0px'});
+    jumps.forEach(j=>navSpy.observe(j.head));
+  }
+}
+/* Beim Scrollen schrumpft der Kopf leicht, damit er wenig Platz kostet. */
+function headerScrollState(){
+  const h=document.querySelector('header');if(!h)return;
+  const klein=window.scrollY>48;
+  if(h.classList.contains('compact')!==klein){h.classList.toggle('compact',klein);measureHeader();}
+}
+window.addEventListener('scroll',headerScrollState,{passive:true});
+window.addEventListener('resize',measureHeader);
+window.addEventListener('load',measureHeader);
+/* Nach dem weichen Schrumpfen des Kopfes die Höhe erneut messen, sonst bleibt ein Spalt. */
+(function(){const h=document.querySelector('header');if(!h)return;
+  h.addEventListener('transitionend',measureHeader);
+  /* Wird der Kopf höher (langer Bandname, umbrechende Zeile), sofort neu messen —
+     sonst rutscht die Menüleiste unter den Kopf. */
+  if('ResizeObserver' in window)new ResizeObserver(measureHeader).observe(h);
+})();
 
 /* ================= Künstler-Arbeitsbereich ================= */
 function tourLabel(){
@@ -1381,7 +1533,7 @@ function vDeckelDeadline(sh){
   const cbox=ael('div');cbox.style.textAlign='right';
   cbox.appendChild(ael('div','kicker','Redaktionsschluss'));
   const cv=ael('div','mono');cv.style.fontWeight='700';cv.style.fontSize='16px';
-  cv.style.color=cd.red?'var(--now)':'var(--tape-ink)';cv.textContent=cd.t;
+  cv.style.color=cd.red?'var(--now)':'var(--tape-sig)';cv.textContent=cd.t;
   cbox.appendChild(cv);
   head.appendChild(cbox);
   sec.appendChild(head);
@@ -1412,8 +1564,8 @@ function vDeckelDeadline(sh){
   fo.appendChild(iov);g1.appendChild(fo);
   b1.appendChild(g1);
   const g2=ael('div','f2');
-  g2.appendChild(kapFeld('Kap Steh',sh.kapSteh,sumSteh,v=>{sh.kapSteh=v;save();render();}));
-  g2.appendChild(kapFeld('Kap Sitz',sh.kapSitz,sumSitz,v=>{sh.kapSitz=v;save();render();}));
+  g2.appendChild(kapFeld('Kapazität Stehplätze',sh.kapSteh,sumSteh,v=>{sh.kapSteh=v;save();render();}));
+  g2.appendChild(kapFeld('Kapazität Sitzplätze',sh.kapSitz,sumSitz,v=>{sh.kapSitz=v;save();render();}));
   b1.appendChild(g2);
   const fff=ael('div','f');fff.appendChild(ael('label',null,'Family & Friends Bereich'));
   const iff=document.createElement('input');iff.value=sh.ffBereich||'';iff.placeholder='z. B. Loge rechts (tbc)';
@@ -1426,7 +1578,7 @@ function vDeckelDeadline(sh){
     rl.onchange=()=>{k.rolle=rl.value;save();};
     const nmI=document.createElement('input');nmI.value=k.name||'';nmI.placeholder='Name';nmI.setAttribute('aria-label','Name '+(k.rolle||''));
     nmI.onchange=()=>{k.name=nmI.value;save();};
-    const mo=document.createElement('input');mo.value=k.mobil||'';mo.placeholder='mobil';mo.className='kmobil';mo.setAttribute('aria-label','Mobilnummer '+(k.rolle||''));
+    const mo=document.createElement('input');mo.value=k.mobil||'';mo.placeholder='Mobilnummer';mo.className='kmobil';mo.setAttribute('aria-label','Mobilnummer '+(k.rolle||''));
     mo.onchange=()=>{k.mobil=mo.value;save();};
     r.appendChild(rl);r.appendChild(nmI);r.appendChild(mo);
     b1.appendChild(r);
@@ -1468,7 +1620,7 @@ function vDeckelDeadline(sh){
   b3.appendChild(ael('div','kopftitel','Pools'));
   const pt=ael('table','pooltab');
   const thead=document.createElement('thead');const htr=document.createElement('tr');
-  ['Kont','Pool','verbraucht','übrig'].forEach(x=>htr.appendChild(ael('th',null,x)));
+  ['Kontingent','Pool','verbraucht','übrig'].forEach(x=>htr.appendChild(ael('th',null,x)));
   thead.appendChild(htr);pt.appendChild(thead);
   const tb=document.createElement('tbody');
   state.gruppen.forEach(gr=>{
@@ -1493,7 +1645,7 @@ function vDeckelDeadline(sh){
   pt.appendChild(tb);b3.appendChild(pt);
 
   const vt=ael('div','kopftitel');
-  const vti=document.createElement('input');vti.value=sh.vorjahrTitel||'GL Vorjahr';vti.className='vjtitel';
+  const vti=document.createElement('input');vti.value=sh.vorjahrTitel||'Gästeliste Vorjahr';vti.className='vjtitel';
   vti.setAttribute('aria-label','Überschrift Vorjahresvergleich');
   vti.onchange=()=>{sh.vorjahrTitel=vti.value;save();};
   vt.appendChild(vti);b3.appendChild(vt);
@@ -1737,6 +1889,10 @@ function vGaesteListe(sh){
     const ea=ael('div','ea');
     const b1=ael('button','smallbtn ok','+ Gast anlegen');b1.onclick=()=>openGuestDlg(null,{});
     ea.appendChild(b1);
+    const bimp=ael('button','smallbtn','Bestehende Liste einlesen');
+    bimp.title='Importvorlage herunterladen oder eine ausgefüllte Tabelle als CSV einlesen.';
+    bimp.onclick=openImportDlg;
+    ea.appendChild(bimp);
     if(state.gaeste.length===0){
       const b2=ael('button','smallbtn','Demo-Daten laden');
       b2.onclick=()=>{if(confirm('Rund 40 Beispiel-Gäste über mehrere Shows laden? (Jederzeit über Einstellungen ⚙ entfernbar.)'))loadDemoData();};
@@ -2066,28 +2222,31 @@ function cellNode(quota,tal,onClick){
   const td=ael('td','cell');
   const qv=ael('div','qv');
   const eff=quota==null?'∞':quota;
-  qv.textContent='K '+eff+' · b '+tal.beantragt+' · g '+tal.genehmigt+' · e '+tal.eingecheckt;
+  qv.textContent=quota==null?('genehmigt '+tal.genehmigt+' (kein Limit)'):('genehmigt '+tal.genehmigt+' von '+eff);
   td.appendChild(qv);
+  const qv2=ael('div','qv qv2');
+  qv2.textContent='beantragt '+tal.beantragt+' · anwesend '+tal.eingecheckt;
+  td.appendChild(qv2);
   td.appendChild(bar(tal.genehmigt,quota));
   td.onclick=onClick;
-  td.title='Kontingent / beantragt / genehmigt / eingecheckt — Klick: Show-Ausnahme setzen';
+  td.title='Kontingent, beantragt, genehmigt und anwesend — Klick: Ausnahme für diese Show setzen';
   return td;
 }
 function vMatrix(){
   const sec=ael('div','einfach-hide');
-  sec.appendChild(sechead('Kontingent-Matrix','Zeile = Pool · Klick klappt die c/o-Personen auf · Zelle = Ausnahme'));
+  sec.appendChild(sechead('Kontingent-Matrix','Zeile = Pool · Klick klappt die einladenden Personen auf · Zelle = Ausnahme'));
   const wrap=ael('div','tlwrap');
   const tab=ael('table','mx');
   // Kopf
   const thead=document.createElement('thead');const htr=document.createElement('tr');
-  htr.appendChild(ael('th',null,'Pool / c/o'));
+  htr.appendChild(ael('th',null,'Pool / einladende Person'));
   state.shows.forEach(s=>{const th=ael('th',null,showLabel(s));htr.appendChild(th);});
   thead.appendChild(htr);tab.appendChild(thead);
   const tb=document.createElement('tbody');
   state.gruppen.forEach(g=>{
     const tr=document.createElement('tr');tr.className='grprow';
     const gtd=ael('td','grp',(mxExpand[g.id]?'▾ ':'▸ ')+g.name);
-    gtd.dataset.label='Pool / c/o';
+    gtd.dataset.label='Pool / einladende Person';
     gtd.onclick=()=>{mxExpand[g.id]=!mxExpand[g.id];render();};
     tr.appendChild(gtd);
     state.shows.forEach(s=>{
@@ -2107,7 +2266,7 @@ function vMatrix(){
       persons.forEach(p=>{
         const tr2=document.createElement('tr');
         const ptd=ael('td','sub',p.name);
-        ptd.dataset.label='Pool / c/o';
+        ptd.dataset.label='Pool / einladende Person';
         ptd.onclick=()=>openEinlDlg(p.id);
         tr2.appendChild(ptd);
         state.shows.forEach(s=>{
@@ -2125,7 +2284,7 @@ function vMatrix(){
   tab.appendChild(tb);
   wrap.appendChild(tab);
   sec.appendChild(wrap);
-  const h=ael('div','hint');h.textContent='K = wirksames Kontingent (Show-Ausnahme schlägt Standard) · b beantragt · g genehmigt · e eingecheckt (jeweils Personen inkl. Begleitungen).';
+  const h=ael('div','hint');h.textContent='Angezeigt wird je Pool und Show: genehmigt von Kontingent, darunter beantragt und anwesend — jeweils Personen einschließlich Begleitungen. Eine Ausnahme für eine einzelne Show geht dem Standardkontingent vor.';
   sec.appendChild(h);
   return sec;
 }
@@ -3131,6 +3290,146 @@ function exportVorlage(sh){
   return true;
 }
 
+/* ================= Importvorlage: bestehende Gästeliste einlesen =================
+   Liest genau den Aufbau, den der Export „(e) Tabelle im gewohnten Aufbau“ schreibt —
+   und damit auch die bisher genutzte Gästelisten-Tabelle, wenn sie als CSV gespeichert wird.
+   Rein additiv: vorhandene Gäste bleiben unangetastet, es kommen nur neue Zeilen dazu. */
+const IMPORT_KOPF=['show','Name','Vorname','E-Mail','Steh','Sitz','Aftershow','Kat 4','AAA','F/F','Foto',
+  'Referenz/Medium','c/o','Pool (IMMER AUSWÄHLEN)','Notiz','Mailout'];
+
+/* Die Vorlage zum Herunterladen — gleicher Aufbau wie der Export, mit zwei Beispielzeilen. */
+function importVorlageText(){
+  const g=[];
+  const setz=(z,sp,w)=>{while(g.length<=z)g.push(new Array(IMPORT_KOPF.length).fill(''));g[z][sp]=(w==null?'':String(w));};
+  setz(0,0,'Importvorlage Gästeliste — bitte diese Datei mit der bestehenden Liste füllen und im Werkzeug einlesen.');
+  setz(1,0,'Eine Zeile je Gast. Die Überschriftenzeile bitte stehen lassen, die beiden Beispielzeilen überschreiben oder löschen.');
+  setz(2,0,'In den Spalten Steh, Sitz, Aftershow, Kat 4, AAA, F/F und Foto steht die Anzahl der Personen (leer = 0).');
+  setz(3,0,'Die Spalten show und Mailout werden beim Einlesen übergangen.');
+  IMPORT_KOPF.forEach((t,i)=>setz(5,i,t));
+  const bsp1=['','Mustermann','Anna','anna.mustermann@example.com','2','','','','','','','Rolling Stone','Band · N.N.','Band','Gitarrenkoffer bitte hinterlegen',''];
+  const bsp2=['','Beispiel','Ben','ben.beispiel@example.com','','1','','','','1','','','Presse · N.N.','Presse','',''];
+  bsp1.forEach((w,i)=>setz(6,i,w));
+  bsp2.forEach((w,i)=>setz(7,i,w));
+  return BOM+csvRows(g);
+}
+function importVorlageHerunterladen(){
+  download('Importvorlage_Gaesteliste.csv',importVorlageText(),'text/csv;charset=utf-8');
+  Toast.show('Importvorlage heruntergeladen.',{type:'ok'});
+}
+
+/* CSV in Zeilen und Felder zerlegen — Trenner (Semikolon, Komma, Tabulator) wird selbst erkannt. */
+function csvZerlegen(text){
+  const probe=text.slice(0,4000);
+  const zaehl=z=>(probe.split(z).length-1);
+  let d=';';
+  const kand=[[';',zaehl(';')],[',',zaehl(',')],['\t',zaehl('\t')]];
+  kand.sort((a,b)=>b[1]-a[1]);
+  if(kand[0][1]>0)d=kand[0][0];
+  const rows=[];let row=[],feld='',inQ=false;
+  for(let i=0;i<text.length;i++){
+    const c=text.charAt(i);
+    if(inQ){
+      if(c==='"'){if(text.charAt(i+1)==='"'){feld+='"';i++;}else inQ=false;}
+      else feld+=c;
+    }else if(c==='"'){inQ=true;}
+    else if(c===d){row.push(feld);feld='';}
+    else if(c==='\n'){row.push(feld);feld='';rows.push(row);row=[];}
+    else if(c!=='\r'){feld+=c;}
+  }
+  row.push(feld);rows.push(row);
+  return rows;
+}
+
+function poolNachName(name){
+  const n=String(name||'').trim();if(!n)return null;
+  let gr=null;
+  state.gruppen.forEach(x=>{if(!gr&&String(x.name||'').trim().toLowerCase()===n.toLowerCase())gr=x;});
+  if(!gr){
+    gr={id:uid('gr'),name:n,autoGenehmigen:false,erlaubtePlatzarten:ALLPLATZ(),aftershowErlaubt:true};
+    state.gruppen.push(gr);
+    if(!state.gruppenKontingente[gr.id])state.gruppenKontingente[gr.id]={std:null,ausnahmen:{}};
+  }
+  return gr;
+}
+function einladendeNachName(name,gruppeId){
+  const n=String(name||'').trim();if(!n)return null;
+  let p=null;
+  state.einladende.forEach(x=>{if(!p&&String(x.name||'').trim().toLowerCase()===n.toLowerCase())p=x;});
+  if(!p){p={id:uid('p'),name:n,gruppeId:gruppeId||null,stdKontingent:null,ausnahmen:{}};state.einladende.push(p);}
+  return p;
+}
+
+/* Liest den Text einer CSV-Datei und legt die Gäste in der aktiven Show an. */
+function importGaesteAusText(text,sh){
+  const rows=csvZerlegen(String(text||'').replace(/^﻿/,''));
+  const norm=s=>String(s==null?'':s).trim().toLowerCase();
+  let hi=-1;
+  for(let i=0;i<rows.length&&i<200;i++){
+    const r=rows[i].map(norm);
+    if(r.indexOf('name')>=0&&r.indexOf('vorname')>=0){hi=i;break;}
+  }
+  if(hi<0)return {fehler:'In der Datei steht keine Überschriftenzeile mit „Name“ und „Vorname“. Bitte die Importvorlage verwenden.'};
+  const kopf=rows[hi].map(norm);
+  const sp=function(){for(let i=0;i<arguments.length;i++){const k=kopf.indexOf(arguments[i]);if(k>=0)return k;}return -1;};
+  const iNach=sp('name'),iVor=sp('vorname'),iMail=sp('e-mail','email','mail','e mail');
+  const iRef=sp('referenz/medium','referenz','medium'),iCo=sp('c/o','co','einladender','einladende person');
+  const iPool=sp('pool (immer auswählen)','pool','gruppe'),iNotiz=sp('notiz','bemerkung','anmerkung');
+  const iPlatz={steh:sp('steh'),sitz:sp('sitz'),aftershow:sp('aftershow'),kat4:sp('kat 4','kat4')};
+  const iPass={aaa:sp('aaa'),ff:sp('f/f','ff','family & friends'),foto:sp('foto')};
+  const zahl=v=>{const n=parseInt(String(v==null?'':v).replace(/[^0-9-]/g,''),10);return (isNaN(n)||n<0)?0:n;};
+  const feld=(r,i)=>(i<0||i>=r.length)?'':String(r[i]==null?'':r[i]).trim();
+  const vorhanden={};
+  state.gaeste.forEach(x=>{if(x.showId===sh.id)vorhanden[((x.nachname||'')+'|'+(x.vorname||'')).toLowerCase()]=true;});
+  let neu=0,doppelt=0,leer=0;
+  const angelegt=[];
+  for(let i=hi+1;i<rows.length;i++){
+    const r=rows[i];
+    const nach=feld(r,iNach),vor=feld(r,iVor),mail=feld(r,iMail);
+    if(!nach&&!vor&&!mail){leer++;continue;}
+    if(!nach&&!vor){leer++;continue;}
+    // Summen- und Zwischenzeilen der gewohnten Tabelle nicht als Gast anlegen
+    if(/^(total|gesamt|summe)/i.test(nach)){leer++;continue;}
+    const schl=(nach+'|'+vor).toLowerCase();
+    if(vorhanden[schl]){doppelt++;continue;}
+    const plaetze=leerePlaetze(),paesse=leerePaesse();
+    Object.keys(iPlatz).forEach(k=>{plaetze[k]=zahl(feld(r,iPlatz[k]));});
+    Object.keys(iPass).forEach(k=>{paesse[k]=zahl(feld(r,iPass[k]));});
+    const gr=poolNachName(feld(r,iPool));
+    const pers=einladendeNachName(feld(r,iCo),gr?gr.id:null);
+    const g={id:uid('g'),vorname:vor,nachname:nach,email:mail,begleitungen:0,
+      plaetze:plaetze,pass:paesse,referenz:feld(r,iRef),
+      einladenderId:pers?pers.id:null,gruppeId:gr?gr.id:null,showId:sh.id,
+      status:'genehmigt',checkinAt:null,notiz:feld(r,iNotiz),
+      aftershow:plaetze.aftershow>0,nachtrag:false,autoGenehmigt:false,mailoutAt:null,createdAt:Date.now()};
+    state.gaeste.push(g);angelegt.push(g);
+    vorhanden[schl]=true;neu++;
+  }
+  return {neu:neu,doppelt:doppelt,leer:leer};
+}
+
+function openImportDlg(){
+  const sh=aktiveShow();
+  modal((dlg,close)=>{
+    dlg.appendChild(ael('h2',null,'Bestehende Gästeliste einlesen'));
+    dlg.appendChild(mkHint('Die Importvorlage hat denselben Aufbau wie die gewohnte Gästelisten-Tabelle. '+
+      'Bestehende Liste in die Vorlage übertragen, als CSV speichern und hier einlesen. '+
+      'Vorhandene Gäste bleiben erhalten, es kommen nur neue Zeilen dazu.'));
+    const bv=ael('button','smallbtn','Importvorlage herunterladen · CSV');
+    bv.style.display='block';bv.style.width='100%';bv.style.marginTop='8px';
+    bv.onclick=()=>{importVorlageHerunterladen();};
+    dlg.appendChild(bv);
+    const bi=ael('button','smallbtn ok','Ausgefüllte Datei einlesen …');
+    bi.style.display='block';bi.style.width='100%';bi.style.marginTop='8px';
+    bi.disabled=!sh;
+    bi.onclick=()=>{close();$('csvImport').click();};
+    dlg.appendChild(bi);
+    if(!sh)dlg.appendChild(mkHint('Zum Einlesen zuerst eine Show auswählen.'));
+    else dlg.appendChild(ael('div','small muted','Ziel: '+(sh.stadt||'')+' · '+fmtDate(sh.datum)+
+      ' — eingelesene Gäste stehen anschließend als genehmigt in der Liste.'));
+    const btns=ael('div','dlgbtns');const c=ael('button','save','Schließen');c.onclick=close;btns.appendChild(c);dlg.appendChild(btns);
+  });
+}
+
 /* (c) CSV krasserstoff — eine Zeile pro Person */
 function exportKrasserstoff(sh){
   if(!guardFinal(sh))return false;
@@ -3233,6 +3532,11 @@ function openExportDlg(sh){
     dlg.appendChild(mk('(c) CSV krasserstoff-Personalisierung',exportKrasserstoff));
     dlg.appendChild(mk('(d) Aftershow-Liste · CSV',exportAftershowCsv));
     dlg.appendChild(mk('(d) Aftershow-Liste · Druck',exportAftershowDruck));
+    const bimp2=ael('button','smallbtn','Umgekehrter Weg: bestehende Liste einlesen');
+    bimp2.style.display='block';bimp2.style.width='100%';bimp2.style.marginTop='14px';
+    bimp2.title='Importvorlage herunterladen oder eine ausgefüllte Tabelle als CSV einlesen.';
+    bimp2.onclick=()=>{close();openImportDlg();};
+    dlg.appendChild(bimp2);
     const btns=ael('div','dlgbtns');const c=ael('button','save','Schließen');c.onclick=close;btns.appendChild(c);dlg.appendChild(btns);
   });
 }
@@ -3250,6 +3554,23 @@ function backupReminder(){
   Toast.show('Letzte JSON-Sicherung ist über einen Tag her — und es gab seitdem Änderungen.',
     {type:'warn',ms:12000,action:{label:'Jetzt sichern',on:jsonExport}});
 }
+$('csvImport').onchange=e=>{
+  const f=e.target.files&&e.target.files[0];if(!f)return;
+  const sh=aktiveShow();
+  if(!sh){alert('Zum Einlesen zuerst eine Show auswählen.');$('csvImport').value='';return;}
+  if(sh.final&&!confirm('Die Show ist bereits finalisiert. Eingelesene Gäste wären Nachträge. Trotzdem einlesen?')){$('csvImport').value='';return;}
+  const r=new FileReader();
+  r.onload=()=>{
+    const erg=importGaesteAusText(r.result,sh);
+    $('csvImport').value='';
+    if(erg.fehler){alert(erg.fehler);return;}
+    if(!erg.neu&&!erg.doppelt){alert('In der Datei standen keine Gästezeilen.');return;}
+    save();render();
+    Toast.show('Eingelesen: '+erg.neu+' Gäste'+(erg.doppelt?', '+erg.doppelt+' schon vorhanden (übersprungen)':'')+'.',{type:'ok'});
+  };
+  r.onerror=()=>{alert('Datei konnte nicht gelesen werden.');$('csvImport').value='';};
+  r.readAsText(f,'UTF-8');
+};
 $('fileImport').onchange=e=>{
   const f=e.target.files[0];if(!f){return;}
   const r=new FileReader();
