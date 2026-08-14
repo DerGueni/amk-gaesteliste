@@ -239,7 +239,9 @@ body.mode-einfach .einfach-hide{display:none!important}
 .qrbox .qrframe svg{display:block;width:220px;height:220px}
 .qrbox .qrlink{font-family:var(--mono);font-size:13px;color:var(--dim);word-break:break-all;text-align:center}
 
-dialog{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--tape);border-radius:8px;padding:16px;width:min(460px,93vw);font-family:var(--body);max-height:92vh;overflow:auto}
+/* margin:auto stellt das Fenster mittig — die Grundregel oben nimmt allen Elementen
+   den Aussenabstand, dadurch klebte jeder Dialog vorher in der linken oberen Ecke. */
+dialog{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--tape);border-radius:8px;padding:16px;width:min(460px,93vw);font-family:var(--body);max-height:92vh;overflow:auto;margin:auto}
 dialog::backdrop{background:rgba(0,0,0,.65)}
 dialog h2{font-family:var(--disp);font-size:16px;text-transform:uppercase;margin-bottom:12px}
 .dlgbtns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}

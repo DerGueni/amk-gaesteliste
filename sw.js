@@ -2,7 +2,7 @@
 // AMK Gästeliste PRO — Service Worker (App-Shell-Cache)
 // Registrierung nur unter https/localhost (siehe gaesteliste.html) — hier keine weitere Prüfung nötig.
 
-const CACHE_NAME = 'amk-gl-v14';
+const CACHE_NAME = 'amk-gl-v15';
 const SHELL_URLS = [
   './',
   './index.html',
