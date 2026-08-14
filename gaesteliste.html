@@ -191,6 +191,16 @@ input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid v
      unsichtbar vergrößerte Tippfläche — sonst trifft man sie am Handy kaum. */
   .tipbtn{position:relative}
   .tipbtn::after{content:'';position:absolute;top:-12px;right:-12px;bottom:-12px;left:-12px}
+  /* Sortier- und Ansichtsleiste der Gästeliste — am Rechner unverändert, am Finger größer. */
+  .glsort button{min-height:36px;padding:8px 12px}
+  /* Mengenfelder der Tabelle: am Handy braucht die Zahl eine ordentliche Trefferfläche. */
+  table.gt td.zahlspalte input{min-height:34px;font-size:15px}
+  table.gt td.zahlspalte{min-width:52px}
+  /* Kopfblock: Kontaktzeilen und Vorjahresfelder ebenfalls auf Fingergröße. */
+  .kontaktzeile input{min-height:34px}
+  table.zahltab input.vjlabel{min-height:34px;font-size:14px}
+  table.zahltab input.vjwert{min-height:34px;font-size:14px}
+  input.vjtitel{min-height:30px}
 }
 /* F4.5 Einfach-Modus — rein visuelle Ausblendung */
 body.mode-einfach .einfach-hide{display:none!important}
