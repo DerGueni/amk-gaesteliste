@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMK Gästeliste · Schriften zur Auswahl</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;600;700&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&family=Inter:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --case:#17181C; --panel:#1F2126; --panel2:#26282E; --line:#33363E;
+  --ink:#F2F3F6; --dim:#D6DAE3; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--case);color:var(--ink);font-family:Inter,sans-serif;padding-bottom:60px}
+.kopf{background:var(--panel);border-bottom:3px solid var(--tape);padding:16px 20px}
+.kopf .marke{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--tape);text-transform:uppercase}
+.kopf h1{font-size:26px;margin:4px 0 2px}
+.kopf .sub{color:var(--dim);font-size:15px}
+.hinweis{max-width:1180px;margin:18px auto 0;padding:0 20px;color:var(--dim);font-size:16px;line-height:1.5}
+.hinweis b{color:var(--ink)}
+main{max-width:1180px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:18px;margin-top:18px}
+
+.probe{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 16px 18px}
+.probe > .name{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tape);margin-bottom:2px}
+.probe > .was{color:var(--dim);font-size:14px;margin-bottom:14px}
+
+/* ---- gemeinsamer Aufbau des Ausschnitts ---- */
+.aus .titel{font-size:22px;margin-bottom:2px}
+.aus .ort{color:var(--dim);font-size:15px;margin-bottom:12px}
+.aus .abschnitt{font-size:15px;margin:14px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.aus table{width:100%;border-collapse:collapse;font-size:15px}
+.aus th{text-align:left;color:var(--dim);font-size:13px;font-weight:600;border-bottom:1px solid var(--line);padding:4px 6px}
+.aus td{padding:5px 6px;border-bottom:1px solid var(--line)}
+.aus td.z{text-align:right;font-variant-numeric:tabular-nums}
+.aus .feld{margin-top:12px}
+.aus .feld label{display:block;font-size:13px;color:var(--dim);margin-bottom:3px}
+.aus .feld input{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:5px;color:var(--ink);padding:8px 9px;font:inherit;font-size:15px}
+.aus .knoepfe{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.aus button{border-radius:5px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:9px 14px;font:inherit;font-size:14px;cursor:pointer}
+.aus button.haupt{background:var(--tape);border-color:var(--tape);color:#161616;font-weight:700}
+.aus .zahlen{font-variant-numeric:tabular-nums}
+
+/* ---- Fassung 1: wie jetzt (Archivo Black + Barlow Semi Condensed, viele Großbuchstaben) ---- */
+.f1{font-family:'Barlow Semi Condensed',sans-serif}
+.f1 .titel{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:.01em}
+.f1 .abschnitt{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:14px}
+.f1 th,.f1 .feld label{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.08em;font-size:12px;font-weight:700}
+.f1 td.z{font-family:'IBM Plex Mono',monospace;font-weight:700}
+
+/* ---- Fassung 2: Inter, normale Schreibweise ---- */
+.f2{font-family:Inter,sans-serif}
+.f2 .titel{font-weight:700;letter-spacing:-.01em}
+.f2 .abschnitt{font-weight:600}
+.f2 th,.f2 .feld label{font-weight:600}
+.f2 td.z{font-weight:600}
+
+/* ---- Fassung 3: Source Sans 3, normale Schreibweise ---- */
+.f3{font-family:'Source Sans 3',sans-serif}
+.f3 .titel{font-weight:700}
+.f3 .abschnitt{font-weight:600}
+.f3 th,.f3 .feld label{font-weight:600}
+.f3 td.z{font-weight:600}
+
+/* ---- Fassung 4: Archivo (nicht Black) + Manrope, normale Schreibweise ---- */
+.f4{font-family:Manrope,sans-serif}
+.f4 .titel{font-family:Archivo,sans-serif;font-weight:700}
+.f4 .abschnitt{font-family:Archivo,sans-serif;font-weight:600}
+.f4 th,.f4 .feld label{font-weight:600}
+.f4 td.z{font-weight:800}
+
+footer{max-width:1180px;margin:26px auto 0;padding:0 20px;color:var(--dim);font-size:14px}
+</style>
+</head>
+<body>
+
+<div class="kopf">
+  <div class="marke">Consec · Tourmanagement-Werkzeuge</div>
+  <h1>Schriften zur Auswahl</h1>
+  <div class="sub">Vier Fassungen desselben Ausschnitts aus der Gästeliste — bitte eine aussuchen.</div>
+</div>
+
+<div class="hinweis">
+  Fassung&nbsp;1 ist der heutige Stand. Die Fassungen&nbsp;2 bis&nbsp;4 sind in
+  <b>normaler Schreibweise</b> gesetzt: Großbuchstaben nur noch am Wortanfang, nicht mehr über ganze
+  Zeilen. Sag mir einfach die Nummer — dann stelle ich das ganze Werkzeug darauf um.
+</div>
+
+<main>
+
+  <div class="probe">
+    <div class="name">Fassung 1 · heutiger Stand</div>
+    <div class="was">Archivo Black + Barlow Semi Condensed, vieles in Großbuchstaben</div>
+    <div class="aus f1">
+      <div class="titel">Berlin · 14.08.2026</div>
+      <div class="ort">Parkbühne Wuhlheide</div>
+      <div class="abschnitt">Gäste · Berlin</div>
+      <table>
+        <tr><th>Name</th><th>Vorname</th><th>Pool</th><th class="z">Steh</th><th class="z">Sitz</th></tr>
+        <tr><td>Bauer</td><td>Anna</td><td>Band</td><td class="z">1</td><td class="z"></td></tr>
+        <tr><td>Brandt</td><td>Kilian</td><td>Presse</td><td class="z"></td><td class="z">1</td></tr>
+        <tr><td>Winkler</td><td>Lea</td><td>Präsentator*in</td><td class="z"></td><td class="z">3</td></tr>
+      </table>
+      <div class="feld"><label>Kapazität Stehplätze</label><input value="1.800"></div>
+      <div class="knoepfe"><button class="haupt">+ Gast</button><button>Exporte</button><button>Liste einlesen</button></div>
+    </div>
+  </div>
+
+  <div class="probe">
+    <div class="name">Fassung 2 · Inter</div>
+    <div class="was">Sehr klar und ruhig, normale Schreibweise</div>
+    <div class="aus f2">
+      <div class="titel">Berlin · 14.08.2026</div>
+      <div class="ort">Parkbühne Wuhlheide</div>
+      <div class="abschnitt">Gäste · Berlin</div>
+      <table>
+        <tr><th>Name</th><th>Vorname</th><th>Pool</th><th class="z">Steh</th><th class="z">Sitz</th></tr>
+        <tr><td>Bauer</td><td>Anna</td><td>Band</td><td class="z">1</td><td class="z"></td></tr>
+        <tr><td>Brandt</td><td>Kilian</td><td>Presse</td><td class="z"></td><td class="z">1</td></tr>
+        <tr><td>Winkler</td><td>Lea</td><td>Präsentator*in</td><td class="z"></td><td class="z">3</td></tr>
+      </table>
+      <div class="feld"><label>Kapazität Stehplätze</label><input value="1.800"></div>
+      <div class="knoepfe"><button class="haupt">+ Gast</button><button>Exporte</button><button>Liste einlesen</button></div>
+    </div>
+  </div>
+
+  <div class="probe">
+    <div class="name">Fassung 3 · Source Sans</div>
+    <div class="was">Sachlich, etwas schmaler, gut für viele Zeilen</div>
+    <div class="aus f3">
+      <div class="titel">Berlin · 14.08.2026</div>
+      <div class="ort">Parkbühne Wuhlheide</div>
+      <div class="abschnitt">Gäste · Berlin</div>
+      <table>
+        <tr><th>Name</th><th>Vorname</th><th>Pool</th><th class="z">Steh</th><th class="z">Sitz</th></tr>
+        <tr><td>Bauer</td><td>Anna</td><td>Band</td><td class="z">1</td><td class="z"></td></tr>
+        <tr><td>Brandt</td><td>Kilian</td><td>Presse</td><td class="z"></td><td class="z">1</td></tr>
+        <tr><td>Winkler</td><td>Lea</td><td>Präsentator*in</td><td class="z"></td><td class="z">3</td></tr>
+      </table>
+      <div class="feld"><label>Kapazität Stehplätze</label><input value="1.800"></div>
+      <div class="knoepfe"><button class="haupt">+ Gast</button><button>Exporte</button><button>Liste einlesen</button></div>
+    </div>
+  </div>
+
+  <div class="probe">
+    <div class="name">Fassung 4 · Archivo + Manrope</div>
+    <div class="was">Behält die Handschrift von heute, nur ruhiger und ohne Großbuchstaben</div>
+    <div class="aus f4">
+      <div class="titel">Berlin · 14.08.2026</div>
+      <div class="ort">Parkbühne Wuhlheide</div>
+      <div class="abschnitt">Gäste · Berlin</div>
+      <table>
+        <tr><th>Name</th><th>Vorname</th><th>Pool</th><th class="z">Steh</th><th class="z">Sitz</th></tr>
+        <tr><td>Bauer</td><td>Anna</td><td>Band</td><td class="z">1</td><td class="z"></td></tr>
+        <tr><td>Brandt</td><td>Kilian</td><td>Presse</td><td class="z"></td><td class="z">1</td></tr>
+        <tr><td>Winkler</td><td>Lea</td><td>Präsentator*in</td><td class="z"></td><td class="z">3</td></tr>
+      </table>
+      <div class="feld"><label>Kapazität Stehplätze</label><input value="1.800"></div>
+      <div class="knoepfe"><button class="haupt">+ Gast</button><button>Exporte</button><button>Liste einlesen</button></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>Nur zum Ansehen — am Werkzeug ändert sich nichts, bevor du dich entschieden hast.</footer>
+
+</body>
+</html>
