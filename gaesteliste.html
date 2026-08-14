@@ -8,16 +8,18 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<!-- Schriften kommen jetzt vom Rechner (Arial/Calibri) — keine Schriften mehr aus dem Netz. -->
 <style>
 :root{
   --case:#17181C; --panel:#1F2126; --panel2:#26282E; --line:#33363E;
-  --ink:#F2F3F6; --dim:#D6DAE3; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
+  --ink:#FFFFFF; --dim:#FFFFFF;   /* kein Grau: auf dunklem Grund alles in Weiss */ --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
   --kat-guest:#64A85C; --kat-aaa:#FFD23F; --kat-working:#4098D7; --kat-photo:#C25CA8; --kat-aftershow:#8B93A1;
   --rowhover:#2A2D34;
-  --disp:'Archivo Black',sans-serif;
-  --body:'Barlow Semi Condensed',sans-serif;
-  --mono:'IBM Plex Mono',monospace;
+  /* Schriften: Arial fuer Ueberschriften und Beschriftungen, Calibri fuer Fliesstext.
+     Zahlen laufen ebenfalls in Arial, aber mit gleich breiten Ziffern (siehe unten). */
+  --disp:Arial,Helvetica,sans-serif;
+  --body:Calibri,'Segoe UI',Arial,Helvetica,sans-serif;
+  --mono:Arial,Helvetica,sans-serif;
   --zoom:1;
   --tape-ink:#FFD23F;   /* Gelb als Textfarbe — nur auf dunklem Grund, siehe unten */
   --tape-sig:#FFD23F;   /* Signalfarbe fuer Zahlen/Hinweise, die sich abheben muessen */
@@ -27,9 +29,10 @@
 }
 /* F4.2 Light-Theme — zweiter Variablensatz, Default bleibt Dark/unveraendert */
 :root[data-theme="light"]{
-  --case:#F4F3EF; --panel:#FFFFFF; --panel2:#ECEAE3; --line:#D8D5CC;
-  --ink:#141518; --dim:#141518;   /* P2: kein Grau — auf hellem Grund schwarzer Text */
-  --rowhover:#E3EDF7;
+  /* Helles Design: neutrale Grautoene statt Beige, Schrift durchgehend Schwarz. */
+  --case:#F1F1F1; --panel:#FFFFFF; --panel2:#E6E6E6; --line:#C4C4C4;
+  --ink:#000000; --dim:#000000;
+  --rowhover:#DCDCDC;
   /* P4: Gelb/Oliv ist auf hellem Grund nie Textfarbe. Ueberschriften schwarz,
      Signalwerte in kraeftigem Braunorange statt Olivgelb. */
   --tape-ink:#141518;
@@ -41,7 +44,7 @@
 /* F4.3 Schriftgroesse S/M/L (root 15/16/18px) — als Seiten-Zoom, da Groessen im Formular ueberwiegend in px stehen */
 html{zoom:var(--zoom,1)}
 html{-webkit-text-size-adjust:100%}
-body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.4;padding-bottom:90px}
+body{background:var(--case);color:var(--ink);font-family:var(--body);font-variant-numeric:tabular-nums;font-size:16px;line-height:1.4;padding-bottom:90px}
 
 /* ---------- Kopf ---------- */
 header{background:var(--panel);border-bottom:3px solid var(--tape);padding:12px 16px 10px;position:relative}
@@ -52,8 +55,8 @@ header{background:var(--panel);border-bottom:3px solid var(--tape);padding:12px 
 .tlbicon{width:15px;height:15px;flex:0 0 auto;vertical-align:-3px;margin-right:5px}
 /* F1.7 Erklär-Tooltip */
 .tipbtn{width:16px;height:16px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:12px;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:help;margin-left:5px;padding:0;flex:0 0 auto;vertical-align:1px}
-.kicker{font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.18em;color:var(--tape-ink);text-transform:uppercase}
-h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:.01em;margin:2px 0 2px;text-transform:uppercase}
+.kicker{font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:0;color:var(--tape-ink)}
+h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:0;margin:2px 0 2px}
 /* Am schmalen Handy sonst läuft der Titel unter den Einstellungen-Knopf. */
 @media (max-width:560px){header{padding-right:58px}}
 .sub{font-size:14px;color:var(--dim)}
@@ -61,7 +64,7 @@ h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:.01em
 
 /* ---------- Tabs ---------- */
 .tabs{display:flex;margin:14px 16px 0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;background:var(--panel);border:none;color:var(--dim);font-family:var(--disp);font-size:13px;text-transform:uppercase;letter-spacing:.04em;padding:11px 2px;cursor:pointer}
+.tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;background:var(--panel);border:none;color:var(--dim);font-family:var(--disp);font-size:13px;letter-spacing:0;padding:11px 2px;cursor:pointer}
 .tabs button.active{background:var(--tape);color:#161616}
 .tabs button+button{border-left:1px solid var(--line)}
 @media (max-width:560px){.tabs button{font-size:11px;letter-spacing:0;padding:11px 1px;gap:3px}}
@@ -69,14 +72,14 @@ h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:.01em
 /* ---------- Karten / Blöcke ---------- */
 .sec{margin:14px 16px}
 .sechead{display:flex;justify-content:space-between;align-items:baseline;margin:16px 16px 6px}
-.sechead h2{font-family:var(--disp);font-size:14px;text-transform:uppercase;letter-spacing:.05em}
+.sechead h2{font-family:var(--disp);font-size:14px;letter-spacing:0}
 .sechead span{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--dim)}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:11px 12px;margin-bottom:8px}
 .card.hl{border-color:var(--tape);box-shadow:0 0 0 1px var(--tape)}
 .row{display:flex;align-items:center;gap:10px}
 .grow{flex:1;min-width:0}
-.chip{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;padding:2px 6px;display:inline-block}
-.badge{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;border-radius:2px;padding:2px 5px;font-weight:700;display:inline-block}
+.chip{font-family:var(--mono);font-size:12px;letter-spacing:0;border-radius:2px;padding:2px 6px;display:inline-block}
+.badge{font-family:var(--mono);font-size:12px;letter-spacing:0;border-radius:2px;padding:2px 5px;font-weight:700;display:inline-block}
 .b-plan{background:var(--panel2);color:var(--dim)} .b-ok{background:var(--ok);color:#161616}
 .b-warn{background:var(--now);color:#fff} .b-tape{background:var(--tape);color:#161616}
 .b-final{background:var(--tape);color:#161616} .b-abg{background:#5a2b28;color:#ffb4ad}
@@ -97,7 +100,7 @@ h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:.01em
 
 /* ---------- Fortschrittsbalken ---------- */
 .pg{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:7px 8px}
-.pg .n{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.pg .n{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:0;color:var(--dim)}
 .pg .b{height:6px;background:var(--panel2);border-radius:3px;margin-top:5px;overflow:hidden}
 .pg .b i{display:block;height:100%;background:var(--ok)}
 .pg .b i.over{background:var(--now)}
@@ -110,7 +113,7 @@ h1{font-family:var(--disp);font-size:clamp(18px,4.5vw,26px);letter-spacing:.01em
 .tlwrap{margin:10px 16px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:6px}
 table.mx{border-collapse:collapse;min-width:100%;font-size:14px}
 table.mx th,table.mx td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
-table.mx th{background:var(--panel2);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap;position:sticky;top:0}
+table.mx th{background:var(--panel2);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:0;color:var(--dim);white-space:nowrap;position:sticky;top:0}
 table.mx td.grp{font-weight:700;cursor:pointer;white-space:nowrap;background:var(--panel)}
 table.mx td.sub{padding-left:18px;color:var(--dim);cursor:pointer;background:var(--panel)}
 table.mx td.cell{font-family:var(--mono);cursor:pointer;min-width:96px}
@@ -124,7 +127,7 @@ table.mx tr.grprow{background:var(--panel)}
 table.gt{border-collapse:separate;border-spacing:0;min-width:100%;font-size:14px;line-height:1.25}
 table.gt th,table.gt td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:3px 6px;text-align:left;white-space:nowrap;vertical-align:middle}
 table.gt th:last-child,table.gt td:last-child{border-right:none}
-table.gt thead th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);font-weight:700;position:sticky;top:0;z-index:2;border-bottom:2px solid var(--line)}
+table.gt thead th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:0;color:var(--dim);font-weight:700;position:sticky;top:0;z-index:2;border-bottom:2px solid var(--line)}
 table.gt th.num,table.gt td.num{text-align:center}
 table.gt td.zahlspalte{padding:1px 2px;min-width:46px}
 table.gt td.zahlspalte input{width:100%;min-width:40px;background:transparent;border:1px solid transparent;border-radius:3px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:14px;padding:3px 2px;text-align:center;-moz-appearance:textfield}
@@ -140,12 +143,12 @@ table.gt tbody tr.dublette td.name{color:var(--now)}
 table.gt td.num.da{color:var(--ok);font-weight:700}
 table.gt td.num.teil{color:var(--tape-sig);font-weight:700}
 table.gt tr.gtsum td{background:var(--panel);font-family:var(--mono);font-weight:700;font-size:13px;color:var(--ink);position:sticky;top:24px;z-index:1;border-bottom:2px solid var(--line)}
-.sorttrenn{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);align-self:center;margin-left:8px}
+.sorttrenn{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:0;color:var(--dim);align-self:center;margin-left:8px}
 
 /* ---------- Kopfblock der Show (Aufbau wie der Kopf der bisherigen Tabelle) ---------- */
 .kopfgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px;align-items:start}
 .kopfbox{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 11px}
-.kopftitel{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:2px 0 6px;border-bottom:1px solid var(--line);padding-bottom:3px}
+.kopftitel{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:0;color:var(--dim);margin:2px 0 6px;border-bottom:1px solid var(--line);padding-bottom:3px}
 .kopfbox .f{margin-bottom:7px}
 /* Beide Kapazitaets-Beschriftungen halten zwei Zeilen frei, damit die Felder
    nebeneinander auf gleicher Hoehe stehen, auch wenn nur eine umbricht. */
@@ -166,9 +169,9 @@ table.zahltab td.zahl{text-align:right;font-family:var(--mono);font-weight:700;w
 table.zahltab td.zahl.ueber{color:var(--now)}
 table.zahltab input.vjlabel{width:100%;background:none;border:none;color:var(--ink);font-family:var(--body);font-size:14px;padding:1px 2px}
 table.zahltab input.vjwert{width:72px;background:var(--panel2);border:1px solid var(--line);border-radius:3px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:14px;padding:3px 5px;text-align:right}
-input.vjtitel{background:none;border:none;color:var(--dim);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;width:100%;padding:0}
+input.vjtitel{background:none;border:none;color:var(--dim);font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:0;width:100%;padding:0}
 table.pooltab{border-collapse:collapse;width:100%;font-size:14px;margin-bottom:8px}
-table.pooltab th{font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-align:right;padding:2px 4px;border-bottom:1px solid var(--line)}
+table.pooltab th{font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:0;color:var(--dim);text-align:right;padding:2px 4px;border-bottom:1px solid var(--line)}
 table.pooltab th:nth-child(2){text-align:left}
 table.pooltab td{padding:3px 4px;border-bottom:1px solid var(--line)}
 table.pooltab td.zahl{text-align:right;font-family:var(--mono);white-space:nowrap}
@@ -180,14 +183,15 @@ table.pooltab tr.summe td{font-weight:700;border-top:2px solid var(--line);borde
 /* Mengenfelder im Gast-Dialog (Spalten Steh/Sitz/… der Tabelle) */
 .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(74px,1fr));gap:6px}
 .mcell{background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:5px 6px;text-align:center}
-.mcell .ml{display:block;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.mcell .ml{display:block;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:0;color:var(--dim);margin-bottom:3px}
 .mcell input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:16px;padding:5px 4px;text-align:center}
 .sumline{font-family:var(--mono);font-size:13px;color:var(--tape-sig);background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:6px 8px;margin-bottom:10px}
 .sumline.warn{color:#fff;background:var(--now);border-color:var(--now)}
 
 /* ---------- Formularfelder / Dialog ---------- */
 .f{margin-bottom:10px}
-.f label{display:block;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:3px}
+.f label{display:block;font-weight:600;font-size:13px;letter-spacing:0;color:var(--dim);margin-bottom:3px}
+::placeholder{color:var(--ink);opacity:.72}
 .f input,.f select,.f textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:var(--body);font-size:15px;padding:8px 9px}
 .f textarea{resize:vertical;min-height:52px}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -243,7 +247,7 @@ body.mode-einfach .einfach-hide{display:none!important}
    den Aussenabstand, dadurch klebte jeder Dialog vorher in der linken oberen Ecke. */
 dialog{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--tape);border-radius:8px;padding:16px;width:min(460px,93vw);font-family:var(--body);max-height:92vh;overflow:auto;margin:auto}
 dialog::backdrop{background:rgba(0,0,0,.65)}
-dialog h2{font-family:var(--disp);font-size:16px;text-transform:uppercase;margin-bottom:12px}
+dialog h2{font-family:var(--disp);font-size:16px;margin-bottom:12px}
 .dlgbtns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .dlgbtns button{flex:1;min-width:90px;padding:10px;border-radius:5px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);font-weight:700;cursor:pointer}
 .dlgbtns .save{background:var(--tape);color:#161616;border-color:var(--tape)}
@@ -278,10 +282,10 @@ dialog h2{font-family:var(--disp);font-size:16px;text-transform:uppercase;margin
 
 /* ---------- Druckliste-Ansicht ---------- */
 .printview{margin:12px 16px}
-.printview h2{font-family:var(--disp);font-size:18px;text-transform:uppercase}
+.printview h2{font-family:var(--disp);font-size:18px}
 table.plist{border-collapse:collapse;width:100%;margin-top:10px;font-size:14px}
 table.plist th,table.plist td{border:1px solid var(--line);padding:6px 8px;text-align:left}
-table.plist th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+table.plist th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:0;color:var(--dim)}
 table.plist td.bar{width:10px;padding:0}
 table.plist td.sign{width:30mm}
 .printview .pfoot{margin-top:10px}
@@ -304,7 +308,7 @@ table.plist td.sign{width:30mm}
 .glchips button{background:var(--panel2);border:1px solid var(--line);border-radius:14px;color:var(--dim);font-size:13px;padding:5px 11px;cursor:pointer}
 .glchips button.on{background:var(--tape);color:#161616;border-color:var(--tape)}
 .glsort{display:flex;gap:0;flex-wrap:wrap;margin:8px 0 0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.glsort button{flex:1;min-width:70px;background:var(--panel);border:none;border-right:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;padding:8px 4px;cursor:pointer}
+.glsort button{flex:1;min-width:70px;background:var(--panel);border:none;border-right:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:13px;letter-spacing:0;padding:8px 4px;cursor:pointer}
 .glsort button:last-child{border-right:none}
 .glsort button.on{background:var(--tape);color:#161616}
 .emptybox{margin:12px 16px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--tape);border-radius:6px;padding:14px 14px}
@@ -325,7 +329,7 @@ table.plist td.sign{width:30mm}
 .artsel .artlist li.cur{color:var(--tape-ink);font-weight:700}
 .artsel .artlist li .artcheck{flex:0 0 auto;color:var(--tape-ink);font-family:var(--mono);font-size:13px}
 .artsel .artempty{padding:9px 8px;font-size:14px;color:var(--dim)}
-.artsel .artfoot{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);padding:6px 4px 1px}
+.artsel .artfoot{font-family:var(--mono);font-size:12px;letter-spacing:0;color:var(--dim);padding:6px 4px 1px}
 
 /* F4.2 Light-Theme — Korrekturen fuer fest verdrahtete Dunkel-Farben (kein heller Text auf hell) */
 :root[data-theme="light"] .hint.warn{color:#B23A2E}
@@ -364,7 +368,7 @@ table.plist td.sign{width:30mm}
   table.mx tr.grprow{background:var(--panel)}
   table.mx td{display:flex;flex-direction:column;gap:2px;border:none;border-bottom:1px solid var(--line);white-space:normal!important;min-width:0}
   table.mx td:last-child{border-bottom:none}
-  table.mx td[data-label]::before{content:attr(data-label);font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+  table.mx td[data-label]::before{content:attr(data-label);font-family:var(--mono);font-size:12px;letter-spacing:0;color:var(--dim)}
   table.mx td.cell{min-width:0}
 }
 
@@ -390,11 +394,33 @@ html{scroll-behavior:smooth}
 :root{--hdrh:96px;--navw:240px}
 .sechead,.sec{scroll-margin-top:calc(var(--hdrh) + 10px)}
 
+/* ---------- Menüleiste quer (Zeigen klappt auf) ---------- */
+.menubar{position:sticky;top:var(--hdrh);z-index:28;display:flex;flex-wrap:wrap;gap:2px;
+  background:var(--panel2);border-bottom:1px solid var(--line);padding:0 8px}
+.mnu{position:relative}
+.mnutitel{background:none;border:none;color:var(--ink);font-family:var(--body);font-size:15px;
+  padding:9px 12px;cursor:pointer;border-radius:5px 5px 0 0}
+.mnu:hover .mnutitel,.mnu.offen .mnutitel,.mnutitel:focus-visible{background:var(--panel);color:var(--ink)}
+.mnuliste{display:none;position:absolute;top:100%;left:0;min-width:262px;background:var(--panel);
+  border:1px solid var(--line);border-top:2px solid var(--tape);border-radius:0 6px 6px 6px;
+  padding:5px;box-shadow:0 10px 24px rgba(0,0,0,.45);z-index:29}
+.mnu:hover .mnuliste,.mnu.offen .mnuliste,.mnu:focus-within .mnuliste{display:block}
+.mnupunkt{display:block;width:100%;text-align:left;background:none;border:none;border-radius:4px;
+  color:var(--ink);font-family:var(--body);font-size:15px;padding:8px 10px;cursor:pointer}
+.mnupunkt:hover:not(:disabled){background:var(--panel2)}
+.mnupunkt:disabled{opacity:.45;cursor:not-allowed}
+.mnupunkt.an::before{content:'✓ ';color:var(--tape-ink);font-weight:700}
+.mnutrenn{height:1px;background:var(--line);margin:5px 4px}
+/* Am Finger nicht über Zeigen, sondern über Tippen — deshalb dort kein Hover-Aufklappen. */
+@media (pointer:coarse){.mnu:hover .mnuliste{display:none}.mnu.offen .mnuliste{display:block}
+  .mnutitel{padding:11px 12px}.mnupunkt{padding:11px 10px}}
+@media print{.menubar{display:none!important}}
+
 /* ---------- P5 Linke Menüleiste ---------- */
 .shell{display:block}
 .sidenav{display:none}
-.sidenav h3{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:14px 12px 6px;font-weight:500}
-.sidenav .navbtn{display:flex;align-items:center;gap:8px;width:calc(100% - 16px);margin:2px 8px;background:none;border:1px solid transparent;border-radius:5px;color:var(--dim);font-family:var(--disp);font-size:13px;text-transform:uppercase;letter-spacing:.04em;padding:10px 10px;cursor:pointer;text-align:left;transition:background-color .15s ease,color .15s ease,border-color .15s ease}
+.sidenav h3{font-family:var(--mono);font-size:12px;letter-spacing:0;color:var(--dim);margin:14px 12px 6px;font-weight:500}
+.sidenav .navbtn{display:flex;align-items:center;gap:8px;width:calc(100% - 16px);margin:2px 8px;background:none;border:1px solid transparent;border-radius:5px;color:var(--dim);font-family:var(--disp);font-size:13px;letter-spacing:0;padding:10px 10px;cursor:pointer;text-align:left;transition:background-color .15s ease,color .15s ease,border-color .15s ease}
 .sidenav .navbtn:hover{background:var(--panel2);color:var(--ink)}
 .sidenav .navbtn.active{background:var(--tape);color:#161616;border-color:var(--tape)}
 .sidenav .navjump{display:block;width:calc(100% - 16px);margin:1px 8px;background:none;border:none;border-left:2px solid var(--line);border-radius:0;color:var(--ink);font-family:var(--body);font-size:14px;padding:7px 10px;cursor:pointer;text-align:left;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
@@ -433,6 +459,8 @@ html{scroll-behavior:smooth}
   <h1>AnnenMayKantereit · Live 2026</h1>
   <div class="sub">Gästelisten-System · krasserstoff-Ticketing · Gespeichert <span id="savedAt">–</span></div>
 </header>
+
+<div class="menubar" id="menubar" role="menubar" aria-label="Menüleiste"></div>
 
 <div class="shell">
 <nav class="sidenav" id="sidenav" aria-label="Hauptmenü"></nav>
@@ -1084,12 +1112,123 @@ function render(){
   else renderEinlass();
   v.classList.remove('fade-in');void v.offsetWidth;v.classList.add('fade-in');
   buildSideNav();
+  renderMenubar();
 }
 function setModus(m){state.ui.modus=m;save();render();window.scrollTo(0,0);}
 function setAktiveShow(id){state.ui.aktiveShowId=id;save();render();}
 
 document.querySelectorAll('#tabs button').forEach(b=>{
   b.onclick=()=>setModus(b.dataset.m);
+});
+
+/* ================= Menüleiste quer über dem Inhalt =================
+   Klassische Leiste: Zeigen mit der Maus klappt das Untermenü auf, Klick führt aus.
+   Am Handy und per Tastatur öffnet ein Klick bzw. der Fokus dasselbe Menü. */
+function menueDaten(){
+  const sh = aktiveShow();
+  const hatShow = !!sh;
+  const dlgSchliessen = () => { const d=document.querySelector('dialog[open]'); if(d) d.close(); };
+  return [
+    {titel:'Liste', punkte:[
+      {t:'Neuen Gast anlegen', on:()=>openGuestDlg(null,{}), aus:!hatShow},
+      {t:'Bestehende Liste einlesen …', on:openImportDlg},
+      {t:'Importvorlage herunterladen', on:importVorlageHerunterladen},
+      {trenner:true},
+      {t:'Demo-Daten laden', on:()=>{ if(confirm('Rund 40 Beispiel-Gäste über mehrere Shows laden? (Jederzeit über Einstellungen entfernbar.)')) loadDemoData(); }}
+    ]},
+    {titel:'Show', punkte:[
+      {t:'Neue Show anlegen', on:()=>openShowDlg(true)},
+      {t:(sh&&sh.final)?'Finalisierung aufheben':'Liste finalisieren', on:()=>toggleFinal(sh), aus:!hatShow},
+      {trenner:true},
+      {t:'Zur Freigabe springen', on:()=>springeZu('Freigabe'), aus:!hatShow},
+      {t:'Zur Gästeliste springen', on:()=>springeZu('Gäste'), aus:!hatShow},
+      {t:'Zur Kontingent-Matrix springen', on:()=>springeZu('Kontingent-Matrix')}
+    ]},
+    {titel:'Exporte', punkte:[
+      {t:'Tabelle im gewohnten Aufbau', on:()=>exportVorlage(sh), aus:!hatShow},
+      {t:'Druckliste', on:()=>exportDruckliste(sh), aus:!hatShow},
+      {t:'Abendkasse', on:()=>exportAbendkasse(sh), aus:!hatShow},
+      {t:'krasserstoff-Personalisierung', on:()=>exportKrasserstoff(sh), aus:!hatShow},
+      {t:'Aftershow-Liste', on:()=>exportAftershowCsv(sh), aus:!hatShow},
+      {trenner:true},
+      {t:'Alle Exporte anzeigen …', on:()=>openExportDlg(sh), aus:!hatShow},
+      {t:'Drucken', on:()=>window.print()}
+    ]},
+    {titel:'Daten', punkte:[
+      {t:'Sicherung schreiben (JSON-Export)', on:jsonExport},
+      {t:'Sicherung einlesen (JSON-Import)', on:()=>$('fileImport').click()},
+      {trenner:true},
+      {t:'Ticket-Zugänge ausgeben', on:()=>tkExportJson(sh?sh.id:null), aus:!hatShow},
+      {t:'Antworten einlesen', on:tkImportJson}
+    ]},
+    {titel:'Ansicht', punkte:[
+      {t:'Verwaltung', on:()=>setModus('verwaltung'), an:state.ui.modus==='verwaltung'},
+      {t:'Einladen', on:()=>setModus('einladen'), an:state.ui.modus==='einladen'},
+      {t:'Einlass', on:()=>setModus('einlass'), an:state.ui.modus==='einlass'},
+      {t:'Ticket', on:()=>setModus('ticket'), an:state.ui.modus==='ticket'},
+      {trenner:true},
+      {t:'Tabelle', on:()=>{prefs.ansicht='tabelle';savePrefs();render();}, an:prefs.ansicht==='tabelle'},
+      {t:'Karten', on:()=>{prefs.ansicht='karten';savePrefs();render();}, an:prefs.ansicht==='karten'},
+      {trenner:true},
+      {t:'Alle Spalten', on:()=>{prefs.spalten='alle';savePrefs();render();}, an:prefs.spalten==='alle'},
+      {t:'Nur benutzte Spalten', on:()=>{prefs.spalten='benutzt';savePrefs();render();}, an:prefs.spalten==='benutzt'},
+      {trenner:true},
+      {t:'Dunkles Design', on:()=>{prefs.theme='dark';savePrefs();applyTheme();render();}, an:prefs.theme!=='light'},
+      {t:'Helles Design', on:()=>{prefs.theme='light';savePrefs();applyTheme();render();}, an:prefs.theme==='light'}
+    ]},
+    {titel:'Hilfe', punkte:[
+      {t:'Einstellungen …', on:()=>{dlgSchliessen();openSettingsDlg();}},
+      {t:'Kurz-Tour zeigen', on:()=>{dlgSchliessen();openTourDlg();}},
+      {trenner:true},
+      {t:'Bedienungsanleitung öffnen', on:()=>window.open('Bedienungsanleitung.html','_blank')}
+    ]}
+  ];
+}
+
+/* Zu einem Abschnitt der Seite springen (Überschrift enthält den Text). */
+function springeZu(text){
+  const h=[...document.querySelectorAll('.sechead h2')].find(x=>x.textContent.indexOf(text)>=0);
+  if(h) h.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function renderMenubar(){
+  const leiste=$('menubar');
+  if(!leiste)return;
+  leiste.textContent='';
+  menueDaten().forEach(gruppe=>{
+    const box=ael('div','mnu');
+    const kopf=ael('button','mnutitel',gruppe.titel);
+    kopf.type='button';
+    kopf.setAttribute('aria-haspopup','true');
+    kopf.setAttribute('aria-expanded','false');
+    box.appendChild(kopf);
+    const liste=ael('div','mnuliste');
+    gruppe.punkte.forEach(p=>{
+      if(p.trenner){liste.appendChild(ael('div','mnutrenn'));return;}
+      const b=ael('button','mnupunkt'+(p.an?' an':''),p.t);
+      b.type='button';
+      if(p.aus)b.disabled=true;
+      b.onclick=()=>{ box.classList.remove('offen'); kopf.blur(); try{ p.on(); }catch(e){} };
+      liste.appendChild(b);
+    });
+    box.appendChild(liste);
+    /* Am Finger (Handy/Tablet) öffnet der Titel das Menü, mit der Maus reicht Zeigen. */
+    kopf.onclick=()=>{
+      const offen=box.classList.contains('offen');
+      leiste.querySelectorAll('.mnu.offen').forEach(x=>x.classList.remove('offen'));
+      if(!offen)box.classList.add('offen');
+      kopf.setAttribute('aria-expanded',String(!offen));
+    };
+    leiste.appendChild(box);
+  });
+}
+/* Klick daneben schließt ein aufgeklapptes Menü. */
+document.addEventListener('click',e=>{
+  const l=$('menubar');
+  if(l&&!l.contains(e.target))l.querySelectorAll('.mnu.offen').forEach(x=>x.classList.remove('offen'));
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){const l=$('menubar');if(l)l.querySelectorAll('.mnu.offen').forEach(x=>x.classList.remove('offen'));}
 });
 
 /* ================= P5/P6/P7 Linke Menüleiste, fester Kopf ================= */
