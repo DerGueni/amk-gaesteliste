@@ -4195,12 +4195,15 @@ function currentToolUrl(){return location.href.replace(/[?#].*$/,'');}
 /* ================= F1.4 Kurz-Tour ================= */
 function tourSteps(){
   return [
-    {t:'Künstler / Band',x:'Ganz oben im Tab „Verwaltung“ den Act wählen — alle von Landstreicher Booking vertretenen Künstler und Bands, alphabetisch, mit Sofortsuche. Jeder hat eigene Shows, Gäste und Kontingente.'},
-    {t:'Verwaltung',x:'Shows anlegen, Deckel/Deadline/Kontingente pflegen, Gästeliste finalisieren und exportieren.'},
-    {t:'Einladen',x:'Die c/o-Personen stellen hier Gast-Anfragen — mit Kontingent-Anzeige und Status (angefragt/genehmigt/final).'},
+    {t:'Künstler / Band',x:'Ganz oben im Bereich „Verwaltung“ den Act wählen — alle von Landstreicher Booking vertretenen Künstler und Bands, alphabetisch, mit Sofortsuche. Jeder hat eigene Shows, Gäste und Kontingente.'},
+    {t:'Menüleiste oben',x:'Quer über der Seite liegen sechs Menüs: Liste, Show, Exporte, Daten, Ansicht und Hilfe. Mit der Maus reicht Zeigen, am Handy tippt man den Namen an.'},
+    {t:'Bereiche links',x:'Am breiten Bildschirm steht links die Bereichsliste: oben Verwaltung, Einladen, Einlass und Ticket, darunter Sprungmarken, unten der Schnellzugriff mit Einstellungen und „Liste einlesen“.'},
+    {t:'Verwaltung',x:'Shows anlegen, Gast-Limit, Deadline und Kontingente pflegen, Gästeliste finalisieren und exportieren.'},
+    {t:'Bestehende Liste einlesen',x:'Wer schon eine Liste hat, tippt sie nicht ab: Importvorlage herunterladen, eigene Liste hineinkopieren, als CSV speichern und wieder einlesen. Vorhandene Namen werden übersprungen.'},
+    {t:'Einladen',x:'Die einladenden Personen (c/o) stellen hier ihre Gast-Anfragen — mit Kontingent-Anzeige und Status (angefragt, genehmigt, final).'},
     {t:'Einlass',x:'An der Abendkasse: schnell nach Namen suchen und einchecken, auch für Begleitungen.'},
-    {t:'Ticket',x:'Ticket-Zugänge (Demo) für externe Gäste ausgeben — per Link, Mail oder QR-Code.'},
-    {t:'Export',x:'Ganz unten in der Werkzeugleiste: Exporte, JSON-Sicherung und Drucken — von jedem Tab aus erreichbar.'}
+    {t:'Ticket',x:'Ticket-Zugänge (Vorführung) für externe Gäste ausgeben — per Link, Mail oder QR-Code.'},
+    {t:'Exporte',x:'Ganz unten in der Werkzeugleiste und im Menü „Exporte“: Tabelle im gewohnten Aufbau, Druckliste, Abendkasse, krasserstoff, Sicherung und Drucken.'}
   ];
 }
 function openTourDlg(){

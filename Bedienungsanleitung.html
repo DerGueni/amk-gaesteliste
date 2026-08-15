@@ -8,18 +8,18 @@
 <style>
 :root{
   --case:#17181C; --panel:#1F2126; --panel2:#26282E; --line:#33363E;
-  --ink:#E9EAEE; --dim:#9BA0AB; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
-  --disp:'Archivo Black',sans-serif;
-  --body:'Barlow Semi Condensed',sans-serif;
-  --mono:'IBM Plex Mono',monospace;
+  --ink:#FFFFFF; --dim:#FFFFFF; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
+  --disp:Arial,Helvetica,sans-serif;
+  --body:Calibri,'Segoe UI',Arial,Helvetica,sans-serif;
+  --mono:Arial,Helvetica,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-bottom:40px}
 
 header{background:var(--panel);border-bottom:3px solid var(--tape);padding:20px 24px 16px}
-.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape);text-transform:uppercase}
-h1{font-family:var(--disp);font-size:clamp(22px,4.5vw,34px);letter-spacing:.01em;margin:4px 0 4px;text-transform:uppercase}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--tape)}
+h1{font-family:var(--disp);font-size:clamp(22px,4.5vw,34px);letter-spacing:0;margin:4px 0 4px}
 .sub{font-size:14px;color:var(--dim)}
 
 main{max-width:900px;margin:0 auto;padding:0 24px}
@@ -28,7 +28,7 @@ main{max-width:900px;margin:0 auto;padding:0 24px}
   background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--tape);
   border-radius:6px;padding:16px 18px;margin:24px 0;
 }
-.intro h2{font-family:var(--disp);font-size:16px;text-transform:uppercase;margin-bottom:8px;color:var(--tape)}
+.intro h2{font-family:var(--disp);font-size:16px;margin-bottom:8px;color:var(--tape)}
 .intro p{margin:6px 0}
 
 .demo-hinweis{
@@ -39,8 +39,8 @@ main{max-width:900px;margin:0 auto;padding:0 24px}
 
 section{margin:36px 0}
 section h2{
-  font-family:var(--disp);font-size:clamp(18px,3vw,24px);text-transform:uppercase;
-  letter-spacing:.01em;border-bottom:2px solid var(--line);padding-bottom:8px;margin-bottom:16px;
+  font-family:var(--disp);font-size:clamp(18px,3vw,24px);
+  letter-spacing:0;border-bottom:2px solid var(--line);padding-bottom:8px;margin-bottom:16px;
   display:flex;align-items:center;gap:10px;
 }
 section h2 .nr{
@@ -89,13 +89,13 @@ figcaption{font-size:12px;color:var(--dim);margin-top:6px;font-family:var(--mono
 
 table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
 th,td{border:1px solid var(--line);padding:6px 10px;text-align:left}
-th{background:var(--panel2);font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+th{background:var(--panel2);font-family:var(--mono);font-size:12px;letter-spacing:0}
 
 .toc{
   background:var(--panel);border:1px solid var(--line);border-radius:6px;
   padding:16px 20px;margin:24px 0;
 }
-.toc h2{font-family:var(--disp);font-size:14px;text-transform:uppercase;color:var(--tape);margin-bottom:8px;border:none;padding:0}
+.toc h2{font-family:var(--disp);font-size:14px;color:var(--tape);margin-bottom:8px;border:none;padding:0}
 .toc ol{margin:0 0 0 20px;columns:2;column-gap:24px}
 .toc a{text-decoration:none;color:var(--ink)}
 .toc a:hover{color:var(--tape)}

@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AMK Gästeliste PRO · Der Ablauf</title>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<!-- Schriften vom Rechner: Arial/Calibri -->
 <style>
 :root{
   --case:#17181C; --panel:#1F2126; --panel2:#26282E; --line:#33363E;
-  --ink:#E9EAEE; --dim:#9BA0AB; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
-  --disp:'Archivo Black',sans-serif; --body:'Barlow Semi Condensed',sans-serif; --mono:'IBM Plex Mono',monospace;
+  --ink:#FFFFFF; --dim:#FFFFFF; --tape:#FFD23F; --now:#FF4B3E; --ok:#64A85C;
+  --disp:Arial,Helvetica,sans-serif; --body:Calibri,'Segoe UI',Arial,Helvetica,sans-serif; --mono:Arial,Helvetica,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.45}
@@ -18,8 +18,8 @@ body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:1
 /* ---------- Kopfleiste ---------- */
 .bar{position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:3px solid var(--tape);
      display:flex;align-items:center;gap:14px;padding:10px 20px}
-.bar .marke{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape);text-transform:uppercase}
-.bar .titel{font-family:var(--disp);font-size:14px;text-transform:uppercase;letter-spacing:.03em}
+.bar .marke{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--tape)}
+.bar .titel{font-family:var(--disp);font-size:14px;letter-spacing:0}
 .bar .rest{margin-left:auto;display:flex;align-items:center;gap:8px}
 .bar button{background:var(--panel2);border:1px solid var(--line);border-radius:5px;color:var(--ink);
      font-family:var(--mono);font-size:12px;padding:7px 12px;cursor:pointer}
@@ -30,10 +30,10 @@ body{background:var(--case);color:var(--ink);font-family:var(--body);font-size:1
 .folie{display:none;padding:34px 0 10px;animation:auf .25s ease}
 .folie.an{display:block}
 @keyframes auf{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.nr{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--tape);text-transform:uppercase;margin-bottom:6px}
-h1{font-family:var(--disp);font-size:clamp(26px,4.4vw,42px);text-transform:uppercase;letter-spacing:.01em;line-height:1.1;margin-bottom:10px}
-h2{font-family:var(--disp);font-size:clamp(20px,3vw,29px);text-transform:uppercase;letter-spacing:.02em;margin-bottom:12px}
-h3{font-family:var(--disp);font-size:15px;text-transform:uppercase;letter-spacing:.04em;margin:18px 0 8px;color:var(--tape)}
+.nr{font-family:var(--mono);font-size:11px;letter-spacing:0;color:var(--tape);margin-bottom:6px}
+h1{font-family:var(--disp);font-size:clamp(26px,4.4vw,42px);letter-spacing:0;line-height:1.1;margin-bottom:10px}
+h2{font-family:var(--disp);font-size:clamp(20px,3vw,29px);letter-spacing:0;margin-bottom:12px}
+h3{font-family:var(--disp);font-size:15px;letter-spacing:0;margin:18px 0 8px;color:var(--tape)}
 p{margin-bottom:10px;max-width:78ch}
 .lead{font-size:20px;color:var(--dim);max-width:70ch}
 ul{margin:0 0 12px 20px} li{margin-bottom:6px}
@@ -42,14 +42,14 @@ ul{margin:0 0 12px 20px} li{margin-bottom:6px}
 
 .karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:14px 0}
 .karte{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--tape);border-radius:6px;padding:14px 15px}
-.karte .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.karte .k{font-family:var(--mono);font-size:10px;letter-spacing:0;color:var(--dim);margin-bottom:5px}
 .karte .t{font-weight:700;margin-bottom:4px}
 .karte .b{font-size:15px;color:var(--dim)}
 .karte.ok{border-left-color:var(--ok)} .karte.neu{border-left-color:var(--now)}
 
 table{border-collapse:collapse;width:100%;margin:12px 0;font-size:16px}
 th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-th{background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+th{background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:0;color:var(--dim)}
 td.sp{font-family:var(--mono);font-weight:700;white-space:nowrap;color:var(--tape)}
 
 figure{margin:14px 0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px}
@@ -65,14 +65,14 @@ figcaption{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:7p
      background:var(--tape);color:#161616;font-family:var(--disp);font-size:15px;display:flex;align-items:center;justify-content:center}
 .schritt .t{font-weight:700;margin-bottom:3px}
 .schritt .b{font-size:15px;color:var(--dim)}
-.schritt .w{font-family:var(--mono);font-size:11px;color:var(--tape);margin-top:5px;text-transform:uppercase;letter-spacing:.08em}
+.schritt .w{font-family:var(--mono);font-size:11px;color:var(--tape);margin-top:5px;letter-spacing:0}
 
 .kasten{border:1px solid var(--line);border-left:3px solid var(--tape);background:var(--panel);border-radius:5px;padding:12px 14px;margin:12px 0}
 .kasten.warn{border-left-color:var(--now)}
 .kasten.ok{border-left-color:var(--ok)}
 .kasten .h{font-weight:700;margin-bottom:4px}
 
-.marke-gross{font-family:var(--disp);font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+.marke-gross{font-family:var(--disp);font-size:12px;letter-spacing:0;
      background:var(--tape);color:#161616;border-radius:3px;padding:3px 8px;display:inline-block}
 
 /* ---------- Fussleiste ---------- */
